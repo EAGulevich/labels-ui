@@ -1,3 +1,11 @@
+![Vercel Deploy](https://deploy-badge.vercel.app/vercel/game-labels) 
+Production https://game-labels.vercel.app/
+
+
+![Vercel Deploy](https://deploy-badge.vercel.app/vercel/game-labels-preview) 
+Development https://game-labels-preview.vercel.app/
+
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
