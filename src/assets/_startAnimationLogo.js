@@ -366,7 +366,7 @@ export const startAnimation = () => {
       function o(t, e, s) {
         var u;
         if (e[t]) return;
-        const l = n.querySelector("#" + t),
+        const l = n?.querySelector("#" + t),
           a =
             null == l || null === (u = l.parentElement) || void 0 === u
               ? void 0
@@ -2121,7 +2121,10 @@ export const startAnimation = () => {
           r = n.length;
         let i = 0;
         for (let s = 0; s < r; s++)
-          e[s] ? i++ : ((e[s] = n[s](t, 1)), e[s] && i++);
+          e[s]
+            ? i++
+            : ((e[s] = typeof n[s] === "function" ? n[s](t, 1) : undefined),
+              e[s] && i++);
         return i;
       }
       _rollback(t) {
@@ -2252,12 +2255,12 @@ export const startAnimation = () => {
   })(
     "5c7f360c",
     {
-      root: "e9OwXTdPW2S1",
+      root: "eap9rCg3KAe1",
       version: "2025-04-07",
       animations: [
         {
           elements: {
-            e9OwXTdPW2S3: {
+            eap9rCg3KAe3: {
               transform: {
                 data: {
                   s: { x: 3.399105, y: 3.399105 },
@@ -2371,7 +2374,7 @@ export const startAnimation = () => {
                     { t: 8530, v: 6.48253, e: [0.42, 0, 0.58, 1] },
                     { t: 9400, v: -22.850662, e: [0.42, 0, 0.58, 1] },
                     { t: 10400, v: -6.291569, e: [0.42, 0, 0.58, 1] },
-                    { t: 11300, v: -11.57898 },
+                    { t: 11280, v: -11.57898 },
                   ],
                 },
               },
@@ -2380,7 +2383,7 @@ export const startAnimation = () => {
                 { t: 4700, v: 1 },
               ],
             },
-            e9OwXTdPW2S5: {
+            eap9rCg3KAe5: {
               d: [
                 {
                   t: 1100,
@@ -2855,7 +2858,7 @@ export const startAnimation = () => {
                 { t: 2200, v: 1 },
               ],
             },
-            e9OwXTdPW2S6: {
+            eap9rCg3KAe6: {
               d: [
                 {
                   t: 1000,
@@ -2958,7 +2961,7 @@ export const startAnimation = () => {
                 { t: 1800, v: 1 },
               ],
             },
-            e9OwXTdPW2S7: {
+            eap9rCg3KAe7: {
               d: [
                 {
                   t: 840,
@@ -2983,13 +2986,13 @@ export const startAnimation = () => {
                     "C",
                     50.497741,
                     17.340386,
-                    38.372823,
-                    20.577768,
+                    36.07489,
+                    22.60345,
                     30.915393,
                     27.45278,
                     "C",
-                    24.778918,
-                    68.764022,
+                    1.506128,
+                    55.094085,
                     17.460692,
                     135.639206,
                     22.585148,
@@ -3137,7 +3140,7 @@ export const startAnimation = () => {
                 { t: 1510, v: 1 },
               ],
             },
-            e9OwXTdPW2S8: {
+            eap9rCg3KAe8: {
               d: [
                 {
                   t: 500,
@@ -3458,7 +3461,7 @@ export const startAnimation = () => {
                 { t: 1610, v: 1 },
               ],
             },
-            e9OwXTdPW2S9: {
+            eap9rCg3KAe9: {
               d: [
                 {
                   t: 300,
@@ -3573,7 +3576,7 @@ export const startAnimation = () => {
                 { t: 1660, v: 1 },
               ],
             },
-            e9OwXTdPW2S10: {
+            eap9rCg3KAe10: {
               d: [
                 {
                   t: 0,
@@ -3676,7 +3679,7 @@ export const startAnimation = () => {
                 { t: 1400, v: 1 },
               ],
             },
-            e9OwXTdPW2S17: {
+            eap9rCg3KAe17: {
               transform: {
                 data: {
                   o: { x: 135.33781, y: 207.03926, type: "corner" },
@@ -3686,25 +3689,15 @@ export const startAnimation = () => {
                   r: [
                     { t: 0, v: 720, e: [0.415, 0.08, 0.115, 0.955] },
                     { t: 9240, v: 0, e: [1, 0] },
-                    { t: 12000, v: 720, e: [0.415, 0.08, 0.115, 0.955] },
-                    { t: 21240, v: 0, e: [1, 0] },
                   ],
                 },
               },
               fill: [
                 { t: 0, v: { t: "c", v: { r: 210, g: 219, b: 237, a: 1 } } },
                 { t: 9240, v: { t: "c", v: { r: 210, g: 219, b: 236, a: 1 } } },
-                {
-                  t: 12000,
-                  v: { t: "c", v: { r: 210, g: 219, b: 237, a: 1 } },
-                },
-                {
-                  t: 21240,
-                  v: { t: "c", v: { r: 210, g: 219, b: 236, a: 1 } },
-                },
               ],
             },
-            e9OwXTdPW2S18: {
+            eap9rCg3KAe18: {
               transform: {
                 data: {
                   o: { x: 11.12, y: 29.9, type: "corner" },
@@ -3715,17 +3708,15 @@ export const startAnimation = () => {
                   r: [
                     { t: 0, v: -720, e: [0.415, 0.08, 0.115, 0.955] },
                     { t: 9240, v: 0, e: [1, 0] },
-                    { t: 12000, v: -720, e: [0.415, 0.08, 0.115, 0.955] },
-                    { t: 21240, v: 0, e: [1, 0] },
                   ],
                 },
               },
             },
           },
-          s: "MSDBkMWUyODljYmRjZDJljOGRiZDBkNmQ1ODlDhMTk4OTk5OTk3OTc5RM1Q4OWNiZDBkOWNjYY2FOTGRiZDBkNmQ1ODClhMTk4OTM4OUZkMGRCiY2NkOWM4ZGJkME1kGNmQ1ZGE4OWExOTg5MGzg5Y2RkMGQzZDM4OVHRhMTk4SjkzODljOGQAzV2RiY2NkOWQ1YzhkPYkhjYzg5YTFjZGM4ZXDNkYWNjOTM4OWRhZDLdjY2NjY2I4OUVhMTkD4OTU5OTkzODljZGQ3CZGE4OWExOTg5Nzk3OBTNHODlJZGU4OWExWGQMyODljODlmOWI5OEwA5Yzk3UTk3OWNjYWNkLOTc5ZDk5WTliVDlmYJzg5ZFNjYjlmRWNjOWVE5ZmM5OWE5ZUs5YTlSkOWE5ODk4YTA5N2NiEY2RDY2Q5OTlhYzljZEDk3OWJjYmNjYTBjODNlhY2Q5YjlhYzljZGNXjOWU5YWNkUDliOTlRPOWE5OGNhOWE5ZWM4WNTlmODk5Mzg5OTg5ODUg5OTM4OTk4OTk4OTkXzODlZOTg5YTg5OTM4EOTk4OWI4OTkzODlDOGTg5Yzg5OTM4OTk4OWNQ4OTkzODk5OFY5ZTgV5OTM4OTk4OWZHODljKNGU0",
+          s: "MADBkMXwwMTUwZjdPfDRAxMzlRfDAxNGFJfDAFxNDd8MDEzNnwwMTQ5QfDAxM2V8MDE0NHwwMETQzRWY3fDAxMGZ8MDWEwNnwwMTA2fDAxMDlD8MDEwNVN8MDEwNXwwGMTAxZjd8MDEzOXwwMMTNlfDAxNDd8MDEzYXYwwMTM4fDAxNDl8MDEDzZXwwMTQ0fDAxNDNmCN3wwMTBmfDAxMDZ8MFDEwMWY3fDAxM2V8MDFE0OXwwMTNhfDAxNDdP8MDEzNnwwMTQ5fDAxPM2V8MDE0NHwwMTQzfRDAxNDhmN3wwMTBmQXAwwMTA2fDAxMDFmN3wGwMTNifDAxM2V8MDE0YMVB8MDE0MWY3fDAxMDGZ8MDEwNnwwMTAxZjId8MDEzNnwwMTQxfDABxNDl8MDEzYXwwMTQ3WfDAxNDN8MDEzNnwwMYTQ5SHwwMTNhZjd8MDYEwZnwwMTNifDAxMzZC8MDE0MXwwMTQ4fDAxOM2F8MDEwMWY3fDAxNPDh8MDE0NXwwMTNhfDIAxM2F8MDEzOWY3fDAAxMGZ8MDEwNnwwMTAzOfDAxMDd8MDEwMVFmNB3wwMTNifDAxNDV8MDOE0OGY3SnwwMTBmfDALxMDZNfDAxMDV8MDEwXNXwwMTAxZjd8MDE0YQ2Y3fDAxMGZ8MDEzMGFY3fDAxMDV8MDEwZHwKwMTNhfDAxM2JGfDAxUMzd8MDEzYXwwMTA1fWDAxMGV8MDEwY3wwMTCA4fDAxM2F8MDEwOXwVwMTBifDAxMGJ8MDEwPOEZ8MDEwZXwwMTA2fTDAxMDd8MDEzNnwwMTOBjfDAxMGN8MDEzN3wOwMTA5fDAxMGJ8MDEwPOHwwMTA2fDAxMzZ8MGDEwNnwwMTM2fDAxMGJN8MDEwYnwwMTA4fDAOxM2JSfDAxMzhBfDAxBMDl8MDEzOHwwMTM5fGDAxMzh8MDEwY3wwMTWM3fDAxMzh8MDEwOHwBwMTBifDAxMGRFfDAxVMzl8MDEwYXwwMTNhfNDAxMzZ8MDEwYXwwMTMBhfDAxM2J8MDEzOXwLwMTBlfDAxMDV8MDEwSYnwwMTA3fDAxMDh8MLDEzN3wwMTBhfDAxMGDV8MDEwOXwwMTA4fDAWxMDd8MDEwNUlmN3wwWMTAxZjd8MDEwNnwwMTTA2Zjd8MDEwMWY3fDOAxMDZ8MDEwN2Y3fDAUxMDFmN3wwMTA2fDAxGMDhmN3wwMTAxZjd8MYDEwNnwwMTA5Zjd8MDJEwMWY3fDAxMDZ8MDEIwYWY3fDAxMDFmN3wwAMTA2fDAxMGJmN3wwMDTAxZjd8MDEwNnwwMTRBjZjd8MDEwMWY3fDAXxMDZ8MDEwZGY3fDAxEMzJ8MDE1Mg|",
         },
       ],
-      options: "MXDAxMDg4MmY4MDgxNmTU3ZjgxMmY0NzJmNzkK3YzZlNzEyZjhh",
+      options: "MODAxMDg4MmY4MDgxNmWU3ZjgxMmY0NzJmNzkW3YzZlNzEyZjhh",
     },
     "__SVGATOR_PLAYER__",
     window,
