@@ -12,6 +12,8 @@ import { Route, Routes, useNavigate } from "react-router";
 import { ThemeName, useApp } from "./AppProvider.tsx";
 import { ThemeSwitcher } from "./components/ThemeSwither/ThemeSwitcher.tsx";
 import { FrownOutlined } from "@ant-design/icons";
+import { LngSwitcher } from "./components/LngSwitcher/LngSwitcher.tsx";
+import { useTranslation } from "react-i18next";
 
 const HomeRouteComponent = lazy(() => import("./pages/Home/Home.tsx"));
 
@@ -41,11 +43,13 @@ function App() {
   const { themeName } = useApp();
 
   const navigate = useNavigate();
+  const { t } = useTranslation();
   return (
     <AntConfigProvider theme={getThemeByName(themeName)} locale={ruRU}>
       <PageLayout>
         <div style={{ position: "absolute", right: 0, margin: "20px" }}>
           <ThemeSwitcher />
+          <LngSwitcher />
         </div>
         <Routes>
           <Route path="/" element={<HomeRouteComponent />} />
@@ -54,11 +58,11 @@ function App() {
             element={
               <Result
                 icon={<FrownOutlined />}
-                title="404"
-                subTitle="Sorry, the page you visited does not exist."
+                title={t("errors.404.title")}
+                subTitle={t("errors.404.subTitle")}
                 extra={
                   <Button type="primary" onClick={() => navigate("/")}>
-                    Домой
+                    {t("errors.404.btnTitle")}
                   </Button>
                 }
               />

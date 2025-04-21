@@ -1,0 +1,15 @@
+{
+  "home": {
+    "menu": {
+      "newGame": "New game",
+      "join": "Join"
+    }
+  },
+  "errors": {
+    "404": {
+      "title": "404",
+      "subTitle": "Sorry, the page you visited does not exist.",
+      "btnTitle": "Back Home"
+    }
+  }
+}
