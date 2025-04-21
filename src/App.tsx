@@ -6,13 +6,14 @@ import {
 } from "antd";
 import { DarkTheme, Theme } from "./theme/theme.tsx";
 import ruRU from "antd/locale/ru_RU";
-import { FC, PropsWithChildren } from "react";
+import { FC, lazy, PropsWithChildren } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { Route, Routes, useNavigate } from "react-router";
 import { ThemeName, useApp } from "./AppProvider.tsx";
-import { HomePage } from "./pages/Home/Home.tsx";
 import { ThemeSwitcher } from "./components/ThemeSwither/ThemeSwitcher.tsx";
 import { FrownOutlined } from "@ant-design/icons";
+
+const HomeRouteComponent = lazy(() => import("./pages/Home/Home.tsx"));
 
 export const StyledPageLayout = styled.div`
   min-height: 100vh;
@@ -47,7 +48,7 @@ function App() {
           <ThemeSwitcher />
         </div>
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<HomeRouteComponent />} />
           <Route
             path="*"
             element={

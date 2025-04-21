@@ -3,7 +3,7 @@ import { Button, Flex } from "antd";
 import { StyledPageLayout } from "../../App.tsx";
 import { useNavigate } from "react-router";
 
-export const HomePage = () => {
+const HomePage = () => {
   const navigate = useNavigate();
   return (
     <StyledPageLayout>
@@ -20,3 +20,5 @@ export const HomePage = () => {
     </StyledPageLayout>
   );
 };
+
+export default HomePage;
