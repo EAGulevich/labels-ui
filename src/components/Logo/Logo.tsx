@@ -6,7 +6,7 @@ import { LogoWrapper } from "./styles.ts";
 export const Logo = () => {
   useEffect(() => {
     startAnimation();
-  });
+  }, []);
 
   return (
     <LogoWrapper>

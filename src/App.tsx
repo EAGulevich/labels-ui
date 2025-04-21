@@ -1,10 +1,18 @@
-import { ConfigProvider, theme as AntTheme } from "antd";
+import {
+  Button,
+  ConfigProvider as AntConfigProvider,
+  Result,
+  theme as AntTheme,
+} from "antd";
 import { DarkTheme, Theme } from "./theme/theme.tsx";
 import ruRU from "antd/locale/ru_RU";
-import { FC, PropsWithChildren, useCallback, useState } from "react";
-import { TempPage } from "./pages/Temp/Temp.tsx";
+import { FC, PropsWithChildren } from "react";
 import styled, { ThemeProvider } from "styled-components";
-import { Logo } from "./components/Logo/Logo.tsx";
+import { Route, Routes, useNavigate } from "react-router";
+import { ThemeName, useApp } from "./AppProvider.tsx";
+import { HomePage } from "./pages/Home/Home.tsx";
+import { ThemeSwitcher } from "./components/ThemeSwither/ThemeSwitcher.tsx";
+import { FrownOutlined } from "@ant-design/icons";
 
 export const StyledPageLayout = styled.div`
   min-height: 100vh;
@@ -25,28 +33,39 @@ const PageLayout: FC<PropsWithChildren> = ({ children }) => {
   );
 };
 
-type ThemeName = "dark" | "light";
-
 const getThemeByName = (themeName: ThemeName) =>
   themeName === "dark" ? DarkTheme : Theme;
 
 function App() {
-  const [theme, setTheme] = useState<ThemeName>(
-    (localStorage.getItem("theme") as ThemeName) || "dark",
-  );
+  const { themeName } = useApp();
 
-  const changeTheme = useCallback((theme: ThemeName) => {
-    localStorage.setItem("theme", theme);
-    setTheme(theme);
-  }, []);
+  const navigate = useNavigate();
   return (
-    <ConfigProvider theme={getThemeByName(theme)} locale={ruRU}>
+    <AntConfigProvider theme={getThemeByName(themeName)} locale={ruRU}>
       <PageLayout>
-        <Logo />
-
-        <TempPage setTheme={changeTheme} checked={theme === "dark"} />
+        <div style={{ position: "absolute", right: 0, margin: "20px" }}>
+          <ThemeSwitcher />
+        </div>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route
+            path="*"
+            element={
+              <Result
+                icon={<FrownOutlined />}
+                title="404"
+                subTitle="Sorry, the page you visited does not exist."
+                extra={
+                  <Button type="primary" onClick={() => navigate("/")}>
+                    Домой
+                  </Button>
+                }
+              />
+            }
+          />
+        </Routes>
       </PageLayout>
-    </ConfigProvider>
+    </AntConfigProvider>
   );
 }
 
