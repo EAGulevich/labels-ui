@@ -5,6 +5,16 @@
       "join": "Join"
     }
   },
+  "createRoomScreen": {
+    "joinLinkText": "Join at {{link}}",
+    "enterCode": "Enter room code",
+    "scan": "or scan this"
+  },
+  "joinScreen": {
+    "enterRoomCode": "Room code",
+    "enterName": "Name",
+    "chooseAvatar": "Avatar"
+  },
   "errors": {
     "404": {
       "title": "404",

@@ -3,25 +3,30 @@ import {
   ConfigProvider as AntConfigProvider,
   Result,
   theme as AntTheme,
+  Layout,
 } from "antd";
 import { DarkTheme, Theme } from "./theme/theme.tsx";
 import ruRU from "antd/locale/ru_RU";
 import { FC, lazy, PropsWithChildren } from "react";
 import styled, { ThemeProvider } from "styled-components";
-import { Route, Routes, useNavigate } from "react-router";
+import { Route, Routes, useLocation, useNavigate } from "react-router";
 import { ThemeName, useApp } from "./AppProvider.tsx";
-import { ThemeSwitcher } from "./components/ThemeSwither/ThemeSwitcher.tsx";
 import { FrownOutlined } from "@ant-design/icons";
-import { LngSwitcher } from "./components/LngSwitcher/LngSwitcher.tsx";
 import { useTranslation } from "react-i18next";
+import { Header } from "./components/Header/Header.tsx";
+const { Content } = Layout;
 
 const HomeRouteComponent = lazy(() => import("./pages/Home/Home.tsx"));
 
-export const StyledPageLayout = styled.div`
-  min-height: 100vh;
-  max-height: 100vh;
-  width: 100vw;
-  overflow: auto;
+const CreateRoomRouteComponent = lazy(
+  () => import("./pages/CreateRoomScreen/CreateRoomScreen.tsx"),
+);
+
+const JoinRouteComponent = lazy(
+  () => import("./pages/JoinScreen/JoinScreen.tsx"),
+);
+
+export const StyledPageLayout = styled(Layout)`
   background: ${({ theme }) => theme.token.colorBgBase};
   color: ${({ theme }) => theme.token.colorTextBase};
 `;
@@ -41,34 +46,36 @@ const getThemeByName = (themeName: ThemeName) =>
 
 function App() {
   const { themeName } = useApp();
-
+  const location = useLocation();
   const navigate = useNavigate();
   const { t } = useTranslation();
   return (
     <AntConfigProvider theme={getThemeByName(themeName)} locale={ruRU}>
       <PageLayout>
-        <div style={{ position: "absolute", right: 0, margin: "20px" }}>
-          <ThemeSwitcher />
-          <LngSwitcher />
-        </div>
-        <Routes>
-          <Route path="/" element={<HomeRouteComponent />} />
-          <Route
-            path="*"
-            element={
-              <Result
-                icon={<FrownOutlined />}
-                title={t("errors.404.title")}
-                subTitle={t("errors.404.subTitle")}
-                extra={
-                  <Button type="primary" onClick={() => navigate("/")}>
-                    {t("errors.404.btnTitle")}
-                  </Button>
-                }
-              />
-            }
-          />
-        </Routes>
+        <Header hideLogo={location.pathname === "/"} />
+
+        <Content style={{ height: "calc(100vh - 50px)" }}>
+          <Routes>
+            <Route path="/" element={<HomeRouteComponent />} />
+            <Route path="/new" element={<CreateRoomRouteComponent />} />
+            <Route path="/join" element={<JoinRouteComponent />} />
+            <Route
+              path="*"
+              element={
+                <Result
+                  icon={<FrownOutlined />}
+                  title={t("errors.404.title")}
+                  subTitle={t("errors.404.subTitle")}
+                  extra={
+                    <Button type="primary" onClick={() => navigate("/")}>
+                      {t("errors.404.btnTitle")}
+                    </Button>
+                  }
+                />
+              }
+            />
+          </Routes>
+        </Content>
       </PageLayout>
     </AntConfigProvider>
   );

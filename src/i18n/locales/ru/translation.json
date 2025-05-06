@@ -5,6 +5,16 @@
       "join": "Присоединиться"
     }
   },
+  "createRoomScreen": {
+    "joinLinkText": "Присоединяйтесь по ссылке {{link}}",
+    "enterCode": "Введите код комнаты",
+    "scan": "или отсканируйте"
+  },
+  "joinScreen": {
+    "enterRoomCode": "Код комнаты",
+    "enterName": "Имя",
+    "chooseAvatar": "Аватар"
+  },
   "errors": {
     "404": {
       "title": "404",

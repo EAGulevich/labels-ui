@@ -1,5 +1,10 @@
 * {
   box-sizing: border-box;
+  transition:
+    background 1s,
+    color 1s,
+    border-color 1s,
+    fill 1s;
 }
 
 #root {
