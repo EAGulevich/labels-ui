@@ -93,8 +93,7 @@ const CreateRoomScreen = () => {
           </Typography.Text>
         </div>
         <QRCode
-          value={`https://game-labels.vercel.app/join?roomCode=${room?.code}`}
-          icon="https://game-labels.vercel.app/icon.svg"
+          value={`${window.location.origin}/join?roomCode=${room?.code}`}
         />
         <Typography.Text>{t("createRoomScreen.scan")}</Typography.Text>
       </Card>
