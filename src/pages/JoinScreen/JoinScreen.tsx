@@ -1,8 +1,16 @@
-import { Button, Flex, Input, Segmented, Typography } from "antd";
+import {
+  Avatar,
+  Button,
+  Dropdown,
+  Flex,
+  Input,
+  MenuProps,
+  Typography,
+} from "antd";
 import { useTranslation } from "react-i18next";
 import { NAME_MAX_LENGTH, ROOM_CODE_LENGTH } from "../../constants.ts";
 import { PlayerAvatar } from "../../components/PlayerAvatar/PlayerAvatar.tsx";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { message } from "antd";
 
 import { ServerToClientEvents } from "../../sharedTypesFromServer/events.ts";
@@ -10,7 +18,9 @@ import { useSearchParams } from "react-router";
 import { socket } from "../../socket.ts";
 import { Room } from "../../sharedTypesFromServer/types.ts";
 import { AvatarToken } from "../../sharedTypesFromServer/avatarTokens.ts";
-
+import { SAvatarDropdownOverlay } from "./styles.ts";
+import { RobotOutlined } from "@ant-design/icons";
+import { avatarItems } from "./avatarItems.tsx";
 const { Title } = Typography;
 
 const JoinScreen = () => {
@@ -31,6 +41,15 @@ const JoinScreen = () => {
   const [playerAvatarToken, setPlayerAvatarToken] = useState<
     AvatarToken | undefined
   >();
+
+  const items: MenuProps["items"] = useMemo(
+    () =>
+      avatarItems.map((item) => ({
+        ...item,
+        onClick: () => setPlayerAvatarToken(item.key),
+      })),
+    [],
+  );
 
   const joinHandler = () => {
     if (playerName && playerAvatarToken) {
@@ -161,24 +180,26 @@ const JoinScreen = () => {
           }}
         />
         <Title level={4}>{t("joinScreen.chooseAvatar")}</Title>
-        <Segmented<AvatarToken>
-          shape={"round"}
-          block={false}
-          value={playerAvatarToken}
-          onChange={(v) => setPlayerAvatarToken(v)}
-          options={[
-            { value: "ROBOT_1", icon: <PlayerAvatar token={"ROBOT_1"} /> },
-            { value: "ROBOT_2", icon: <PlayerAvatar token={"ROBOT_2"} /> },
-            { value: "ROBOT_3", icon: <PlayerAvatar token={"ROBOT_3"} /> },
-            { value: "ROBOT_4", icon: <PlayerAvatar token={"ROBOT_4"} /> },
-            { value: "ROBOT_5", icon: <PlayerAvatar token={"ROBOT_5"} /> },
-            { value: "ROBOT_6", icon: <PlayerAvatar token={"ROBOT_6"} /> },
-            { value: "ROBOT_7", icon: <PlayerAvatar token={"ROBOT_7"} /> },
-            { value: "ROBOT_8", icon: <PlayerAvatar token={"ROBOT_8"} /> },
-            { value: "ROBOT_9", icon: <PlayerAvatar token={"ROBOT_9"} /> },
-            // { value: "ROBOT_BOT", icon: <PlayerAvatar token={"ROBOT_BOT"} /> },
-          ]}
-        />
+        <Dropdown
+          trigger={["click"]}
+          menu={{ items }}
+          dropdownRender={(originNode) => (
+            <SAvatarDropdownOverlay>{originNode}</SAvatarDropdownOverlay>
+          )}
+        >
+          <Button
+            size={"large"}
+            type="dashed"
+            shape="circle"
+            icon={
+              playerAvatarToken ? (
+                <PlayerAvatar token={playerAvatarToken} />
+              ) : (
+                <Avatar size={40} icon={<RobotOutlined />} />
+              )
+            }
+          />
+        </Dropdown>
       </Flex>
 
       <Button onClick={joinHandler}>Присоединиться</Button>
