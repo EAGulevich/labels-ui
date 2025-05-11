@@ -14,6 +14,9 @@
     "enterRoomCode": "Код комнаты",
     "enterName": "Имя",
     "chooseAvatar": "Аватар",
+    "buttons": {
+      "enter": "Войти"
+    },
     "messages": {
       "wrongRoomCode": "Неверный код комнаты",
       "youEnteredInRoom": "Вы вошли в комнату",

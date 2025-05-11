@@ -202,7 +202,7 @@ const JoinScreen = () => {
         </Dropdown>
       </Flex>
 
-      <Button onClick={joinHandler}>Присоединиться</Button>
+      <Button onClick={joinHandler}>{t("joinScreen.buttons.enter")}</Button>
       {room ? "connected" : "disconnected"}
     </div>
   );
