@@ -13,7 +13,13 @@
   "joinScreen": {
     "enterRoomCode": "Room code",
     "enterName": "Name",
-    "chooseAvatar": "Avatar"
+    "chooseAvatar": "Avatar",
+    "messages": {
+      "wrongRoomCode": "Wrong room code",
+      "youEnteredInRoom": "You entered in room",
+      "reconnecting": "Reconnecting",
+      "reconnected": "Reconnected"
+    }
   },
   "errors": {
     "404": {

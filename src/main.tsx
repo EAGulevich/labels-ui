@@ -7,16 +7,13 @@ import { BrowserRouter } from "react-router";
 import { AppProvider } from "./AppProvider.tsx";
 import { I18nextProvider } from "react-i18next";
 import i18n from "./i18n/config";
-import { socket, SocketContext } from "./socket.ts";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
       <AppProvider>
         <I18nextProvider i18n={i18n} defaultNS={"translation"}>
-          <SocketContext.Provider value={socket}>
-            <App />
-          </SocketContext.Provider>
+          <App />
         </I18nextProvider>
       </AppProvider>
     </BrowserRouter>

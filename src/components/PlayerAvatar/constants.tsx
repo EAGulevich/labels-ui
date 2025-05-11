@@ -9,10 +9,13 @@ import Robot_7_Svg from "../../assets/avatars/robot_7.svg?react";
 import Robot_9_Svg from "../../assets/avatars/robot_9.svg?react";
 import Robot_8_Svg from "../../assets/avatars/robot_8.svg?react";
 import Robot_bot_Svg from "../../assets/avatars/robot_bot.svg?react";
-import { PlayerAvatarProps } from "./types.ts";
+import {
+  AvatarToken,
+  AvatarTokenBot,
+} from "../../sharedTypesFromServer/avatarTokens.ts";
 
 export const AVATARS: {
-  [key in PlayerAvatarProps["token"]]: {
+  [key in AvatarToken | AvatarTokenBot]: {
     background: string;
     icon: ReactElement;
   };

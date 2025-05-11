@@ -13,7 +13,13 @@
   "joinScreen": {
     "enterRoomCode": "Код комнаты",
     "enterName": "Имя",
-    "chooseAvatar": "Аватар"
+    "chooseAvatar": "Аватар",
+    "messages": {
+      "wrongRoomCode": "Неверный код комнаты",
+      "youEnteredInRoom": "Вы вошли в комнату",
+      "reconnecting": "Восстанавливается соединение",
+      "reconnected": "Соединение восстановлено"
+    }
   },
   "errors": {
     "404": {

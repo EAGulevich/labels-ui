@@ -1,53 +1,81 @@
-import { useCallback, useEffect, useState } from "react";
-import { Card, QRCode, Typography } from "antd";
+import { useEffect, useState } from "react";
+import { Button, Card, QRCode, Typography } from "antd";
 import { useTranslation } from "react-i18next";
-import { Player } from "../../sharedTypesFromServer/types.ts";
 import { ServerToClientEvents } from "../../sharedTypesFromServer/events.ts";
-import { useSocket } from "../../socket.ts";
+import { socket } from "../../socket.ts";
+import { SESSION_CREATOR_ID_FILED_NAME } from "../../constants.ts";
+import { Room } from "../../sharedTypesFromServer/types.ts";
+import { PlayerAvatar } from "../../components/PlayerAvatar/PlayerAvatar.tsx";
 
 const CreateRoomScreen = () => {
-  const socket = useSocket();
-  const { t } = useTranslation();
-  const [roomCode, setRoomCode] = useState<string | null>(null);
-  const [players, setPlayers] = useState<Player[]>([]);
-
-  const joinRoom: ServerToClientEvents["joinedPlayer"] = useCallback((data) => {
-    console.log("joinedPlayer");
-    setPlayers(() => [...data.room.players]);
-  }, []);
-
-  const leaveRoom: ServerToClientEvents["disconnectedPlayer"] = useCallback(
-    (data) => {
-      console.log("disconnectedPlayer");
-      setPlayers(() => [...data.room.players]);
-    },
-    [],
+  const [creatorId, setCreatorId] = useState(
+    sessionStorage.getItem(SESSION_CREATOR_ID_FILED_NAME),
   );
+  const [room, setRoom] = useState<Room | undefined>(undefined);
+  const { t } = useTranslation();
 
   useEffect(() => {
-    console.log("useEffect");
+    const onCreatedRoom: ServerToClientEvents["createdRoom"] = (data) => {
+      sessionStorage.setItem(
+        SESSION_CREATOR_ID_FILED_NAME,
+        data.eventData.createdRoom.creatorId,
+      );
+      setRoom(data.room);
+    };
 
-    // socket.on("connect", () => {
-    //   console.log("emit create room");
-    //   socket.emit("createRoom");
-    // });
-    socket.emit("createRoom");
+    const onCreatingRoomError: ServerToClientEvents["creatingRoomError"] =
+      () => {
+        sessionStorage.setItem(SESSION_CREATOR_ID_FILED_NAME, "");
+        setCreatorId(null);
+      };
 
-    socket.on("createdRoom", (data) => {
-      console.log(data);
-      setRoomCode(data.eventData.createdRoom.code);
-    });
+    const onJoinedPlayer: ServerToClientEvents["joinedPlayer"] = (data) => {
+      setRoom(data.room);
+    };
 
-    socket.off("joinedPlayer", joinRoom).on("joinedPlayer", joinRoom);
-    socket
-      .off("disconnectedPlayer", leaveRoom)
-      .on("disconnectedPlayer", leaveRoom);
+    const onDisconnectedPlayer: ServerToClientEvents["disconnectedPlayer"] = (
+      data,
+    ) => {
+      setRoom(data.room);
+    };
+
+    socket.on("createdRoom", onCreatedRoom);
+    socket.on("creatingRoomError", onCreatingRoomError);
+    socket.on("joinedPlayer", onJoinedPlayer);
+    socket.on("disconnectedPlayer", onDisconnectedPlayer);
 
     return () => {
-      socket.off("createdRoom");
-      socket.off("joinedPlayer");
+      socket.off("createdRoom", onCreatedRoom);
+      socket.off("creatingRoomError", onCreatingRoomError);
+      socket.off("joinedPlayer", onJoinedPlayer);
+      socket.off("disconnectedPlayer", onDisconnectedPlayer);
     };
-  }, [joinRoom, socket]);
+  }, []);
+
+  if (!room) {
+    return (
+      <>
+        {creatorId && (
+          <Button
+            onClick={() => {
+              socket.emit("createRoom", creatorId);
+            }}
+          >
+            Вернуться в игру
+          </Button>
+        )}
+
+        <Button
+          onClick={() => {
+            socket.emit("createRoom", null);
+            // TODO отправить эвенет на удаление старой комнаты
+          }}
+        >
+          Создать комнату
+        </Button>
+      </>
+    );
+  }
 
   return (
     <div>
@@ -60,18 +88,24 @@ const CreateRoomScreen = () => {
           </Typography.Text>
         </div>
         <div>
-          <Typography.Text>{t("createRoomScreen.enterCode")}</Typography.Text>
+          <Typography.Text>
+            {t("createRoomScreen.enterCode")}: {room?.code}
+          </Typography.Text>
         </div>
-        <Typography.Text>{roomCode}</Typography.Text>
         <QRCode
-          value={`https://game-labels.vercel.app/join?roomCode=${roomCode}`}
+          value={`https://game-labels.vercel.app/join?roomCode=${room?.code}`}
           icon="https://game-labels.vercel.app/icon.svg"
         />
         <Typography.Text>{t("createRoomScreen.scan")}</Typography.Text>
       </Card>
       <Card>
         <Typography.Text>Игроки: </Typography.Text>
-        {players.map((player) => player.name)}
+        {room?.players.map((player) => (
+          <div>
+            <PlayerAvatar token={player.avatarToken} />
+            {player.name}
+          </div>
+        ))}
       </Card>
     </div>
   );
