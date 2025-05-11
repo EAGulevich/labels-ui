@@ -4,10 +4,11 @@ import HeaderLogo from "./headerLogo.svg?react";
 import {
   StyledDivider,
   StyledHeader,
+  StyledHeaderContent,
   StyledMenuButton,
   SvgContainer,
 } from "./styles.tsx";
-import { Flex, List, Popover } from "antd";
+import { List, Popover } from "antd";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 
@@ -30,7 +31,7 @@ export const Header = ({ hideLogo }: HeaderProps) => {
   const items = [<ThemeSwitcher />, <LngSwitcher />];
   return (
     <StyledHeader>
-      <Flex justify="space-between" align="start">
+      <StyledHeaderContent>
         <SvgContainer hideLogo={hideLogo}>
           <HeaderLogo
             onClick={() => navigate("/")}
@@ -52,7 +53,7 @@ export const Header = ({ hideLogo }: HeaderProps) => {
         >
           <StyledMenuButton />
         </Popover>
-      </Flex>
+      </StyledHeaderContent>
 
       {!hideLogo && <StyledDivider mounted={isMounted} />}
     </StyledHeader>

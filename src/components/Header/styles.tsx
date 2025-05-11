@@ -6,17 +6,25 @@ import { MenuOutlined } from "@ant-design/icons";
 export const StyledHeader = styled(Header)`
   background-color: ${({ theme }) => theme.token.colorBgBase};
   padding: 0;
-  height: 50px;
+  height: 40px;
+  overflow: visible;
   position: relative;
 `;
 
+export const StyledHeaderContent = styled.div`
+  display: flex;
+  vertical-align: middle;
+  justify-content: space-between;
+  height: 40px;
+  padding: 0 10px;
+`;
+
 export const SvgContainer = styled.div<{ hideLogo: boolean }>`
-  margin-left: -30px;
+  margin-left: -34px;
   cursor: pointer;
-  //display: ${({ hideLogo }) => (hideLogo ? "none" : "block")};
 
   opacity: ${({ hideLogo }) => (!hideLogo ? "1" : "0")};
-  transition: ${({ hideLogo }) => (!hideLogo ? "all 1.2s" : "all 0s")};
+  transition: ${({ hideLogo }) => (!hideLogo ? "opacity 1.2s" : "opacity 0s")};
 
   svg {
     path {
@@ -25,11 +33,13 @@ export const SvgContainer = styled.div<{ hideLogo: boolean }>`
   }
 `;
 
+const DIVIDER_LEFT_SPACE = "160px";
+
 export const StyledDivider = styled(Divider)<{ mounted: boolean }>`
   position: absolute;
   top: 40px;
-  left: 150px;
-  max-width: calc(100% - 150px);
+  left: ${DIVIDER_LEFT_SPACE};
+  max-width: calc(100% - ${DIVIDER_LEFT_SPACE});
   min-width: 0;
   border-color: ${({ theme }) => theme.token.colorTextBase};
   margin: 0;
@@ -43,5 +53,5 @@ export const StyledDivider = styled(Divider)<{ mounted: boolean }>`
 `;
 
 export const StyledMenuButton = styled(MenuOutlined)`
-  margin: 14px 14px 14px auto;
+  //margin: 14px;
 `;

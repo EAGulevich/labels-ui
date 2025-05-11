@@ -27,6 +27,7 @@ const JoinRouteComponent = lazy(
 );
 
 export const StyledPageLayout = styled(Layout)`
+  height: 100vh;
   background: ${({ theme }) => theme.token.colorBgBase};
   color: ${({ theme }) => theme.token.colorTextBase};
 `;
@@ -44,6 +45,10 @@ const PageLayout: FC<PropsWithChildren> = ({ children }) => {
 const getThemeByName = (themeName: ThemeName) =>
   themeName === "dark" ? DarkTheme : Theme;
 
+export const StyledContent = styled(Content)`
+  padding: 40px 20px;
+`;
+
 function App() {
   const { themeName } = useApp();
   const location = useLocation();
@@ -54,7 +59,7 @@ function App() {
       <PageLayout>
         <Header hideLogo={location.pathname === "/"} />
 
-        <Content style={{ height: "calc(100vh - 50px)" }}>
+        <StyledContent>
           <Routes>
             <Route path="/" element={<HomeRouteComponent />} />
             <Route path="/new" element={<CreateRoomRouteComponent />} />
@@ -75,7 +80,7 @@ function App() {
               }
             />
           </Routes>
-        </Content>
+        </StyledContent>
       </PageLayout>
     </AntConfigProvider>
   );
