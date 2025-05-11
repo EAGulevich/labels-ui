@@ -11,9 +11,28 @@
     "scan": "or scan this"
   },
   "joinScreen": {
-    "enterRoomCode": "Room code",
-    "enterName": "Name",
-    "chooseAvatar": "Avatar",
+    "form": {
+      "fields": {
+        "name": {
+          "label": "Name",
+          "errors": {
+            "required": "Please input your name"
+          }
+        },
+        "roomCode": {
+          "label": "Room code",
+          "errors": {
+            "required": "Please input room code"
+          }
+        },
+        "avatar": {
+          "label": "Avatar",
+          "errors": {
+            "required": "Please choose avatar"
+          }
+        }
+      }
+    },
     "buttons": {
       "enter": "Enter"
     },

@@ -1,66 +1,43 @@
-import {
-  Avatar,
-  Button,
-  Dropdown,
-  Flex,
-  Input,
-  MenuProps,
-  Typography,
-} from "antd";
+import { Button, Card, Form, FormProps, Input } from "antd";
 import { useTranslation } from "react-i18next";
 import { NAME_MAX_LENGTH, ROOM_CODE_LENGTH } from "../../constants.ts";
-import { PlayerAvatar } from "../../components/PlayerAvatar/PlayerAvatar.tsx";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { message } from "antd";
 
 import { ServerToClientEvents } from "../../sharedTypesFromServer/events.ts";
 import { useSearchParams } from "react-router";
 import { socket } from "../../socket.ts";
-import { Room } from "../../sharedTypesFromServer/types.ts";
+import { Player, Room } from "../../sharedTypesFromServer/types.ts";
 import { AvatarToken } from "../../sharedTypesFromServer/avatarTokens.ts";
-import { SAvatarDropdownOverlay } from "./styles.ts";
-import { RobotOutlined } from "@ant-design/icons";
-import { avatarItems } from "./avatarItems.tsx";
-const { Title } = Typography;
+import { AvatarSelect } from "./parts/AvatarSelect/AvatarSelect.tsx";
+
+type FieldType = {
+  name?: string;
+  avatarToken?: AvatarToken;
+  roomCode?: string;
+};
 
 const JoinScreen = () => {
   const [searchParams] = useSearchParams();
-  const [roomCode, setRoomCode] = useState<string>(
-    searchParams.get("roomCode") || "",
-  );
+  const [roomCode] = useState<string>(searchParams.get("roomCode") || "");
 
   const [messageApi, contextHolder] = message.useMessage();
   const { t } = useTranslation();
 
   const [room, setRoom] = useState<Room | null>(null);
-  const [joiningError, setJoiningError] = useState<{ message: string } | null>(
-    null,
-  );
 
-  const [playerName, setPlayerName] = useState<string>("");
-  const [playerAvatarToken, setPlayerAvatarToken] = useState<
-    AvatarToken | undefined
-  >();
-
-  const items: MenuProps["items"] = useMemo(
-    () =>
-      avatarItems.map((item) => ({
-        ...item,
-        onClick: () => setPlayerAvatarToken(item.key),
-      })),
-    [],
-  );
-
-  const joinHandler = () => {
-    if (playerName && playerAvatarToken) {
-      socket.emit("joinRoom", {
-        roomCode,
-        player: {
-          name: playerName,
-          avatarToken: playerAvatarToken,
-        },
-      });
-    }
+  const joinHandler = ({
+    code,
+    name,
+    avatarToken,
+  }: Pick<Player, "name" | "avatarToken"> & Pick<Room, "code">) => {
+    socket.emit("joinRoom", {
+      roomCode: code,
+      player: {
+        name: name,
+        avatarToken: avatarToken,
+      },
+    });
   };
 
   const joinRoom: ServerToClientEvents["joinedPlayer"] = useCallback(
@@ -68,7 +45,6 @@ const JoinScreen = () => {
       setRoom(data.room);
 
       console.log("joinedPlayer");
-      setJoiningError(null);
       messageApi.open({
         type: "success",
         content: t("joinScreen.messages.youEnteredInRoom"),
@@ -112,18 +88,13 @@ const JoinScreen = () => {
     }, []);
 
   const joiningPlayerError: ServerToClientEvents["joiningPlayerError"] =
-    useCallback(
-      (err) => {
-        setJoiningError(err);
-        setRoom(null);
-
-        messageApi.open({
-          type: "error",
-          content: t("joinScreen.messages.wrongRoomCode"),
-        });
-      },
-      [t, messageApi],
-    );
+    useCallback(() => {
+      setRoom(null);
+      messageApi.open({
+        type: "error",
+        content: t("joinScreen.messages.wrongRoomCode"),
+      });
+    }, [t, messageApi]);
 
   useEffect(() => {
     socket.on("joinedPlayer", joinRoom);
@@ -142,7 +113,6 @@ const JoinScreen = () => {
       socket.off("joiningPlayerError", joiningPlayerError);
     };
   }, [
-    socket,
     joinRoom,
     creatorWasDisconnect,
     creatorWasConnected,
@@ -150,61 +120,88 @@ const JoinScreen = () => {
     joiningPlayerError,
   ]);
 
-  return (
-    <div
-      style={{
-        minWidth: "320px",
-        maxWidth: "450px",
-        margin: "0 auto",
-      }}
-    >
-      {contextHolder}
-      <Flex gap="middle" align="flex-start" vertical>
-        <Title level={4}>{t("joinScreen.enterRoomCode")}</Title>
-        <Input.OTP
-          variant={"outlined"}
-          length={ROOM_CODE_LENGTH}
-          formatter={(str) => str.toUpperCase()}
-          status={joiningError ? "error" : ""}
-          value={roomCode}
-          onChange={(value) => {
-            setRoomCode(value);
-          }}
-        />
-        <Title level={4}>{t("joinScreen.enterName")}</Title>
-        <Input
-          showCount
-          maxLength={NAME_MAX_LENGTH}
-          onChange={(e) => {
-            setPlayerName(e.target.value);
-          }}
-        />
-        <Title level={4}>{t("joinScreen.chooseAvatar")}</Title>
-        <Dropdown
-          trigger={["click"]}
-          menu={{ items }}
-          dropdownRender={(originNode) => (
-            <SAvatarDropdownOverlay>{originNode}</SAvatarDropdownOverlay>
-          )}
-        >
-          <Button
-            size={"large"}
-            type="dashed"
-            shape="circle"
-            icon={
-              playerAvatarToken ? (
-                <PlayerAvatar token={playerAvatarToken} />
-              ) : (
-                <Avatar size={40} icon={<RobotOutlined />} />
-              )
-            }
-          />
-        </Dropdown>
-      </Flex>
+  const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
+    console.log("Success:", values);
+    if (!!values.avatarToken && values.name && values.roomCode) {
+      joinHandler({
+        avatarToken: values.avatarToken,
+        name: values.name,
+        code: values.roomCode,
+      });
+    }
+  };
 
-      <Button onClick={joinHandler}>{t("joinScreen.buttons.enter")}</Button>
+  const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (
+    errorInfo,
+  ) => {
+    console.log("Failed:", errorInfo);
+  };
+
+  return (
+    <Card>
+      {contextHolder}
+      <Form
+        name="playerInfo"
+        layout={"vertical"}
+        labelCol={{ span: 8 }}
+        wrapperCol={{ span: 16 }}
+        style={{ maxWidth: 600 }}
+        initialValues={{ roomCode: roomCode }}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        autoComplete="off"
+      >
+        <Form.Item<FieldType>
+          label={t("joinScreen.form.fields.roomCode.label")}
+          name="roomCode"
+          rules={[
+            {
+              required: true,
+              message: t("joinScreen.form.fields.roomCode.errors.required"),
+            },
+          ]}
+        >
+          <Input.OTP
+            variant={"outlined"}
+            length={ROOM_CODE_LENGTH}
+            formatter={(str) => str.toUpperCase()}
+          />
+        </Form.Item>
+        <Form.Item<FieldType>
+          label={t("joinScreen.form.fields.avatar.label")}
+          name="avatarToken"
+          rules={[
+            {
+              required: true,
+              message: t("joinScreen.form.fields.avatar.errors.required"),
+            },
+          ]}
+        >
+          <AvatarSelect />
+        </Form.Item>
+        <Form.Item<FieldType>
+          label={t("joinScreen.form.fields.name.label")}
+          name="name"
+          rules={[
+            {
+              required: true,
+              max: NAME_MAX_LENGTH,
+              message: t("joinScreen.form.fields.name.errors.required"),
+            },
+          ]}
+        >
+          <Input showCount maxLength={NAME_MAX_LENGTH} />
+        </Form.Item>
+
+        <Form.Item label={null}>
+          <Button type="primary" htmlType="submit">
+            {t("joinScreen.buttons.enter")}
+          </Button>
+        </Form.Item>
+      </Form>
+
       {room ? "connected" : "disconnected"}
-    </div>
+    </Card>
   );
 };
 

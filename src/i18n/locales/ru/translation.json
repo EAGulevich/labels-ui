@@ -11,9 +11,28 @@
     "scan": "или отсканируйте"
   },
   "joinScreen": {
-    "enterRoomCode": "Код комнаты",
-    "enterName": "Имя",
-    "chooseAvatar": "Аватар",
+    "form": {
+      "fields": {
+        "name": {
+          "label": "Имя",
+          "errors": {
+            "required": "Пожалуйста, введите Ваше имя"
+          }
+        },
+        "roomCode": {
+          "label": "Код комнаты",
+          "errors": {
+            "required": "Пожалуйста, введите код комнаты"
+          }
+        },
+        "avatar": {
+          "label": "Аватар",
+          "errors": {
+            "required": "Пожалуйста, выберите аватар"
+          }
+        }
+      }
+    },
     "buttons": {
       "enter": "Войти"
     },
