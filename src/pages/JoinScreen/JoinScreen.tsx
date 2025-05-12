@@ -143,9 +143,7 @@ const JoinScreen = () => {
       <Form
         name="playerInfo"
         layout={"vertical"}
-        labelCol={{ span: 8 }}
-        wrapperCol={{ span: 16 }}
-        style={{ maxWidth: 600 }}
+        variant={"outlined"}
         initialValues={{ roomCode: roomCode }}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
@@ -162,7 +160,6 @@ const JoinScreen = () => {
           ]}
         >
           <Input.OTP
-            variant={"outlined"}
             length={ROOM_CODE_LENGTH}
             formatter={(str) => str.toUpperCase()}
           />

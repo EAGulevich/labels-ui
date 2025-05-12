@@ -4,7 +4,7 @@ const { Header } = Layout;
 import { MenuOutlined } from "@ant-design/icons";
 
 export const StyledHeader = styled(Header)`
-  background-color: ${({ theme }) => theme.token.colorBgBase};
+  background-color: ${({ theme }) => theme.token.colorBgLayout};
   padding: 0;
   height: 40px;
   overflow: visible;

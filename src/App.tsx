@@ -28,8 +28,6 @@ const JoinRouteComponent = lazy(
 
 export const StyledPageLayout = styled(Layout)`
   height: 100vh;
-  background: ${({ theme }) => theme.token.colorBgBase};
-  color: ${({ theme }) => theme.token.colorTextBase};
 `;
 
 const PageLayout: FC<PropsWithChildren> = ({ children }) => {
@@ -58,7 +56,6 @@ function App() {
     <AntConfigProvider theme={getThemeByName(themeName)} locale={ruRU}>
       <PageLayout>
         <Header hideLogo={location.pathname === "/"} />
-
         <StyledContent>
           <Routes>
             <Route path="/" element={<HomeRouteComponent />} />
