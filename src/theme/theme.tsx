@@ -20,9 +20,7 @@ export const DarkTheme: ThemeConfig = {
     colorWarning: "#ffca3a",
     colorError: "#ff6b6b",
     colorTextBase: "#eddeff",
-    // TODO: не черный
-    colorBgBase: "#000",
-    // colorBgElevated: "#100017",
+    colorBgBase: "#08060a",
     colorLink: "#eddeffd9",
   },
 };
@@ -38,7 +36,7 @@ export const Theme: ThemeConfig = {
     colorWarning: "#ffca3a",
     colorError: "#ff6b6b",
     colorTextBase: "#1b1526",
-    // colorBgBase: "#f2e8ff",
+    colorBgBase: "#f2e8ff",
     colorLink: "1b1526e0",
   },
 };
