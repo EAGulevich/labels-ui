@@ -12,6 +12,7 @@ export const PlayerAvatar = ({
 }) => (
   <Avatar
     size={"large"}
+    shape={"square"}
     icon={AVATARS[token].icon}
     style={{
       background: AVATARS[token].background,

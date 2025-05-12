@@ -21,6 +21,12 @@ export default tseslint
       },
       rules: {
         ...reactHooks.configs.recommended.rules,
+        "prettier/prettier": [
+          "error",
+          {
+            endOfLine: "auto",
+          },
+        ],
         "react-refresh/only-export-components": [
           "warn",
           { allowConstantExport: true },

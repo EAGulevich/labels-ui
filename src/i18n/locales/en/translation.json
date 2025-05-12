@@ -6,9 +6,13 @@
     }
   },
   "createRoomScreen": {
-    "joinLinkText": "Join at {{link}}",
+    "joinLinkText": "Join at",
     "enterCode": "Enter room code",
-    "scan": "or scan this"
+    "scan": "or scan this",
+    "players": "Players",
+    "buttons": {
+      "exit": "Exit"
+    }
   },
   "joinScreen": {
     "form": {

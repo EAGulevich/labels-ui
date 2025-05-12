@@ -6,9 +6,13 @@
     }
   },
   "createRoomScreen": {
-    "joinLinkText": "Присоединяйтесь по ссылке {{link}}",
+    "joinLinkText": "Присоединяйтесь по ссылке",
     "enterCode": "Введите код комнаты",
-    "scan": "или отсканируйте"
+    "scan": "или отсканируйте",
+    "players": "Игроки",
+    "buttons": {
+      "exit": "Выйти"
+    }
   },
   "joinScreen": {
     "form": {
