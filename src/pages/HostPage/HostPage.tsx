@@ -13,7 +13,7 @@ import {
 import { useTheme } from "styled-components";
 
 import { PlayerAvatar } from "@components/PlayerAvatar/PlayerAvatar.tsx";
-import { SESSION_CREATOR_ID_FILED_NAME } from "@constants";
+import { SESSION_KEY_HOST_ID } from "@constants";
 import { ServerToClientEvents } from "@sharedTypes/events.ts";
 import { Room } from "@sharedTypes/types.ts";
 import { socket } from "@socket";
@@ -23,7 +23,7 @@ import { PlayerInfo, PlayersGrid, StyledBlock, StyledTag } from "./styles.ts";
 const HostPage = () => {
   const { token } = useTheme();
   const [creatorId, setCreatorId] = useState(
-    sessionStorage.getItem(SESSION_CREATOR_ID_FILED_NAME),
+    sessionStorage.getItem(SESSION_KEY_HOST_ID),
   );
   const [room, setRoom] = useState<Room | undefined>(undefined);
   const { t } = useTranslation();
@@ -31,7 +31,7 @@ const HostPage = () => {
   useEffect(() => {
     const onCreatedRoom: ServerToClientEvents["createdRoom"] = (data) => {
       sessionStorage.setItem(
-        SESSION_CREATOR_ID_FILED_NAME,
+        SESSION_KEY_HOST_ID,
         data.eventData.createdRoom.creatorId,
       );
       setRoom(data.room);
@@ -39,7 +39,7 @@ const HostPage = () => {
 
     const onCreatingRoomError: ServerToClientEvents["creatingRoomError"] =
       () => {
-        sessionStorage.setItem(SESSION_CREATOR_ID_FILED_NAME, "");
+        sessionStorage.setItem(SESSION_KEY_HOST_ID, "");
         setCreatorId(null);
       };
 

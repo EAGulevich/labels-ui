@@ -1,4 +1,6 @@
-export const ROOM_CODE_LENGTH = 4;
-export const NAME_MAX_LENGTH = 20;
+// session storage fields
+export const SESSION_KEY_HOST_ID = "hostId";
 
-export const SESSION_CREATOR_ID_FILED_NAME = "creatorId";
+// settings
+export const ROOM_CODE_LENGTH = 4;
+export const NAME_MAX_LENGTH = 12;
