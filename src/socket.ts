@@ -5,9 +5,7 @@ import {
   ServerToClientEvents,
 } from "@sharedTypes/events.ts";
 
-const WS_URL = import.meta.env.PROD
-  ? "https://labels-server-production.up.railway.app"
-  : undefined;
+const WS_URL = import.meta.env.PROD ? import.meta.env.VITE_WS_URL : undefined;
 
 export const socket: Socket<ServerToClientEvents, ClientToServerEvents> =
   io(WS_URL);
