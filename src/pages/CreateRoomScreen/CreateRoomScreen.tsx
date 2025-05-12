@@ -1,5 +1,14 @@
 import { useEffect, useState } from "react";
-import { Badge, Button, Card, Flex, QRCode, Skeleton, Typography } from "antd";
+import {
+  Badge,
+  Button,
+  Card,
+  Flex,
+  QRCode,
+  Skeleton,
+  Statistic,
+  Typography,
+} from "antd";
 import { useTranslation } from "react-i18next";
 import { ServerToClientEvents } from "../../sharedTypesFromServer/events.ts";
 import { socket } from "../../socket.ts";
@@ -7,8 +16,10 @@ import { SESSION_CREATOR_ID_FILED_NAME } from "../../constants.ts";
 import { Room } from "../../sharedTypesFromServer/types.ts";
 import { PlayerAvatar } from "../../components/PlayerAvatar/PlayerAvatar.tsx";
 import { PlayerInfo, PlayersGrid, StyledBlock, StyledTag } from "./styles.ts";
+import { useTheme } from "styled-components";
 
 const CreateRoomScreen = () => {
+  const { token } = useTheme();
   const [creatorId, setCreatorId] = useState(
     sessionStorage.getItem(SESSION_CREATOR_ID_FILED_NAME),
   );
@@ -107,10 +118,24 @@ const CreateRoomScreen = () => {
         </Card>
         <Card style={{ width: "100%" }}>
           <StyledBlock>
-            <Typography.Title level={4}>
-              {t("createRoomScreen.players")}
-            </Typography.Title>
-
+            <Statistic
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "20px",
+              }}
+              valueStyle={{
+                color: room?.players.length > 4 ? "inherit" : token.colorError,
+              }}
+              title={
+                <Typography.Title level={4} type={"secondary"}>
+                  {t("createRoomScreen.players")}
+                </Typography.Title>
+              }
+              value={room?.players.length}
+              suffix="/ 9"
+            />
             <PlayersGrid>
               <Card className="place decorative decorative_1" />
               <Card className="place decorative decorative_2" />
