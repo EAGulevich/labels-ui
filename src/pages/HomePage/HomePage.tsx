@@ -1,4 +1,4 @@
-import { Logo } from "../../components/Logo/Logo.tsx";
+import { Logo } from "@components/Logo/Logo.tsx";
 import { Button, Flex } from "antd";
 import { StyledPageLayout } from "../../App.tsx";
 import { useNavigate } from "react-router";

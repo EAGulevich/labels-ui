@@ -1,9 +1,6 @@
 import { Avatar } from "antd";
 import { AVATARS } from "./constants.tsx";
-import {
-  AvatarToken,
-  AvatarTokenBot,
-} from "../../sharedTypesFromServer/avatarTokens.ts";
+import { AvatarToken, AvatarTokenBot } from "@sharedTypes/avatarTokens.ts";
 
 export const PlayerAvatar = ({
   token,

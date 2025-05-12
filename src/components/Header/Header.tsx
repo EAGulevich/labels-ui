@@ -1,5 +1,5 @@
-import { ThemeSwitcher } from "../ThemeSwither/ThemeSwitcher.tsx";
-import { LngSwitcher } from "../LngSwitcher/LngSwitcher.tsx";
+import { ThemeSwitcher } from "@components/ThemeSwither/ThemeSwitcher.tsx";
+import { LngSwitcher } from "@components/LngSwitcher/LngSwitcher.tsx";
 import HeaderLogo from "./headerLogo.svg?react";
 import {
   StyledDivider,

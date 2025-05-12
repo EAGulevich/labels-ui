@@ -10,15 +10,15 @@ import {
   Typography,
 } from "antd";
 import { useTranslation } from "react-i18next";
-import { ServerToClientEvents } from "../../sharedTypesFromServer/events.ts";
-import { socket } from "../../socket.ts";
-import { SESSION_CREATOR_ID_FILED_NAME } from "../../constants.ts";
-import { Room } from "../../sharedTypesFromServer/types.ts";
-import { PlayerAvatar } from "../../components/PlayerAvatar/PlayerAvatar.tsx";
+import { ServerToClientEvents } from "@sharedTypes/events.ts";
+import { socket } from "@socket";
+import { SESSION_CREATOR_ID_FILED_NAME } from "@constants";
+import { Room } from "@sharedTypes/types.ts";
+import { PlayerAvatar } from "@components/PlayerAvatar/PlayerAvatar.tsx";
 import { PlayerInfo, PlayersGrid, StyledBlock, StyledTag } from "./styles.ts";
 import { useTheme } from "styled-components";
 
-const CreateRoomScreen = () => {
+const HostPage = () => {
   const { token } = useTheme();
   const [creatorId, setCreatorId] = useState(
     sessionStorage.getItem(SESSION_CREATOR_ID_FILED_NAME),
@@ -196,4 +196,4 @@ const CreateRoomScreen = () => {
   );
 };
 
-export default CreateRoomScreen;
+export default HostPage;

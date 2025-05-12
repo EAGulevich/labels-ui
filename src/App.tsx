@@ -13,17 +13,21 @@ import { Route, Routes, useLocation, useNavigate } from "react-router";
 import { ThemeName, useApp } from "./AppProvider.tsx";
 import { FrownOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
-import { Header } from "./components/Header/Header.tsx";
+import { Header } from "@components/Header/Header.tsx";
 const { Content } = Layout;
 
-const HomeRouteComponent = lazy(() => import("./pages/Home/Home.tsx"));
+// TODO: eslint order import
+
+// TODO: creator -> host
+
+const HomeRouteComponent = lazy(() => import("./pages/HomePage/HomePage.tsx"));
 
 const CreateRoomRouteComponent = lazy(
-  () => import("./pages/CreateRoomScreen/CreateRoomScreen.tsx"),
+  () => import("./pages/HostPage/HostPage.tsx"),
 );
 
 const JoinRouteComponent = lazy(
-  () => import("./pages/JoinScreen/JoinScreen.tsx"),
+  () => import("./pages/PlayerPage/PlayerPage.tsx"),
 );
 
 export const StyledPageLayout = styled(Layout)`
