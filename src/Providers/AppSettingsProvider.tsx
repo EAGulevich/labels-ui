@@ -7,27 +7,28 @@ import {
   useState,
 } from "react";
 
+import { DEFAULT_THEME } from "@constants";
+
 export type ThemeName = "dark" | "light";
 
-type AppContextType = {
+type AppSettingsContextType = {
   themeName: ThemeName;
   changeTheme: (themeName: ThemeName) => void;
 };
 
-const defaultValue: AppContextType = {
+const defaultValue: AppSettingsContextType = {
   themeName: "dark",
   changeTheme: () => null,
 };
 
-// eslint-disable-next-line react-refresh/only-export-components
-export const AppContext = createContext(defaultValue);
+const AppSettingsContext = createContext(defaultValue);
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const useApp = () => useContext(AppContext);
+export const useAppSettings = () => useContext(AppSettingsContext);
 
-export const AppProvider: FC<PropsWithChildren> = ({ children }) => {
+export const AppSettingsProvider: FC<PropsWithChildren> = ({ children }) => {
   const [themeName, setTheme] = useState<ThemeName>(
-    (localStorage.getItem("theme") as ThemeName) || "dark",
+    (localStorage.getItem("theme") as ThemeName) || DEFAULT_THEME,
   );
 
   const changeTheme = useCallback((theme: ThemeName) => {
@@ -36,13 +37,13 @@ export const AppProvider: FC<PropsWithChildren> = ({ children }) => {
   }, []);
 
   return (
-    <AppContext.Provider
+    <AppSettingsContext.Provider
       value={{
         themeName,
         changeTheme,
       }}
     >
       {children}
-    </AppContext.Provider>
+    </AppSettingsContext.Provider>
   );
 };

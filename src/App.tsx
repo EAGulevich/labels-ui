@@ -13,12 +13,12 @@ import ruRU from "antd/locale/ru_RU";
 import styled, { ThemeProvider } from "styled-components";
 
 import { Header } from "@components/Header/Header.tsx";
+import { ThemeName, useAppSettings } from "@providers/AppSettingsProvider.tsx";
 
 import { DarkTheme, Theme } from "./theme/theme.tsx";
-import { ThemeName, useApp } from "./AppProvider.tsx";
 
-// TODO: creator -> host
-
+// TODO: creator -> host -
+// TODO: review -
 const HomeRouteComponent = lazy(() => import("./pages/HomePage/HomePage.tsx"));
 
 const CreateRoomRouteComponent = lazy(
@@ -57,7 +57,7 @@ export const StyledContent = styled(Layout.Content)`
 `;
 
 function App() {
-  const { themeName } = useApp();
+  const { themeName } = useAppSettings();
   const location = useLocation();
   const navigate = useNavigate();
   const { t } = useTranslation();

@@ -33,7 +33,7 @@ export default tsEslint
               ["^react", "^@?\\w"],
               // Internal packages.
               [
-                "^(@assets|@components|@home|@host|@player|@sharedTypes|@socket|@constants)(/.*|$)",
+                "^(@assets|@components|@home|@host|@player|@sharedTypes|@socket|@constants|@providers)(/.*|$)",
               ],
               // Relative paths.
               [
