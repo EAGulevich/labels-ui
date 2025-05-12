@@ -30,8 +30,14 @@ const JoinRouteComponent = lazy(
   () => import("./pages/PlayerPage/PlayerPage.tsx"),
 );
 
-export const StyledPageLayout = styled(Layout)`
-  height: 100vh;
+const StyledPageLayout = styled(Layout)`
+  min-height: 100vh;
+  max-height: 100vh;
+
+  min-width: 100vw;
+  max-width: 100vw;
+
+  overflow: auto;
 `;
 
 const PageLayout: FC<PropsWithChildren> = ({ children }) => {
