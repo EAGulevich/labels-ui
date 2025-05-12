@@ -59,7 +59,7 @@ export const PlayersGrid = styled.div`
   }
 
   .place.decorative {
-    background: ${({ theme }) => theme.token.colorInfoBg};
+    background: ${({ theme }) => theme.token.colorTextSecondary};
   }
 
   .decorative_1 {
