@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Badge,
   Button,
@@ -9,14 +10,15 @@ import {
   Statistic,
   Typography,
 } from "antd";
-import { useTranslation } from "react-i18next";
-import { ServerToClientEvents } from "@sharedTypes/events.ts";
-import { socket } from "@socket";
-import { SESSION_CREATOR_ID_FILED_NAME } from "@constants";
-import { Room } from "@sharedTypes/types.ts";
-import { PlayerAvatar } from "@components/PlayerAvatar/PlayerAvatar.tsx";
-import { PlayerInfo, PlayersGrid, StyledBlock, StyledTag } from "./styles.ts";
 import { useTheme } from "styled-components";
+
+import { PlayerAvatar } from "@components/PlayerAvatar/PlayerAvatar.tsx";
+import { SESSION_CREATOR_ID_FILED_NAME } from "@constants";
+import { ServerToClientEvents } from "@sharedTypes/events.ts";
+import { Room } from "@sharedTypes/types.ts";
+import { socket } from "@socket";
+
+import { PlayerInfo, PlayersGrid, StyledBlock, StyledTag } from "./styles.ts";
 
 const HostPage = () => {
   const { token } = useTheme();

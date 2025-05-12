@@ -1,9 +1,8 @@
-import styled from "styled-components";
-import { Divider, Layout } from "antd";
-const { Header } = Layout;
 import { MenuOutlined } from "@ant-design/icons";
+import { Divider, Layout } from "antd";
+import styled from "styled-components";
 
-export const StyledHeader = styled(Header)`
+export const StyledHeader = styled(Layout.Header)`
   background-color: ${({ theme }) => theme.token.colorBgLayout};
   padding: 0;
   height: 40px;

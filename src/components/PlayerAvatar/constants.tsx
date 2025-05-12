@@ -1,4 +1,5 @@
 import { ReactElement } from "react";
+
 import Robot_1_Svg from "@assets/avatars/robot_1.svg?react";
 import Robot_2_Svg from "@assets/avatars/robot_2.svg?react";
 import Robot_3_Svg from "@assets/avatars/robot_3.svg?react";
@@ -6,8 +7,8 @@ import Robot_4_Svg from "@assets/avatars/robot_4.svg?react";
 import Robot_5_Svg from "@assets/avatars/robot_5.svg?react";
 import Robot_6_Svg from "@assets/avatars/robot_6.svg?react";
 import Robot_7_Svg from "@assets/avatars/robot_7.svg?react";
-import Robot_9_Svg from "@assets/avatars/robot_9.svg?react";
 import Robot_8_Svg from "@assets/avatars/robot_8.svg?react";
+import Robot_9_Svg from "@assets/avatars/robot_9.svg?react";
 import Robot_bot_Svg from "@assets/avatars/robot_bot.svg?react";
 import { AvatarToken, AvatarTokenBot } from "@sharedTypes/avatarTokens.ts";
 

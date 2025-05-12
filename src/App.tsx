@@ -1,22 +1,21 @@
+import { FC, lazy, PropsWithChildren } from "react";
+import { useTranslation } from "react-i18next";
+import { Route, Routes, useLocation, useNavigate } from "react-router";
+import { FrownOutlined } from "@ant-design/icons";
 import {
   Button,
   ConfigProvider as AntConfigProvider,
+  Layout,
   Result,
   theme as AntTheme,
-  Layout,
 } from "antd";
-import { DarkTheme, Theme } from "./theme/theme.tsx";
 import ruRU from "antd/locale/ru_RU";
-import { FC, lazy, PropsWithChildren } from "react";
 import styled, { ThemeProvider } from "styled-components";
-import { Route, Routes, useLocation, useNavigate } from "react-router";
-import { ThemeName, useApp } from "./AppProvider.tsx";
-import { FrownOutlined } from "@ant-design/icons";
-import { useTranslation } from "react-i18next";
-import { Header } from "@components/Header/Header.tsx";
-const { Content } = Layout;
 
-// TODO: eslint order import
+import { Header } from "@components/Header/Header.tsx";
+
+import { DarkTheme, Theme } from "./theme/theme.tsx";
+import { ThemeName, useApp } from "./AppProvider.tsx";
 
 // TODO: creator -> host
 
@@ -53,7 +52,7 @@ const PageLayout: FC<PropsWithChildren> = ({ children }) => {
 const getThemeByName = (themeName: ThemeName) =>
   themeName === "dark" ? DarkTheme : Theme;
 
-export const StyledContent = styled(Content)`
+export const StyledContent = styled(Layout.Content)`
   padding: 40px 20px;
 `;
 

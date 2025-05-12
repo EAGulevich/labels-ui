@@ -1,6 +1,6 @@
-import { Switch } from "antd";
-import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import { Switch } from "antd";
 
 export const LngSwitcher = () => {
   const { i18n } = useTranslation();

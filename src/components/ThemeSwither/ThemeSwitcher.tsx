@@ -1,5 +1,6 @@
-import { Switch } from "antd";
 import { MoonFilled, SunFilled } from "@ant-design/icons";
+import { Switch } from "antd";
+
 import { useApp } from "../../AppProvider.tsx";
 
 export const ThemeSwitcher = () => {

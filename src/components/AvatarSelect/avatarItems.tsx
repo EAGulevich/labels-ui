@@ -1,6 +1,7 @@
+import { ReactElement } from "react";
+
 import { PlayerAvatar } from "@components/PlayerAvatar/PlayerAvatar.tsx";
 import { AvatarToken } from "@sharedTypes/avatarTokens.ts";
-import { ReactElement } from "react";
 
 export const avatarItems: { key: AvatarToken; label: ReactElement }[] = [
   {

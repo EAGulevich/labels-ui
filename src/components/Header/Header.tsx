@@ -1,5 +1,10 @@
-import { ThemeSwitcher } from "@components/ThemeSwither/ThemeSwitcher.tsx";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import { List, Popover } from "antd";
+
 import { LngSwitcher } from "@components/LngSwitcher/LngSwitcher.tsx";
+import { ThemeSwitcher } from "@components/ThemeSwither/ThemeSwitcher.tsx";
+
 import HeaderLogo from "./headerLogo.svg?react";
 import {
   StyledDivider,
@@ -8,9 +13,6 @@ import {
   StyledMenuButton,
   SvgContainer,
 } from "./styles.tsx";
-import { List, Popover } from "antd";
-import { useNavigate } from "react-router";
-import { useEffect, useState } from "react";
 
 type HeaderProps = {
   hideLogo: boolean;

@@ -1,9 +1,10 @@
-import { ServerToClientEvents } from "@sharedTypes/events.ts";
 import { useCallback, useEffect } from "react";
-import { socket } from "@socket";
 import { useTranslation } from "react-i18next";
-import { Room } from "@sharedTypes/types.ts";
 import { message } from "antd";
+
+import { ServerToClientEvents } from "@sharedTypes/events.ts";
+import { Room } from "@sharedTypes/types.ts";
+import { socket } from "@socket";
 
 type UseHostConnectDisconnectProps = {
   setRoom: (room: Room) => void;

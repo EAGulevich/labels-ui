@@ -19,8 +19,10 @@ const defaultValue: AppContextType = {
   changeTheme: () => null,
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const AppContext = createContext(defaultValue);
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useApp = () => useContext(AppContext);
 
 export const AppProvider: FC<PropsWithChildren> = ({ children }) => {

@@ -1,5 +1,5 @@
-import styled from "styled-components";
 import { Tag } from "antd";
+import styled from "styled-components";
 
 export const StyledTag = styled(Tag)`
   font-size: inherit;

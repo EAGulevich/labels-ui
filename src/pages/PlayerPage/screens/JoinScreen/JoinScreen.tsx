@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { useSearchParams } from "react-router";
 import { useTranslation } from "react-i18next";
+import { useSearchParams } from "react-router";
 import { Button, Card, Form, FormProps, Input } from "antd";
 
-import { NAME_MAX_LENGTH, ROOM_CODE_LENGTH } from "@constants";
 import { AvatarSelect } from "@components/AvatarSelect/AvatarSelect.tsx";
+import { NAME_MAX_LENGTH, ROOM_CODE_LENGTH } from "@constants";
 import { AvatarToken } from "@sharedTypes/avatarTokens.ts";
 import { socket } from "@socket";
 

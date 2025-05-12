@@ -1,10 +1,12 @@
-import { Avatar, Button, Dropdown, MenuProps } from "antd";
-import { SAvatarDropdownOverlay } from "./styles.ts";
-import { PlayerAvatar } from "@components/PlayerAvatar/PlayerAvatar.tsx";
-import { RobotOutlined } from "@ant-design/icons";
 import { FC, useMemo, useState } from "react";
-import { avatarItems } from "./avatarItems.tsx";
+import { RobotOutlined } from "@ant-design/icons";
+import { Avatar, Button, Dropdown, MenuProps } from "antd";
+
+import { PlayerAvatar } from "@components/PlayerAvatar/PlayerAvatar.tsx";
 import { AvatarToken } from "@sharedTypes/avatarTokens.ts";
+
+import { avatarItems } from "./avatarItems.tsx";
+import { SAvatarDropdownOverlay } from "./styles.ts";
 
 type AvatarSelectProps = {
   value?: AvatarToken;
