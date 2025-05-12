@@ -6,7 +6,7 @@ import { PlayerAvatar } from "@components/PlayerAvatar/PlayerAvatar.tsx";
 import { AvatarToken } from "@sharedTypes/avatarTokens.ts";
 
 import { avatarItems } from "./avatarItems.tsx";
-import { SAvatarDropdownOverlay } from "./styles.ts";
+import { MENU_AVATARS_LIST_CLASS, SAvatarDropdownOverlay } from "./styles.ts";
 
 type AvatarSelectProps = {
   value?: AvatarToken;
@@ -31,10 +31,11 @@ export const AvatarSelect: FC<AvatarSelectProps> = ({ value, onChange }) => {
       })),
     [onChange],
   );
+
   return (
     <Dropdown
       trigger={["click"]}
-      menu={{ items }}
+      menu={{ items, className: MENU_AVATARS_LIST_CLASS }}
       dropdownRender={(originNode) => (
         <SAvatarDropdownOverlay>{originNode}</SAvatarDropdownOverlay>
       )}
@@ -42,12 +43,11 @@ export const AvatarSelect: FC<AvatarSelectProps> = ({ value, onChange }) => {
       <Button
         size={"large"}
         type="dashed"
-        shape="circle"
         icon={
           avatarToken ? (
             <PlayerAvatar token={avatarToken} />
           ) : (
-            <Avatar size={40} icon={<RobotOutlined />} />
+            <Avatar size={40} shape={"square"} icon={<RobotOutlined />} />
           )
         }
       />
