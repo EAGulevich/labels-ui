@@ -1,22 +1,17 @@
-import { Avatar } from "antd";
-
+import { StyledAvatar } from "@components/PlayerAvatar/styles.ts";
 import { AvatarToken, AvatarTokenBot } from "@sharedTypes/avatarTokens.ts";
 
 import { AVATARS } from "./constants.tsx";
 
-export const PlayerAvatar = ({
-  token,
-}: {
+type PlayerAvatarProps = {
   token: AvatarToken | AvatarTokenBot;
-}) => (
-  <Avatar
+};
+
+export const PlayerAvatar = ({ token }: PlayerAvatarProps) => (
+  <StyledAvatar
+    background={AVATARS[token].background}
     size={"large"}
     shape={"square"}
     icon={AVATARS[token].icon}
-    style={{
-      background: AVATARS[token].background,
-      border: "1px solid white",
-      padding: "2px",
-    }}
   />
 );
