@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import { defineConfig } from "vite";
 import svgr from "vite-plugin-svgr";
 import tsconfigPaths from "vite-tsconfig-paths";
+
 dotenv.config();
 
 const WS_URL = process.env.VITE_WS_URL;

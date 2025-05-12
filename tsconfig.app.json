@@ -13,7 +13,7 @@
       "@home/*": ["./src/page/HomePage/*"],
       "@host/*": ["./src/page/HostPage/*"],
       "@player/*": ["./src/page/PlayerPage/*"],
-      "@sharedTypes/*": ["./src/sharedTypesFromServer/*"],
+      "@sharedTypes/*": ["./src/_sharedTypesFromServer/*"],
       "@socket": ["./src/socket.ts"],
       "@constants": ["./src/constants.ts"]
     },

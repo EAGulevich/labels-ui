@@ -6,7 +6,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const source = path.join(__dirname, "../labels-server/src/shared-types");
-const destination = path.join(__dirname, "./src/sharedTypesFromServer");
+const destination = path.join(__dirname, "./src/_sharedTypesFromServer");
 
 ncp(source, destination, (err) => {
   if (err) {
