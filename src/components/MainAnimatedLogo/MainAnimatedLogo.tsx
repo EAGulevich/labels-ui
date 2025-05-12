@@ -5,7 +5,7 @@ import LogoSvg from "@assets/homeLogo/logoForAnimation.svg?react";
 
 import { LogoWrapper } from "./styles.ts";
 
-export const Logo = () => {
+export const MainAnimatedLogo = () => {
   useEffect(() => {
     startAnimation();
   });
