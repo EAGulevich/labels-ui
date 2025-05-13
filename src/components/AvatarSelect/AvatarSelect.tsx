@@ -1,12 +1,17 @@
 import { FC, useMemo, useState } from "react";
 import { RobotOutlined } from "@ant-design/icons";
-import { Avatar, Button, Dropdown, MenuProps } from "antd";
+import { Dropdown, MenuProps } from "antd";
 
 import { PlayerAvatar } from "@components/PlayerAvatar/PlayerAvatar.tsx";
 import { AvatarToken } from "@sharedTypes/avatarTokens.ts";
 
 import { avatarItems } from "./avatarItems.tsx";
-import { MENU_AVATARS_LIST_CLASS, SAvatarDropdownOverlay } from "./styles.ts";
+import {
+  MENU_AVATARS_LIST_CLASS,
+  SAvatarDropdownOverlay,
+  StyledAvatar,
+  StyledButton,
+} from "./styles.ts";
 
 type AvatarSelectProps = {
   value?: AvatarToken;
@@ -40,14 +45,14 @@ export const AvatarSelect: FC<AvatarSelectProps> = ({ value, onChange }) => {
         <SAvatarDropdownOverlay>{originNode}</SAvatarDropdownOverlay>
       )}
     >
-      <Button
+      <StyledButton
         size={"large"}
         type="dashed"
         icon={
           avatarToken ? (
             <PlayerAvatar token={avatarToken} />
           ) : (
-            <Avatar size={40} shape={"square"} icon={<RobotOutlined />} />
+            <StyledAvatar size={40} shape={"square"} icon={<RobotOutlined />} />
           )
         }
       />
