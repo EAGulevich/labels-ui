@@ -3,8 +3,6 @@ import { Switch } from "antd";
 
 import { useAppSettings } from "@providers/AppSettingsProvider.tsx";
 
-// TODO: review -
-
 export const ThemeSwitcher = () => {
   const { themeName, changeTheme } = useAppSettings();
 

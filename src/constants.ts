@@ -14,6 +14,6 @@ export const QUERY_PARAM_ROOM_CODE = "roomCode";
 // routes
 export const ROUTE_PATHS = {
   home: "/",
-  room: "/room",
-  game: "/game",
+  host: "/room",
+  player: "/game",
 } as const;

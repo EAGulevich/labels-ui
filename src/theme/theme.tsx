@@ -1,5 +1,7 @@
 import { theme, ThemeConfig } from "antd";
 
+import { ThemeName } from "@providers/AppSettingsProvider.tsx";
+
 const commonConfig: ThemeConfig = {
   token: {
     fontSize: 14,
@@ -9,7 +11,7 @@ const commonConfig: ThemeConfig = {
   components: {},
 };
 
-export const DarkTheme: ThemeConfig = {
+const DarkTheme: ThemeConfig = {
   algorithm: theme.darkAlgorithm,
   ...commonConfig,
   token: {
@@ -25,7 +27,7 @@ export const DarkTheme: ThemeConfig = {
   },
 };
 
-export const Theme: ThemeConfig = {
+const Theme: ThemeConfig = {
   algorithm: theme.defaultAlgorithm,
   ...commonConfig,
   token: {
@@ -40,3 +42,6 @@ export const Theme: ThemeConfig = {
     colorLink: "1b1526e0",
   },
 };
+
+export const getThemeByName = (themeName: ThemeName) =>
+  themeName === "dark" ? DarkTheme : Theme;

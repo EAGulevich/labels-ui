@@ -16,7 +16,7 @@ const HomePage = () => {
         <Button
           size={"large"}
           type={"link"}
-          onClick={() => navigate(ROUTE_PATHS.room)}
+          onClick={() => navigate(ROUTE_PATHS.host)}
         >
           {t("home.menu.newGame")}
         </Button>
@@ -24,7 +24,7 @@ const HomePage = () => {
         <Button
           size={"large"}
           type={"link"}
-          onClick={() => navigate(ROUTE_PATHS.game)}
+          onClick={() => navigate(ROUTE_PATHS.player)}
         >
           {t("home.menu.join")}
         </Button>
