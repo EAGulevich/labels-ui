@@ -8,6 +8,11 @@ import { socket } from "@socket";
 
 import { useHostConnectDisconnect } from "./useHostConnectDisconnect.tsx";
 import { usePlayerConnectDisconnect } from "./usePlayerConnectDisconnect.tsx";
+// TODO: review
+// TODO: доступные аватарки
+// TODO: максимальное кол-во игроков
+// TODO: если сервер не доступен
+// TODO: creator -> host
 
 export const useSocketEvents = () => {
   const [messageApi, contextHolder] = message.useMessage();
@@ -23,7 +28,7 @@ export const useSocketEvents = () => {
       setRoom(null);
       messageApi.open({
         type: "error",
-        content: t("joinScreen.messages.wrongRoomCode"),
+        content: t("messages.wrongRoomCode"),
       });
     }, [t, messageApi]);
 

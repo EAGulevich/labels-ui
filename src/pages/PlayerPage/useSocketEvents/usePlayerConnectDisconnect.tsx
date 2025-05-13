@@ -10,6 +10,7 @@ type UsePlayerConnectDisconnectProps = {
   setRoom: (room: Room) => void;
   messageApi: ReturnType<typeof message.useMessage>[0];
 };
+// TODO: review
 
 export const usePlayerConnectDisconnect = ({
   setRoom,
@@ -24,7 +25,7 @@ export const usePlayerConnectDisconnect = ({
       // TODO: Игрок Петя подключился
       messageApi.open({
         type: "success",
-        content: t("joinScreen.messages.youEnteredInRoom"),
+        content: t("messages.youEnteredInRoom"),
       });
     },
     [setRoom, messageApi, t],

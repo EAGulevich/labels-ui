@@ -5,14 +5,28 @@
       "join": "Присоединиться"
     }
   },
-  "createRoomScreen": {
+  "createOrReturnToRoom": {
+    "returnResult": {
+      "title": "Хотите вернуться?",
+      "subTitle": "Найдена ранее созданная комната.",
+      "buttons": {
+        "return": "Вернуться",
+        "createNew": "Создать новую"
+      }
+    },
+    "createResult": {
+      "title": "Создайте комнату и пригласите в нее игроков",
+      "subTitle": "Этот экран должны видеть все игроки",
+      "buttons": {
+        "create": "Создать"
+      }
+    }
+  },
+  "waitingPlayersScreen": {
     "joinLinkText": "Присоединяйтесь по ссылке",
     "enterCode": "Введите код комнаты",
     "scan": "или отсканируйте",
-    "players": "Игроки",
-    "buttons": {
-      "exit": "Выйти"
-    }
+    "players": "Игроки"
   },
   "joinScreen": {
     "form": {
@@ -39,13 +53,13 @@
     },
     "buttons": {
       "enter": "Войти"
-    },
-    "messages": {
-      "wrongRoomCode": "Неверный код комнаты",
-      "youEnteredInRoom": "Вы вошли в комнату",
-      "reconnecting": "Восстанавливается соединение",
-      "reconnected": "Соединение восстановлено"
     }
+  },
+  "messages": {
+    "wrongRoomCode": "Неверный код комнаты",
+    "youEnteredInRoom": "Вы вошли в комнату",
+    "reconnecting": "Восстанавливается соединение",
+    "reconnected": "Соединение восстановлено"
   },
   "errors": {
     "404": {

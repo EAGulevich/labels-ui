@@ -12,11 +12,11 @@ import { getThemeByName } from "./theme/theme.tsx";
 
 const StyledPageLayout = styled(Layout)`
   height: 100%;
-  overflow: auto;
 `;
 
 export const StyledContent = styled(Layout.Content)`
   padding: 20px;
+  overflow: auto;
 `;
 
 function App() {

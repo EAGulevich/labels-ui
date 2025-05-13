@@ -10,6 +10,7 @@ type UseHostConnectDisconnectProps = {
   setRoom: (room: Room) => void;
   messageApi: ReturnType<typeof message.useMessage>[0];
 };
+// TODO: review
 
 export const useHostConnectDisconnect = ({
   setRoom,
@@ -27,7 +28,7 @@ export const useHostConnectDisconnect = ({
         messageApi.open({
           key: data.room.code,
           type: "loading",
-          content: t("joinScreen.messages.reconnecting"),
+          content: t("messages.reconnecting"),
           duration: 10000,
         });
       },
@@ -41,7 +42,7 @@ export const useHostConnectDisconnect = ({
         messageApi.open({
           key: data.room.code,
           type: "success",
-          content: t("joinScreen.messages.reconnected"),
+          content: t("messages.reconnected"),
           duration: 2,
         });
       },
