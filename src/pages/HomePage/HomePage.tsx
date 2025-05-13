@@ -3,23 +3,33 @@ import { useNavigate } from "react-router";
 import { Button, Flex } from "antd";
 
 import { MainAnimatedLogo } from "@components/MainAnimatedLogo/MainAnimatedLogo.tsx";
+import { ROUTE_PATHS } from "@constants";
 
 const HomePage = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
   return (
-    <div>
+    <>
       <MainAnimatedLogo />
       <Flex vertical>
-        <Button size={"large"} type={"link"} onClick={() => navigate("/new")}>
+        <Button
+          size={"large"}
+          type={"link"}
+          onClick={() => navigate(ROUTE_PATHS.room)}
+        >
           {t("home.menu.newGame")}
         </Button>
-        <Button size={"large"} type={"link"} onClick={() => navigate("/join")}>
+
+        <Button
+          size={"large"}
+          type={"link"}
+          onClick={() => navigate(ROUTE_PATHS.game)}
+        >
           {t("home.menu.join")}
         </Button>
       </Flex>
-    </div>
+    </>
   );
 };
 
