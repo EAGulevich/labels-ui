@@ -1,47 +1,47 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router";
-import { Button, Card, Form, FormProps, Input } from "antd";
+import { Button, Flex, Form, FormProps, Input } from "antd";
 
 import { AvatarSelect } from "@components/AvatarSelect/AvatarSelect.tsx";
-import { NAME_MAX_LENGTH, ROOM_CODE_LENGTH } from "@constants";
-import { AvatarToken } from "@sharedTypes/avatarTokens.ts";
+import {
+  NAME_MAX_LENGTH,
+  QUERY_PARAM_ROOM_CODE,
+  ROOM_CODE_LENGTH,
+} from "@constants";
 import { socket } from "@socket";
 
-type FormFieldType = {
-  name?: string;
-  avatarToken?: AvatarToken;
-  roomCode?: string;
-};
+import { FormFieldType } from "./types.ts";
+import { StyledForm } from "./styles.ts";
 
 export const JoinScreen = () => {
   const [searchParams] = useSearchParams();
-  const [roomCode] = useState<string>(searchParams.get("roomCode") || "");
+  const [roomCode] = useState<string>(
+    searchParams.get(QUERY_PARAM_ROOM_CODE) || "",
+  );
 
   const { t } = useTranslation();
 
-  const onFinish: FormProps<FormFieldType>["onFinish"] = (values) => {
-    if (!!values.avatarToken && values.name && values.roomCode) {
-      socket.emit("joinRoom", {
-        roomCode: values.roomCode,
-        player: {
-          name: values.name,
-          avatarToken: values.avatarToken,
-        },
-      });
-    }
+  const onFinish: FormProps<FormFieldType>["onFinish"] = ({
+    roomCode,
+    ...player
+  }) => {
+    socket.emit("joinRoom", {
+      roomCode,
+      player,
+    });
   };
 
   return (
-    <Card>
-      <Form
-        name="playerInfo"
-        layout={"vertical"}
-        variant={"outlined"}
-        initialValues={{ roomCode: roomCode }}
-        onFinish={onFinish}
-        autoComplete="off"
-      >
+    <StyledForm
+      name="playerInfo"
+      layout={"vertical"}
+      variant={"outlined"}
+      initialValues={{ roomCode: roomCode }}
+      onFinish={onFinish}
+      autoComplete="off"
+    >
+      <Flex vertical gap={"small"}>
         <Form.Item<FormFieldType>
           label={t("joinScreen.form.fields.roomCode.label")}
           name="roomCode"
@@ -82,13 +82,14 @@ export const JoinScreen = () => {
         >
           <Input showCount maxLength={NAME_MAX_LENGTH} />
         </Form.Item>
-
         <Form.Item label={null}>
-          <Button type="primary" htmlType="submit">
-            {t("joinScreen.buttons.enter")}
-          </Button>
+          <Flex vertical>
+            <Button type="primary" htmlType="submit">
+              {t("joinScreen.buttons.enter")}
+            </Button>
+          </Flex>
         </Form.Item>
-      </Form>
-    </Card>
+      </Flex>
+    </StyledForm>
   );
 };
