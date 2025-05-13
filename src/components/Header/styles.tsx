@@ -1,56 +1,66 @@
-import { MenuOutlined } from "@ant-design/icons";
 import { Divider, Layout } from "antd";
 import styled from "styled-components";
+
+const HEADER_HEIGHT = 40;
+const HEADER_HEIGHT_PX = HEADER_HEIGHT + "px";
+const ANIMATION_SPEED = "1.2s";
+
+const COMPUTED_LOGO_HEIGHT = HEADER_HEIGHT * 1.75;
+const COMPUTED_LOGO_WIDTH = COMPUTED_LOGO_HEIGHT * 2.15;
+const COMPUTED_DIVIDER_LEFT_SPACE = COMPUTED_LOGO_WIDTH + 10;
+
+const COMPUTED_LOGO_HEIGHT_PX = COMPUTED_LOGO_HEIGHT + "px";
+const COMPUTED_LOGO_WIDTH_PX = COMPUTED_LOGO_WIDTH + "px";
+const COMPUTED_DIVIDER_LEFT_SPACE_PX = COMPUTED_DIVIDER_LEFT_SPACE + "px";
 
 export const StyledHeader = styled(Layout.Header)`
   background-color: ${({ theme }) => theme.token.colorBgLayout};
   padding: 0;
-  height: 40px;
-  overflow: visible;
-  position: relative;
 `;
 
 export const StyledHeaderContent = styled.div`
   display: flex;
   vertical-align: middle;
   justify-content: space-between;
-  height: 40px;
+  height: ${HEADER_HEIGHT_PX};
   padding: 0 10px;
 `;
 
 export const SvgContainer = styled.div<{ hideLogo: boolean }>`
-  margin-left: -34px;
   cursor: pointer;
 
   opacity: ${({ hideLogo }) => (!hideLogo ? "1" : "0")};
-  transition: ${({ hideLogo }) => (!hideLogo ? "opacity 1.2s" : "opacity 0s")};
+  transition: ${({ hideLogo }) =>
+    !hideLogo ? `opacity ${ANIMATION_SPEED}` : "opacity 0s"};
 
   svg {
-    path {
-      fill: ${({ theme }) => theme.token.colorTextBase};
-    }
+    width: ${COMPUTED_LOGO_WIDTH_PX};
+    height: ${COMPUTED_LOGO_HEIGHT_PX};
+  }
+
+  svg > path {
+    fill: ${({ theme }) => theme.token.colorTextBase};
+  }
+
+  svg:hover > path {
+    fill: ${({ theme }) => theme.token.colorTextSecondary};
   }
 `;
 
-const DIVIDER_LEFT_SPACE = "160px";
-
-export const StyledDivider = styled(Divider)<{ mounted: boolean }>`
+export const StyledDivider = styled(Divider)<{ isDividerVisible: boolean }>`
   position: absolute;
-  top: 40px;
-  left: ${DIVIDER_LEFT_SPACE};
-  max-width: calc(100% - ${DIVIDER_LEFT_SPACE});
+  top: ${HEADER_HEIGHT_PX};
+  left: ${COMPUTED_DIVIDER_LEFT_SPACE_PX};
+  max-width: calc(100% - ${COMPUTED_DIVIDER_LEFT_SPACE_PX});
   min-width: 0;
   border-color: ${({ theme }) => theme.token.colorTextBase};
   margin: 0;
 
-  width: ${({ mounted }) => (mounted ? "calc(100% - 150px)" : "0")};
-  opacity: ${({ mounted }) => (mounted ? "1" : "0")};
+  width: ${({ isDividerVisible }) =>
+    isDividerVisible ? `calc(100% - ${COMPUTED_DIVIDER_LEFT_SPACE_PX})` : "0"};
+  opacity: ${({ isDividerVisible }) => (isDividerVisible ? "1" : "0")};
 
   transition:
-    width 1s,
-    opacity 1.2s;
-`;
-
-export const StyledMenuButton = styled(MenuOutlined)`
-  //margin: 14px;
+    width ${ANIMATION_SPEED},
+    opacity ${ANIMATION_SPEED};
 `;

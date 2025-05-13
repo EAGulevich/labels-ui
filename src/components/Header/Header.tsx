@@ -1,63 +1,64 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { List, Popover } from "antd";
+import { MenuOutlined } from "@ant-design/icons";
+import { Button, Flex, List, Popover } from "antd";
 
+import HeaderLogo from "@assets/headerLogo.svg?react";
 import { LngSwitcher } from "@components/LngSwitcher/LngSwitcher.tsx";
 import { ThemeSwitcher } from "@components/ThemeSwither/ThemeSwitcher.tsx";
+import { ROUTE_PATHS } from "@constants";
 
-import HeaderLogo from "./headerLogo.svg?react";
 import {
   StyledDivider,
   StyledHeader,
   StyledHeaderContent,
-  StyledMenuButton,
   SvgContainer,
 } from "./styles.tsx";
 
 type HeaderProps = {
-  hideLogo: boolean;
+  onlyMenuButton: boolean;
 };
 
-export const Header = ({ hideLogo }: HeaderProps) => {
-  const [isMounted, setIsMounted] = useState(false);
+export const Header = ({ onlyMenuButton }: HeaderProps) => {
+  const navigate = useNavigate();
+
+  const [isDividerVisible, setIsDividerVisible] = useState(false);
 
   useEffect(() => {
-    if (!hideLogo) {
-      setIsMounted(true);
+    if (!onlyMenuButton) {
+      setIsDividerVisible(true);
     } else {
-      setIsMounted(false);
+      setIsDividerVisible(false);
     }
-  }, [hideLogo]);
+  }, [onlyMenuButton]);
 
-  const navigate = useNavigate();
-  const items = [<ThemeSwitcher />, <LngSwitcher />];
   return (
     <StyledHeader>
       <StyledHeaderContent>
-        <SvgContainer hideLogo={hideLogo}>
-          <HeaderLogo
-            onClick={() => navigate("/")}
-            className={"headerLogo"}
-            height={70}
-          />
+        <SvgContainer
+          hideLogo={onlyMenuButton}
+          onClick={() => navigate(ROUTE_PATHS.home)}
+        >
+          <HeaderLogo />
         </SvgContainer>
         <Popover
           placement="bottomRight"
           trigger={"click"}
           content={
             <List
-              bordered
-              dataSource={items}
+              dataSource={[<ThemeSwitcher />, <LngSwitcher />]}
               renderItem={(item) => <List.Item>{item}</List.Item>}
             />
           }
           arrow={false}
         >
-          <StyledMenuButton />
+          <Flex align="center">
+            <Button size={"middle"} type={"text"} icon={<MenuOutlined />} />
+          </Flex>
         </Popover>
       </StyledHeaderContent>
 
-      {!hideLogo && <StyledDivider mounted={isMounted} />}
+      {!onlyMenuButton && <StyledDivider isDividerVisible={isDividerVisible} />}
     </StyledHeader>
   );
 };

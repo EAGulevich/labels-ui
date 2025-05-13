@@ -13,12 +13,14 @@ import ruRU from "antd/locale/ru_RU";
 import styled, { ThemeProvider } from "styled-components";
 
 import { Header } from "@components/Header/Header.tsx";
+import { ROUTE_PATHS } from "@constants";
 import { ThemeName, useAppSettings } from "@providers/AppSettingsProvider.tsx";
 
 import { DarkTheme, Theme } from "./theme/theme.tsx";
 
-// TODO: creator -> host -
+
 // TODO: review -
+
 const HomeRouteComponent = lazy(() => import("./pages/HomePage/HomePage.tsx"));
 
 const CreateRoomRouteComponent = lazy(
@@ -53,7 +55,7 @@ const getThemeByName = (themeName: ThemeName) =>
   themeName === "dark" ? DarkTheme : Theme;
 
 export const StyledContent = styled(Layout.Content)`
-  padding: 40px 20px;
+  padding: 20px;
 `;
 
 function App() {
@@ -64,12 +66,15 @@ function App() {
   return (
     <AntConfigProvider theme={getThemeByName(themeName)} locale={ruRU}>
       <PageLayout>
-        <Header hideLogo={location.pathname === "/"} />
+        <Header onlyMenuButton={location.pathname === "/"} />
         <StyledContent>
           <Routes>
-            <Route path="/" element={<HomeRouteComponent />} />
-            <Route path="/new" element={<CreateRoomRouteComponent />} />
-            <Route path="/join" element={<JoinRouteComponent />} />
+            <Route path={ROUTE_PATHS.home} element={<HomeRouteComponent />} />
+            <Route
+              path={ROUTE_PATHS.room}
+              element={<CreateRoomRouteComponent />}
+            />
+            <Route path={ROUTE_PATHS.game} element={<JoinRouteComponent />} />
             <Route
               path="*"
               element={
