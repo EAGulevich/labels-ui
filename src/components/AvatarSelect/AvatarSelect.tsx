@@ -1,6 +1,6 @@
 import { FC, useMemo, useState } from "react";
 import { RobotOutlined } from "@ant-design/icons";
-import { Dropdown, MenuProps } from "antd";
+import { Button, Dropdown, MenuProps } from "antd";
 
 import { PlayerAvatar } from "@components/PlayerAvatar/PlayerAvatar.tsx";
 import { AvatarToken } from "@sharedTypes/avatarTokens.ts";
@@ -27,12 +27,18 @@ export const AvatarSelect: FC<AvatarSelectProps> = ({ value, onChange }) => {
     () =>
       avatarItems.map((item) => ({
         ...item,
-        onClick: () => {
-          setAvatarToken(item.key);
-          if (typeof onChange === "function") {
-            onChange(item.key);
-          }
-        },
+        label: (
+          <Button
+            type={"primary"}
+            icon={<PlayerAvatar token={item.key} />}
+            onClick={() => {
+              setAvatarToken(item.key);
+              if (typeof onChange === "function") {
+                onChange(item.key);
+              }
+            }}
+          />
+        ),
       })),
     [onChange],
   );
