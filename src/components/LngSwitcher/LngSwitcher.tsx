@@ -1,24 +1,17 @@
-import { useEffect } from "react";
-import { useTranslation } from "react-i18next";
 import { Switch } from "antd";
 
-export const LngSwitcher = () => {
-  const { i18n } = useTranslation();
+import { useAppSettings } from "@providers/AppSettingsProvider.tsx";
 
-  useEffect(() => {
-    const localStorageLng = localStorage.getItem("lng");
-    if (localStorageLng !== i18n.language) {
-      localStorage.setItem("lng", i18n.language);
-    }
-  }, [i18n.language]);
+export const LngSwitcher = () => {
+  const { lng, changeLng } = useAppSettings();
 
   return (
     <Switch
-      onChange={(checked) => i18n.changeLanguage(checked ? "ru" : "en")}
+      onChange={(checked) => changeLng(checked ? "ru" : "en")}
       checkedChildren={"ru"}
       unCheckedChildren={"en"}
-      checked={i18n.language === "ru"}
-      defaultChecked={i18n.language === "ru"}
+      checked={lng === "ru"}
+      defaultChecked={lng === "ru"}
     />
   );
 };
