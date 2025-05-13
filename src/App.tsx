@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import { ConfigProvider as AntConfigProvider, Layout } from "antd";
 import styled from "styled-components";
@@ -10,8 +11,9 @@ import { ThemeTokenProvider } from "@providers/ThemeTokenProvider.tsx";
 import { Pages } from "./pages/Pages.tsx";
 import { getThemeByName } from "./theme/theme.tsx";
 
-const StyledPageLayout = styled(Layout)`
-  height: 100%;
+const StyledPageLayout = styled(Layout)<{ height: string }>`
+  min-height: ${({ height }) => height};
+  max-height: ${({ height }) => height};
 `;
 
 export const StyledContent = styled(Layout.Content)`
@@ -20,13 +22,20 @@ export const StyledContent = styled(Layout.Content)`
 `;
 
 function App() {
+  const [layoutHeight, setLayoutHeight] = useState(window.innerHeight);
   const { themeName } = useAppSettings();
   const location = useLocation();
+
+  useEffect(() => {
+    window.addEventListener("resize", () => {
+      setLayoutHeight(window.innerHeight);
+    });
+  }, []);
 
   return (
     <AntConfigProvider theme={getThemeByName(themeName)}>
       <ThemeTokenProvider>
-        <StyledPageLayout>
+        <StyledPageLayout height={layoutHeight + "px"}>
           <Header onlyMenuButton={location.pathname === ROUTE_PATHS.home} />
           <StyledContent>
             <Pages />
