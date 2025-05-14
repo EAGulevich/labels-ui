@@ -7,6 +7,7 @@ import { I18nextProvider } from "react-i18next";
 import { BrowserRouter } from "react-router";
 
 import { AppSettingsProvider } from "@providers/AppSettingsProvider.tsx";
+import { AppStorageProvider } from "@providers/AppStorageProvider.tsx";
 
 import i18n from "./i18n/config";
 import App from "./App.tsx";
@@ -14,11 +15,13 @@ import App from "./App.tsx";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
-      <AppSettingsProvider>
-        <I18nextProvider i18n={i18n} defaultNS={"translation"}>
-          <App />
-        </I18nextProvider>
-      </AppSettingsProvider>
+      <AppStorageProvider>
+        <AppSettingsProvider>
+          <I18nextProvider i18n={i18n} defaultNS={"translation"}>
+            <App />
+          </I18nextProvider>
+        </AppSettingsProvider>
+      </AppStorageProvider>
     </BrowserRouter>
   </StrictMode>,
 );

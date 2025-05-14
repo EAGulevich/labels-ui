@@ -7,5 +7,9 @@ import {
 
 const WS_URL = import.meta.env.PROD ? import.meta.env.VITE_WS_URL : undefined;
 
-export const socket: Socket<ServerToClientEvents, ClientToServerEvents> =
-  io(WS_URL);
+export const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
+  WS_URL,
+  {
+    autoConnect: false,
+  },
+);

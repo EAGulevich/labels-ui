@@ -56,15 +56,27 @@
     }
   },
   "messages": {
-    "wrongRoomCode": "Wrong room code",
     "youEnteredInRoom": "You entered in room",
-    "reconnecting": "Reconnecting",
-    "reconnected": "Reconnected"
+    "hostLeftRoom": "Reconnecting",
+    "hostReturnedToRoom": "Reconnected",
+    "joinedPlayer": "Player {{playerName}} has connected",
+    "playerLeft": "Player {{playerName}} has connected"
+  },
+  "errorMessages": {
+    "ROOM_NOT_FOUND_BY_HOST_ID_REENTER_ERROR": "Failed to return to a previously created room",
+    "MAX_ROOM_CAPACITY_JOIN_ERROR": "Maximum number of players in a room",
+    "GAME_ALREADY_STARTED_JOIN_ERROR": "This game has already started, wait until it ends or connect to another room",
+    "ROOM_NOT_FOUND_JOIN_ERROR": "Wrong room code"
   },
   "errors": {
+    "500": {
+      "title": "500",
+      "subTitle": "Sorry, something went wrong",
+      "btnTitle": "Back Home"
+    },
     "404": {
       "title": "404",
-      "subTitle": "Sorry, the page you visited does not exist.",
+      "subTitle": "Sorry, the page you visited does not exist",
       "btnTitle": "Back Home"
     }
   }

@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { message } from "antd";
 
@@ -10,7 +10,6 @@ type UsePlayerConnectDisconnectProps = {
   setRoom: (room: Room) => void;
   messageApi: ReturnType<typeof message.useMessage>[0];
 };
-// TODO: review
 
 export const usePlayerConnectDisconnect = ({
   setRoom,
@@ -18,34 +17,30 @@ export const usePlayerConnectDisconnect = ({
 }: UsePlayerConnectDisconnectProps) => {
   const { t } = useTranslation();
 
-  const joinRoom: ServerToClientEvents["joinedPlayer"] = useCallback(
-    (data) => {
+  useEffect(() => {
+    const joinRoom: ServerToClientEvents["joinedPlayer"] = (data) => {
       setRoom(data.room);
 
-      // TODO: Игрок Петя подключился
       messageApi.open({
-        type: "success",
-        content: t("messages.youEnteredInRoom"),
+        type: "info",
+        content: t("messages.joinedPlayer", {
+          playerName: data.eventData.joinedPlayer.name,
+        }),
       });
-    },
-    [setRoom, messageApi, t],
-  );
+    };
 
-  const disconnectedPlayer: ServerToClientEvents["disconnectedPlayer"] =
-    useCallback(
-      (data) => {
-        setRoom(data.room);
+    const disconnectedPlayer: ServerToClientEvents["disconnectedPlayer"] = (
+      data,
+    ) => {
+      setRoom(data.room);
+      messageApi.open({
+        type: "warning",
+        content: t("messages.playerLeft", {
+          playerName: data.eventData.disconnectedPlayer.name,
+        }),
+      });
+    };
 
-        // TODO: Игрок Петя отключился
-        // messageApi.open({
-        //   type: "success",
-        //   content: t("joinScreen.messages.youEnteredInRoom"),
-        // });
-      },
-      [setRoom],
-    );
-
-  useEffect(() => {
     socket.on("joinedPlayer", joinRoom);
     socket.on("disconnectedPlayer", disconnectedPlayer);
 
@@ -53,5 +48,5 @@ export const usePlayerConnectDisconnect = ({
       socket.off("disconnectedPlayer", disconnectedPlayer);
       socket.off("joinedPlayer", joinRoom);
     };
-  }, [joinRoom, disconnectedPlayer]);
+  }, [messageApi, setRoom, t]);
 };

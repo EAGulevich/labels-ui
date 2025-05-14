@@ -9,12 +9,19 @@ import {
   QUERY_PARAM_ROOM_CODE,
   ROOM_CODE_LENGTH,
 } from "@constants";
-import { socket } from "@socket";
+import { Player, Room } from "@sharedTypes/types.ts";
 
 import { FormFieldType } from "./types.ts";
 import { StyledForm } from "./styles.ts";
 
-export const JoinScreen = () => {
+type JoinScreenProps = {
+  onJoin: (params: {
+    roomCode: Room["code"];
+    player: Omit<Player, "id" | "isVip">;
+  }) => void;
+};
+
+export const JoinScreen = ({ onJoin }: JoinScreenProps) => {
   const [searchParams] = useSearchParams();
   const [roomCode] = useState<string>(
     searchParams.get(QUERY_PARAM_ROOM_CODE) || "",
@@ -26,7 +33,7 @@ export const JoinScreen = () => {
     roomCode,
     ...player
   }) => {
-    socket.emit("joinRoom", {
+    onJoin({
       roomCode,
       player,
     });

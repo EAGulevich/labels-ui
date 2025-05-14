@@ -1,0 +1,53 @@
+import { useCallback } from "react";
+import { useTranslation } from "react-i18next";
+import { TranslatedError } from "@utils/TranslatedError.tsx";
+import { message } from "antd";
+
+import { Player, Room } from "@sharedTypes/types.ts";
+import { socket } from "@socket";
+
+type UseActionsProps = {
+  setRoom: (room: Room) => void;
+  messageApi: ReturnType<typeof message.useMessage>[0];
+};
+
+export const useActions = ({ setRoom, messageApi }: UseActionsProps) => {
+  const { t } = useTranslation();
+
+  const onJoin = useCallback(
+    ({
+      roomCode,
+      player,
+    }: {
+      roomCode: Room["code"];
+      player: Omit<Player, "id" | "isVip">;
+    }) => {
+      socket.emit(
+        "joinRoom",
+        {
+          roomCode,
+          player,
+        },
+        ({ data, error }) => {
+          if (data?.room) {
+            setRoom(data.room);
+            messageApi.open({
+              type: "success",
+              content: t("messages.youEnteredInRoom"),
+            });
+          } else if (error) {
+            messageApi.open({
+              type: "error",
+              content: <TranslatedError errorCode={error.code} />,
+            });
+          }
+        },
+      );
+    },
+    [setRoom, messageApi, t],
+  );
+
+  return {
+    onJoin,
+  };
+};

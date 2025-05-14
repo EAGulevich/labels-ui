@@ -16,7 +16,8 @@
       "@player/*": ["./src/page/PlayerPage/*"],
       "@sharedTypes/*": ["./src/_sharedTypesFromServer/*"],
       "@socket": ["./src/socket.ts"],
-      "@constants": ["./src/constants.ts"]
+      "@constants": ["./src/constants.ts"],
+      "@utils/*": ["./src/utils/*"]
     },
 
     /* Bundler mode */

@@ -1,3 +1,5 @@
+import { ERROR_CODE } from "@sharedTypes/errorNameCodes";
+
 import { Player, Room } from "./types";
 
 // SocketServerEventData
@@ -8,29 +10,48 @@ type SSEData<T = undefined> = T extends undefined
       eventData: T;
     };
 
-// SocketServerEventError
-type SSEError = { message: string };
+type SSEDataWithError<T = undefined> =
+  | {
+      data: SSEData<T>;
+      error?: null;
+    }
+  | {
+      data?: null;
+      error: {
+        code: ERROR_CODE;
+        message: string;
+      } | null;
+    };
 
 export interface ServerToClientEvents {
-  createdRoom: (
-    data: SSEData<{ createdRoom: Room; wasReconnect: boolean }>,
-  ) => void;
-  creatingRoomError: (err: SSEError) => void;
-
+  // Connect/Disconnect events
+  hostLeftRoom: (data: SSEData) => void;
+  hostReturnedToRoom: (data: SSEData) => void;
   joinedPlayer: (data: SSEData<{ joinedPlayer: Player }>) => void;
-  joiningPlayerError: (err: SSEError) => void;
-
   disconnectedPlayer: (data: SSEData<{ disconnectedPlayer: Player }>) => void;
-
-  // TODO: добавить различие неактивен, удален
-  creatorWasDisconnect: (data: SSEData) => void;
-  creatorWasConnected: (data: SSEData) => void;
 }
 
 export interface ClientToServerEvents {
-  createRoom: (creatorId?: Room["creatorId"] | null) => void;
-  joinRoom: (data: {
-    roomCode: Room["code"];
-    player: Omit<Player, "id" | "isVip">;
-  }) => void;
+  findRoomByHostId: (
+    data: { roomHostId: string },
+    cb: (res: { foundedRoom: Room | undefined }) => void,
+  ) => void;
+
+  createRoom: (
+    data: null,
+    cb: (res: SSEData<{ newRoomHostId: string }>) => void,
+  ) => void;
+
+  reenterRoom: (
+    data: { roomHostId: string },
+    cb: (res: SSEDataWithError<{ newRoomHostId: string }>) => void,
+  ) => void;
+
+  joinRoom: (
+    data: {
+      roomCode: Room["code"];
+      player: Pick<Player, "name" | "avatarToken">;
+    },
+    cb: (res: SSEDataWithError) => void,
+  ) => void;
 }

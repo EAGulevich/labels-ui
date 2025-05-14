@@ -1,8 +1,5 @@
 import { type ThemeName } from "@providers/AppSettingsProvider.tsx";
 
-// session storage fields
-export const SESSION_KEY_HOST_ID = "hostId";
-
 // local storage fields
 export const LOCAL_STORAGE_THEME = "theme";
 export const LOCAL_STORAGE_LNG = "lng";

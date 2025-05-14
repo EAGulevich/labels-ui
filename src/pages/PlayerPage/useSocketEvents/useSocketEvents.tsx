@@ -1,47 +1,29 @@
-import { useCallback, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useState } from "react";
 import { message } from "antd";
 
-import { ServerToClientEvents } from "@sharedTypes/events.ts";
 import { Room } from "@sharedTypes/types.ts";
-import { socket } from "@socket";
 
+import { useActions } from "./useActions.tsx";
+import { useConnectDisconnect } from "./useConnectDisconnect.tsx";
 import { useHostConnectDisconnect } from "./useHostConnectDisconnect.tsx";
 import { usePlayerConnectDisconnect } from "./usePlayerConnectDisconnect.tsx";
-// TODO: review
-// TODO: доступные аватарки
-// TODO: максимальное кол-во игроков
-// TODO: если сервер не доступен
-// TODO: creator -> host
 
 export const useSocketEvents = () => {
   const [messageApi, contextHolder] = message.useMessage();
-  const { t } = useTranslation();
 
   const [room, setRoom] = useState<Room | null>(null);
+
+  const { isServerError } = useConnectDisconnect();
 
   useHostConnectDisconnect({ setRoom, messageApi });
   usePlayerConnectDisconnect({ setRoom, messageApi });
 
-  const joiningPlayerError: ServerToClientEvents["joiningPlayerError"] =
-    useCallback(() => {
-      setRoom(null);
-      messageApi.open({
-        type: "error",
-        content: t("messages.wrongRoomCode"),
-      });
-    }, [t, messageApi]);
-
-  useEffect(() => {
-    socket.on("joiningPlayerError", joiningPlayerError);
-
-    return () => {
-      socket.off("joiningPlayerError", joiningPlayerError);
-    };
-  }, [joiningPlayerError]);
+  const { onJoin } = useActions({ setRoom, messageApi });
 
   return {
     room,
     contextHolder,
+    onJoin,
+    isServerError,
   };
 };

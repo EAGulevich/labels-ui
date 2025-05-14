@@ -56,12 +56,24 @@
     }
   },
   "messages": {
-    "wrongRoomCode": "Неверный код комнаты",
     "youEnteredInRoom": "Вы вошли в комнату",
-    "reconnecting": "Восстанавливается соединение",
-    "reconnected": "Соединение восстановлено"
+    "hostLeftRoom": "Восстанавливается соединение",
+    "hostReturnedToRoom": "Соединение восстановлено",
+    "joinedPlayer": "Игрок {{playerName}} подключился",
+    "playerLeft": "Игрок {{playerName}} вышел"
+  },
+  "errorMessages": {
+    "ROOM_NOT_FOUND_BY_HOST_ID_REENTER_ERROR": "Не удалось вернуться в ранее созданную комнату",
+    "MAX_ROOM_CAPACITY_JOIN_ERROR": "В комнате максимальное число игроков",
+    "GAME_ALREADY_STARTED_JOIN_ERROR": "Эта игра уже началась, дождитесь ее завершения или подключитесь к другой комнате",
+    "ROOM_NOT_FOUND_JOIN_ERROR": "Неверный код комнаты"
   },
   "errors": {
+    "500": {
+      "title": "500",
+      "subTitle": "Что-то пошло не так",
+      "btnTitle": "На главную"
+    },
     "404": {
       "title": "404",
       "subTitle": "Этой страницы не существует",

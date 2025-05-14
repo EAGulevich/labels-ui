@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { message } from "antd";
 
@@ -10,7 +10,6 @@ type UseHostConnectDisconnectProps = {
   setRoom: (room: Room) => void;
   messageApi: ReturnType<typeof message.useMessage>[0];
 };
-// TODO: review
 
 export const useHostConnectDisconnect = ({
   setRoom,
@@ -18,44 +17,37 @@ export const useHostConnectDisconnect = ({
 }: UseHostConnectDisconnectProps) => {
   const { t } = useTranslation();
 
-  const creatorWasDisconnect: ServerToClientEvents["creatorWasDisconnect"] =
-    useCallback(
-      (data) => {
-        setRoom(data.room);
-
-        // TODO: + добавить обработку эвента с сервера, что комната удалена, т.к. хост не переподключился
-
-        messageApi.open({
-          key: data.room.code,
-          type: "loading",
-          content: t("messages.reconnecting"),
-          duration: 10000,
-        });
-      },
-      [messageApi, setRoom, t],
-    );
-
-  const creatorWasConnected: ServerToClientEvents["creatorWasConnected"] =
-    useCallback(
-      (data) => {
-        setRoom(data.room);
-        messageApi.open({
-          key: data.room.code,
-          type: "success",
-          content: t("messages.reconnected"),
-          duration: 2,
-        });
-      },
-      [setRoom, messageApi, t],
-    );
-
   useEffect(() => {
-    socket.on("creatorWasDisconnect", creatorWasDisconnect);
-    socket.on("creatorWasConnected", creatorWasConnected);
+    const hostLeftRoom: ServerToClientEvents["hostLeftRoom"] = (data) => {
+      setRoom(data.room);
+
+      messageApi.open({
+        key: data.room.code,
+        type: "loading",
+        content: t("messages.hostLeftRoom"),
+        // TODO: подумать сколько нужно
+        duration: 60 * 30,
+      });
+    };
+
+    const hostReturnedToRoom: ServerToClientEvents["hostReturnedToRoom"] = (
+      data,
+    ) => {
+      setRoom(data.room);
+      messageApi.open({
+        key: data.room.code,
+        type: "success",
+        content: t("messages.hostReturnedToRoom"),
+        duration: 2,
+      });
+    };
+
+    socket.on("hostLeftRoom", hostLeftRoom);
+    socket.on("hostReturnedToRoom", hostReturnedToRoom);
 
     return () => {
-      socket.off("creatorWasDisconnect", creatorWasDisconnect);
-      socket.off("creatorWasConnected", creatorWasConnected);
+      socket.off("hostLeftRoom", hostLeftRoom);
+      socket.off("hostReturnedToRoom", hostReturnedToRoom);
     };
-  }, [creatorWasDisconnect, creatorWasConnected]);
+  }, [messageApi, setRoom, t]);
 };

@@ -1,13 +1,19 @@
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { Button, Flex } from "antd";
 
 import { MainAnimatedLogo } from "@components/MainAnimatedLogo/MainAnimatedLogo.tsx";
 import { ROUTE_PATHS } from "@constants";
+import { socket } from "@socket";
 
 const HomePage = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+
+  useEffect(() => {
+    socket.disconnect();
+  }, []);
 
   return (
     <>
