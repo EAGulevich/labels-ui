@@ -35,6 +35,8 @@ const HostPage = () => {
   return (
     <>
       {contextHolder}
+      {/*TODO: вывести код комнаты*/}
+      {/*<StyledTag color="gold">{room?.code}</StyledTag>*/}
       {!room && (
         <CreateOrReturnToRoom
           onCreateRoom={onCreateRoom}
@@ -45,7 +47,9 @@ const HostPage = () => {
         <WaitingPlayersScreen room={room} />
       )}
 
-      {room?.status === ROOM_STATUSES.STARTED && <InputFactScreen />}
+      {room?.status === ROOM_STATUSES.STARTED && (
+        <InputFactScreen players={room.players} />
+      )}
     </>
   );
 };

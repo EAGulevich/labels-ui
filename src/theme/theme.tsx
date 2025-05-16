@@ -12,6 +12,9 @@ const commonConfig: ThemeConfig = {
     Spin: {
       dotSizeLG: 38,
     },
+    Card: {
+      bodyPadding: 0,
+    },
   },
 };
 

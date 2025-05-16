@@ -22,12 +22,28 @@ export const useConnectDisconnectPlayer = ({
       setRoom(data.room);
     };
 
+    const playerHasReconnected: ServerToClientEvents["playerHasReconnected"] = (
+      data,
+    ) => {
+      setRoom(data.room);
+    };
+
+    const playerLostConnection: ServerToClientEvents["playerLostConnection"] = (
+      data,
+    ) => {
+      setRoom(data.room);
+    };
+
     socket.on("joinedPlayer", onJoinedPlayer);
     socket.on("disconnectedPlayer", onDisconnectedPlayer);
+    socket.on("playerHasReconnected", playerHasReconnected);
+    socket.on("playerLostConnection", playerLostConnection);
 
     return () => {
       socket.off("joinedPlayer", onJoinedPlayer);
       socket.off("disconnectedPlayer", onDisconnectedPlayer);
+      socket.off("playerHasReconnected", playerHasReconnected);
+      socket.off("playerLostConnection", playerLostConnection);
     };
   }, [setRoom]);
 };

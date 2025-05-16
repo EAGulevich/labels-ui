@@ -14,7 +14,7 @@ type UseActionsProps = {
 
 export const useActions = ({ setRoom, messageApi }: UseActionsProps) => {
   const { t } = useTranslation();
-  const { changePlayerId } = useAppStorage();
+  const { playerId, changePlayerId } = useAppStorage();
 
   const onJoin = useCallback(
     ({
@@ -29,6 +29,7 @@ export const useActions = ({ setRoom, messageApi }: UseActionsProps) => {
         {
           roomCode,
           player,
+          prevPlayerId: playerId || "",
         },
         ({ data, error }) => {
           if (data?.room) {
@@ -54,7 +55,7 @@ export const useActions = ({ setRoom, messageApi }: UseActionsProps) => {
         },
       );
     },
-    [changePlayerId, setRoom, messageApi, t],
+    [playerId, changePlayerId, setRoom, messageApi, t],
   );
 
   const onStart = useCallback(() => {

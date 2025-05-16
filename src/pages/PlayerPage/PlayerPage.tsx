@@ -43,7 +43,9 @@ const PlayerPage = () => {
           onStart={onStart}
         />
       )}
-      {room?.status === ROOM_STATUSES.STARTED && <InputFactScreen />}
+      {room?.status === ROOM_STATUSES.STARTED && (
+        <InputFactScreen players={room.players} />
+      )}
     </>
   );
 };
