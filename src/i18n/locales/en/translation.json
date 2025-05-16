@@ -26,7 +26,13 @@
     "joinLinkText": "Join at",
     "enterCode": "Enter room code",
     "scan": "or scan this",
-    "players": "Players"
+    "players": "Players",
+    "waitingAllPlayers": "We are waiting for players to connect",
+    "waitingVipStarts": "Waiting for the VIP player to start the game",
+    "vipScreen": {
+      "title": "If all players are connected, press",
+      "btnTitle": "Start"
+    }
   },
   "joinScreen": {
     "form": {

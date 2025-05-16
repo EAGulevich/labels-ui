@@ -26,7 +26,13 @@
     "joinLinkText": "Присоединяйтесь по ссылке",
     "enterCode": "Введите код комнаты",
     "scan": "или отсканируйте",
-    "players": "Игроки"
+    "players": "Игроки",
+    "waitingAllPlayers": "Ожидаем подключения игроков",
+    "waitingVipStarts": "Ждем, когда VIP-игрок начнет игру",
+    "vipScreen": {
+      "title": "Если все игроки подключились, жми",
+      "btnTitle": "Начать"
+    }
   },
   "joinScreen": {
     "form": {

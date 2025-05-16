@@ -8,7 +8,11 @@ const commonConfig: ThemeConfig = {
     sizeStep: 4,
     borderRadius: 4,
   },
-  components: {},
+  components: {
+    Spin: {
+      dotSizeLG: 38,
+    },
+  },
 };
 
 const DarkTheme: ThemeConfig = {

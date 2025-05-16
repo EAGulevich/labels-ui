@@ -3,7 +3,8 @@ import { useNavigate } from "react-router";
 import { FrownOutlined } from "@ant-design/icons";
 import { Button, Result } from "antd";
 
-import { ROUTE_PATHS } from "@constants";
+import { MIN_PLAYERS, ROUTE_PATHS } from "@constants";
+import { ROOM_STATUSES } from "@sharedTypes/roomStatuses.ts";
 
 import { JoinScreen } from "./screens/JoinScreen/JoinScreen.tsx";
 import { WaitingPlayersScreen } from "./screens/WaitingPlayersScreen/WaitingPlayersScreen.tsx";
@@ -11,7 +12,8 @@ import { useSocketEvents } from "./useSocketEvents/useSocketEvents.tsx";
 
 const PlayerPage = () => {
   const navigate = useNavigate();
-  const { room, contextHolder, onJoin, isServerError } = useSocketEvents();
+  const { room, contextHolder, onJoin, isServerError, isVip } =
+    useSocketEvents();
   const { t } = useTranslation();
 
   if (isServerError) {
@@ -33,7 +35,12 @@ const PlayerPage = () => {
     <>
       {contextHolder}
       {!room && <JoinScreen onJoin={onJoin} />}
-      {!!room && <WaitingPlayersScreen />}
+      {room?.status === ROOM_STATUSES.CREATED && (
+        <WaitingPlayersScreen
+          isVip={isVip}
+          isMinNumberOfPlayers={room.players.length >= MIN_PLAYERS}
+        />
+      )}
     </>
   );
 };

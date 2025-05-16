@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { message } from "antd";
 
+import { useAppStorage } from "@providers/AppStorageProvider.tsx";
 import { Room } from "@sharedTypes/types.ts";
 
 import { useActions } from "./useActions.tsx";
@@ -10,6 +11,8 @@ import { useNewVip } from "./useNewVip.tsx";
 import { usePlayerConnectDisconnect } from "./usePlayerConnectDisconnect.tsx";
 
 export const useSocketEvents = () => {
+  const { playerId } = useAppStorage();
+
   const [messageApi, contextHolder] = message.useMessage();
 
   const [room, setRoom] = useState<Room | null>(null);
@@ -21,11 +24,13 @@ export const useSocketEvents = () => {
   useNewVip({ setRoom, messageApi });
 
   const { onJoin } = useActions({ setRoom, messageApi });
+  const isVip = !!room?.players.find((p) => p.isVip && p.id === playerId);
 
   return {
     room,
     contextHolder,
     onJoin,
     isServerError,
+    isVip,
   };
 };
