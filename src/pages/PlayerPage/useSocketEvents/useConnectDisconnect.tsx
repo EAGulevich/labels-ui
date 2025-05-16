@@ -7,7 +7,7 @@ export const useConnectDisconnect = () => {
 
   useEffect(() => {
     const onConnect = () => {
-      // TODO: Попробовать перезайти в ранее созданную комнату
+      // todo later: Попробовать перезайти в ранее созданную комнату, в которой игра уже началась
     };
 
     const onConnectError = () => {

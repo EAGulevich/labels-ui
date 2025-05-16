@@ -20,7 +20,7 @@ export const useActions = ({ setRoom, messageApi }: UseActionsProps) => {
       player,
     }: {
       roomCode: Room["code"];
-      player: Omit<Player, "id" | "isVip">;
+      player: Pick<Player, "name" | "avatarToken">;
     }) => {
       socket.emit(
         "joinRoom",

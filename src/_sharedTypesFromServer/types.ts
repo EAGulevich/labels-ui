@@ -1,27 +1,20 @@
 import { AvatarToken } from "./avatarTokens";
+import { ROOM_STATUSES } from "./roomStatuses";
 
 export type Player = {
   id: string;
   isVip: boolean;
   name: string;
   avatarToken: AvatarToken;
-  // TODO: переименовать и убрать опциональность
-  isPlayerInactive?: boolean;
+  isActive: boolean;
 };
 
 export type Room = {
   code: string;
-  // TODO enum + created -> lobby
-  status: "CREATED";
+  status: ROOM_STATUSES;
   hostId: string;
   players: Player[];
   isInactive: boolean;
 };
 
-export type ReadonlyPlayer = Readonly<
-  Pick<Player, "id" | "name" | "isVip" | "avatarToken" | "isPlayerInactive">
->;
-
-export type ReadonlyRoom = Readonly<
-  Pick<Room, "isInactive" | "hostId" | "status" | "code">
-> & { players: Readonly<ReadonlyPlayer[]> };
+export type DeepReadonly<T> = { readonly [P in keyof T]: DeepReadonly<T[P]> };

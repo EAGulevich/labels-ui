@@ -17,7 +17,7 @@ import { StyledForm } from "./styles.ts";
 type JoinScreenProps = {
   onJoin: (params: {
     roomCode: Room["code"];
-    player: Omit<Player, "id" | "isVip">;
+    player: Pick<Player, "name" | "avatarToken">;
   }) => void;
 };
 

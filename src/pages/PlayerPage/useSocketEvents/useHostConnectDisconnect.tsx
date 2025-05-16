@@ -25,8 +25,8 @@ export const useHostConnectDisconnect = ({
         key: data.room.code,
         type: "loading",
         content: t("messages.hostLeftRoom"),
-        // TODO: подумать сколько нужно
-        duration: 60 * 30,
+        // todo later: подумать сколько нужно
+        duration: 60 * 3,
       });
     };
 

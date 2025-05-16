@@ -1,5 +1,4 @@
-import { ERROR_CODE } from "@sharedTypes/errorNameCodes";
-
+import { ERROR_CODE } from "./errorNameCodes";
 import { Player, Room } from "./types";
 
 // SocketServerEventData
@@ -29,6 +28,13 @@ export interface ServerToClientEvents {
   hostReturnedToRoom: (data: SSEData) => void;
   joinedPlayer: (data: SSEData<{ joinedPlayer: Player }>) => void;
   disconnectedPlayer: (data: SSEData<{ disconnectedPlayer: Player }>) => void;
+
+  // todo later: playerHasReconnected
+  // playerHasReconnected: (data: SSEData<{ reconnectedPlayer: Player }>) => void;
+  // todo later: playerLostConnection
+  playerLostConnection: (
+    data: SSEData<{ markedInactivePlayer: Player }>,
+  ) => void;
 }
 
 export interface ClientToServerEvents {
@@ -54,4 +60,13 @@ export interface ClientToServerEvents {
     },
     cb: (res: SSEDataWithError) => void,
   ) => void;
+
+  // todo later: rejoinRoom
+  // rejoinRoom: (
+  //   data: {
+  //     roomCode: Room["code"];
+  //     player: Pick<Player, "name" | "avatarToken">;
+  //   },
+  //   cb: (res: SSEDataWithError) => void,
+  // ) => void;
 }
