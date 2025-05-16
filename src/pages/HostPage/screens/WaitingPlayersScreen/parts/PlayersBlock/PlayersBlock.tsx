@@ -65,13 +65,20 @@ export const PlayersBlock: FC<PlayersBlockProps> = ({ players }) => {
         ))}
         {Array(MAX_PLAYERS - players.length)
           .fill(EMPTY_PLACE_CLASS)
-          .map((cn) => (
-            <StyledSkeleton className={cn} active={true} />
+          .map((cn, index) => (
+            <StyledSkeleton
+              key={"skeleton" + index}
+              className={cn}
+              active={true}
+            />
           ))}
         {Array(DECORATIVE_PLACES_COUNT)
           .fill(DECORATIVE_PLACE_CLASS)
           .map((cn, index) => (
-            <StyledCard className={`${cn} ${cn + "_" + (index + 1)}`} />
+            <StyledCard
+              key={"decorate" + index}
+              className={`${cn} ${cn + "_" + (index + 1)}`}
+            />
           ))}
       </PlayersGrid>
     </>

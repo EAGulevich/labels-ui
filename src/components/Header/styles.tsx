@@ -26,12 +26,12 @@ export const StyledHeaderContent = styled.div`
   padding: 0 10px;
 `;
 
-export const SvgContainer = styled.div<{ hideLogo: boolean }>`
+export const SvgContainer = styled.div<{ $hideLogo: boolean }>`
   cursor: pointer;
 
-  opacity: ${({ hideLogo }) => (!hideLogo ? "1" : "0")};
-  transition: ${({ hideLogo }) =>
-    !hideLogo ? `opacity ${ANIMATION_SPEED}` : "opacity 0s"};
+  opacity: ${({ $hideLogo }) => (!$hideLogo ? "1" : "0")};
+  transition: ${({ $hideLogo }) =>
+    !$hideLogo ? `opacity ${ANIMATION_SPEED}` : "opacity 0s"};
 
   svg {
     width: ${COMPUTED_LOGO_WIDTH_PX};
@@ -47,7 +47,7 @@ export const SvgContainer = styled.div<{ hideLogo: boolean }>`
   }
 `;
 
-export const StyledDivider = styled(Divider)<{ isDividerVisible: boolean }>`
+export const StyledDivider = styled(Divider)<{ $isDividerVisible: boolean }>`
   position: absolute;
   top: ${HEADER_HEIGHT_PX};
   left: ${COMPUTED_DIVIDER_LEFT_SPACE_PX};
@@ -56,9 +56,9 @@ export const StyledDivider = styled(Divider)<{ isDividerVisible: boolean }>`
   border-color: ${({ theme }) => theme.token.colorTextBase};
   margin: 0;
 
-  width: ${({ isDividerVisible }) =>
-    isDividerVisible ? `calc(100% - ${COMPUTED_DIVIDER_LEFT_SPACE_PX})` : "0"};
-  opacity: ${({ isDividerVisible }) => (isDividerVisible ? "1" : "0")};
+  width: ${({ $isDividerVisible }) =>
+    $isDividerVisible ? `calc(100% - ${COMPUTED_DIVIDER_LEFT_SPACE_PX})` : "0"};
+  opacity: ${({ $isDividerVisible }) => ($isDividerVisible ? "1" : "0")};
 
   transition:
     width ${ANIMATION_SPEED},

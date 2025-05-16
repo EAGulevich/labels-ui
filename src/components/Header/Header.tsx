@@ -36,7 +36,7 @@ export const Header = ({ onlyMenuButton }: HeaderProps) => {
     <StyledHeader>
       <StyledHeaderContent>
         <SvgContainer
-          hideLogo={onlyMenuButton}
+          $hideLogo={onlyMenuButton}
           onClick={() => navigate(ROUTE_PATHS.home)}
         >
           <HeaderLogo />
@@ -58,7 +58,9 @@ export const Header = ({ onlyMenuButton }: HeaderProps) => {
         </Popover>
       </StyledHeaderContent>
 
-      {!onlyMenuButton && <StyledDivider isDividerVisible={isDividerVisible} />}
+      {!onlyMenuButton && (
+        <StyledDivider $isDividerVisible={isDividerVisible} />
+      )}
     </StyledHeader>
   );
 };

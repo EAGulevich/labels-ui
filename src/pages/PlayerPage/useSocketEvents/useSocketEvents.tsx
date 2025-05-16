@@ -6,6 +6,7 @@ import { Room } from "@sharedTypes/types.ts";
 import { useActions } from "./useActions.tsx";
 import { useConnectDisconnect } from "./useConnectDisconnect.tsx";
 import { useHostConnectDisconnect } from "./useHostConnectDisconnect.tsx";
+import { useNewVip } from "./useNewVip.tsx";
 import { usePlayerConnectDisconnect } from "./usePlayerConnectDisconnect.tsx";
 
 export const useSocketEvents = () => {
@@ -17,6 +18,7 @@ export const useSocketEvents = () => {
 
   useHostConnectDisconnect({ setRoom, messageApi });
   usePlayerConnectDisconnect({ setRoom, messageApi });
+  useNewVip({ setRoom, messageApi });
 
   const { onJoin } = useActions({ setRoom, messageApi });
 

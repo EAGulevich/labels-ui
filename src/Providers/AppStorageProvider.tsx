@@ -8,17 +8,26 @@ import {
 } from "react";
 
 const SESSION_KEY_HOST_ID = "roomHostId";
+const SESSION_KEY_PLAYER_ID = "playerId";
 
 type AppStorageContextType = {
   roomHostId: string | null;
   changeRoomHostId: (id: string) => void;
   removeRoomHostId: () => void;
+
+  playerId: string | null;
+  changePlayerId: (id: string) => void;
+  removePlayerId: () => void;
 };
 
 const defaultValue: AppStorageContextType = {
   roomHostId: sessionStorage.getItem(SESSION_KEY_HOST_ID) || "",
   changeRoomHostId: () => undefined,
   removeRoomHostId: () => undefined,
+
+  playerId: sessionStorage.getItem(SESSION_KEY_PLAYER_ID) || "",
+  changePlayerId: () => undefined,
+  removePlayerId: () => undefined,
 };
 
 const AppStorageContext = createContext(defaultValue);
@@ -31,14 +40,28 @@ export const AppStorageProvider: FC<PropsWithChildren> = ({ children }) => {
     sessionStorage.getItem(SESSION_KEY_HOST_ID),
   );
 
+  const [playerId, setPlayerId] = useState(
+    sessionStorage.getItem(SESSION_KEY_PLAYER_ID),
+  );
+
   const removeRoomHostId = useCallback(() => {
     sessionStorage.removeItem(SESSION_KEY_HOST_ID);
     setRoomHostId(null);
   }, []);
 
+  const removePlayerId = useCallback(() => {
+    sessionStorage.removeItem(SESSION_KEY_PLAYER_ID);
+    setPlayerId(null);
+  }, []);
+
   const changeRoomHostId = (newRoomHostId: string) => {
     sessionStorage.setItem(SESSION_KEY_HOST_ID, newRoomHostId);
     setRoomHostId(newRoomHostId);
+  };
+
+  const changePlayerId = (newPlayerId: string) => {
+    sessionStorage.setItem(SESSION_KEY_PLAYER_ID, newPlayerId);
+    setPlayerId(newPlayerId);
   };
 
   return (
@@ -47,6 +70,10 @@ export const AppStorageProvider: FC<PropsWithChildren> = ({ children }) => {
         roomHostId,
         changeRoomHostId,
         removeRoomHostId,
+
+        playerId,
+        changePlayerId,
+        removePlayerId,
       }}
     >
       {children}

@@ -57,6 +57,8 @@
   },
   "messages": {
     "youEnteredInRoom": "Вы вошли в комнату",
+    "youHaveBecomeVIP": "Вы стали VIP",
+    "playerHasBecomeVIP": "Игрок {{playerName}} стал VIP",
     "hostLeftRoom": "Восстанавливается соединение",
     "hostReturnedToRoom": "Соединение восстановлено",
     "joinedPlayer": "Игрок {{playerName}} подключился",

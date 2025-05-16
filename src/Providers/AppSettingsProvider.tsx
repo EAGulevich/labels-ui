@@ -9,12 +9,11 @@ import {
 } from "react";
 import { useTranslation } from "react-i18next";
 
-import {
-  DEFAULT_LNG,
-  DEFAULT_THEME,
-  LOCAL_STORAGE_LNG,
-  LOCAL_STORAGE_THEME,
-} from "@constants";
+import i18n from "../i18n/config.ts";
+
+const LOCAL_STORAGE_THEME = "theme";
+const LOCAL_STORAGE_LNG = "lng";
+const DEFAULT_THEME: ThemeName = "dark";
 
 export type ThemeName = "dark" | "light";
 
@@ -26,9 +25,10 @@ type AppSettingsContextType = {
 };
 
 const defaultValue: AppSettingsContextType = {
-  themeName: DEFAULT_THEME,
+  themeName:
+    (localStorage.getItem(LOCAL_STORAGE_THEME) as ThemeName) || DEFAULT_THEME,
   changeTheme: () => null,
-  lng: DEFAULT_LNG,
+  lng: i18n.language,
   changeLng: () => null,
 };
 
