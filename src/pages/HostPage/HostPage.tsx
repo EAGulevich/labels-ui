@@ -4,8 +4,10 @@ import { FrownOutlined } from "@ant-design/icons";
 import { Button, Result } from "antd";
 
 import { ROUTE_PATHS } from "@constants";
+import { ROOM_STATUSES } from "@sharedTypes/roomStatuses.ts";
 
 import { CreateOrReturnToRoom } from "./screens/CreateOrReturnToRoom/CreateOrReturnToRoom.tsx";
+import { InputFactScreen } from "./screens/InputFactScreen/InputFactScreen.tsx";
 import { WaitingPlayersScreen } from "./screens/WaitingPlayersScreen/WaitingPlayersScreen.tsx";
 import { useSocketEvents } from "./useSocketEvents/useSocketEvents.tsx";
 
@@ -39,7 +41,11 @@ const HostPage = () => {
           onReenterRoom={onReenterRoom}
         />
       )}
-      {!!room && <WaitingPlayersScreen room={room} />}
+      {room?.status === ROOM_STATUSES.CREATED && (
+        <WaitingPlayersScreen room={room} />
+      )}
+
+      {room?.status === ROOM_STATUSES.STARTED && <InputFactScreen />}
     </>
   );
 };

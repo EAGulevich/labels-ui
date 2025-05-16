@@ -6,13 +6,14 @@ import { Button, Result } from "antd";
 import { MIN_PLAYERS, ROUTE_PATHS } from "@constants";
 import { ROOM_STATUSES } from "@sharedTypes/roomStatuses.ts";
 
+import { InputFactScreen } from "./screens/InputFactScreen/InputFactScreen.tsx";
 import { JoinScreen } from "./screens/JoinScreen/JoinScreen.tsx";
 import { WaitingPlayersScreen } from "./screens/WaitingPlayersScreen/WaitingPlayersScreen.tsx";
 import { useSocketEvents } from "./useSocketEvents/useSocketEvents.tsx";
 
 const PlayerPage = () => {
   const navigate = useNavigate();
-  const { room, contextHolder, onJoin, isServerError, isVip } =
+  const { room, contextHolder, onJoin, onStart, isServerError, isVip } =
     useSocketEvents();
   const { t } = useTranslation();
 
@@ -39,8 +40,10 @@ const PlayerPage = () => {
         <WaitingPlayersScreen
           isVip={isVip}
           isMinNumberOfPlayers={room.players.length >= MIN_PLAYERS}
+          onStart={onStart}
         />
       )}
+      {room?.status === ROOM_STATUSES.STARTED && <InputFactScreen />}
     </>
   );
 };

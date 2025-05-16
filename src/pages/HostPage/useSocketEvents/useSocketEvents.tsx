@@ -6,6 +6,7 @@ import { Room } from "@sharedTypes/types.ts";
 import { useActions } from "./useActions.tsx";
 import { useConnectDisconnect } from "./useConnectDisconnect.tsx";
 import { useConnectDisconnectPlayer } from "./useConnectDisconnectPlayer.tsx";
+import { useGameStarted } from "./useGameStarted.tsx";
 
 export const useSocketEvents = () => {
   const [messageApi, contextHolder] = message.useMessage();
@@ -16,6 +17,7 @@ export const useSocketEvents = () => {
   const { onReenterRoom, onCreateRoom } = useActions({ setRoom, messageApi });
 
   useConnectDisconnectPlayer({ setRoom });
+  useGameStarted({ setRoom, messageApi });
 
   return {
     contextHolder,

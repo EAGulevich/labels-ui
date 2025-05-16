@@ -4,11 +4,13 @@ import { Button, Result, Spin } from "antd";
 type WaitingPlayersScreenProps = {
   isVip: boolean;
   isMinNumberOfPlayers: boolean;
+  onStart: () => void;
 };
 
 export const WaitingPlayersScreen = ({
   isMinNumberOfPlayers,
   isVip,
+  onStart,
 }: WaitingPlayersScreenProps) => {
   const { t } = useTranslation();
 
@@ -26,8 +28,7 @@ export const WaitingPlayersScreen = ({
         status="info"
         title={t("waitingPlayersScreen.vipScreen.title")}
         extra={
-          // TODO:
-          <Button type="primary" disabled={true}>
+          <Button type="primary" onClick={onStart}>
             {t("waitingPlayersScreen.vipScreen.btnTitle")}
           </Button>
         }

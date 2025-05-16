@@ -57,7 +57,12 @@ export const useActions = ({ setRoom, messageApi }: UseActionsProps) => {
     [changePlayerId, setRoom, messageApi, t],
   );
 
+  const onStart = useCallback(() => {
+    socket.emit("startGame");
+  }, []);
+
   return {
     onJoin,
+    onStart,
   };
 };
