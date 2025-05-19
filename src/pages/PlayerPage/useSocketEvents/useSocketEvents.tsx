@@ -10,6 +10,7 @@ import { useGameStarted } from "./useGameStarted.tsx";
 import { useHostConnectDisconnect } from "./useHostConnectDisconnect.tsx";
 import { useNewVip } from "./useNewVip.tsx";
 import { usePlayerConnectDisconnect } from "./usePlayerConnectDisconnect.tsx";
+import { useReceiveFact } from "./useReceiveFact.tsx";
 
 export const useSocketEvents = () => {
   const { playerId } = useAppStorage();
@@ -24,8 +25,12 @@ export const useSocketEvents = () => {
   usePlayerConnectDisconnect({ setRoom, messageApi });
   useNewVip({ setRoom, messageApi });
   useGameStarted({ setRoom, messageApi });
+  useReceiveFact({ setRoom, messageApi });
 
-  const { onJoin, onStart } = useActions({ setRoom, messageApi });
+  const { onJoin, onStart, onSendFact } = useActions({
+    setRoom,
+    messageApi,
+  });
   const isVip = !!room?.players.find((p) => p.isVip && p.id === playerId);
 
   return {
@@ -35,5 +40,6 @@ export const useSocketEvents = () => {
     isServerError,
     isVip,
     onStart,
+    onSendFact,
   };
 };

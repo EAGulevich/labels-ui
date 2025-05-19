@@ -63,7 +63,21 @@
     }
   },
   "inputFactScreen": {
-    "inputFact": "Enter the fact on your device"
+    "inputFact": "Enter the fact on your device",
+    "statisticsLabel": "We are waiting for facts from the players",
+    "form": {
+      "fields": {
+        "fact": {
+          "label": "Fact",
+          "errors": {
+            "required": "Please input fact"
+          }
+        }
+      }
+    },
+    "buttons": {
+      "send": "Send"
+    }
   },
   "messages": {
     "youEnteredInRoom": "You entered in room",

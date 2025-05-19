@@ -63,7 +63,21 @@
     }
   },
   "inputFactScreen": {
-    "inputFact": "Введите факт на своем устройстве"
+    "inputFact": "Введите факт на своем устройстве",
+    "statisticsLabel": "Ждем факты от игроков",
+    "form": {
+      "fields": {
+        "fact": {
+          "label": "Факт",
+          "errors": {
+            "required": "Пожалуйста, введите факт о себе"
+          }
+        }
+      }
+    },
+    "buttons": {
+      "send": "Отправить"
+    }
   },
   "messages": {
     "youEnteredInRoom": "Вы вошли в комнату",

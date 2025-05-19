@@ -7,6 +7,7 @@ import { useActions } from "./useActions.tsx";
 import { useConnectDisconnect } from "./useConnectDisconnect.tsx";
 import { useConnectDisconnectPlayer } from "./useConnectDisconnectPlayer.tsx";
 import { useGameStarted } from "./useGameStarted.tsx";
+import { useReceiveFact } from "./useReceiveFact.tsx";
 
 export const useSocketEvents = () => {
   const [messageApi, contextHolder] = message.useMessage();
@@ -18,6 +19,7 @@ export const useSocketEvents = () => {
 
   useConnectDisconnectPlayer({ setRoom });
   useGameStarted({ setRoom, messageApi });
+  useReceiveFact({ setRoom, messageApi });
 
   return {
     contextHolder,

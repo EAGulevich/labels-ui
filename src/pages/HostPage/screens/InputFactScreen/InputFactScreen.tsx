@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 
 import { Player as PlayerComp } from "@components/Player/Player.tsx";
+import { FACT_STATUS } from "@sharedTypes/factStatuses.ts";
 import { Player } from "@sharedTypes/types.ts";
 
 import { Players, StyledTitle } from "./styles.ts";
@@ -16,7 +17,15 @@ export const InputFactScreen = ({ players }: InputFactScreenProps) => {
       <StyledTitle level={1}>{t("inputFactScreen.inputFact")}</StyledTitle>
       <Players>
         {players.map((player) => (
-          <PlayerComp key={player.id} player={player} status={"waiting"} />
+          <PlayerComp
+            key={player.id}
+            player={player}
+            status={
+              player.factStatus === FACT_STATUS.NOT_RECEIVED
+                ? "waiting"
+                : "success"
+            }
+          />
         ))}
         <PlayerComp
           player={{

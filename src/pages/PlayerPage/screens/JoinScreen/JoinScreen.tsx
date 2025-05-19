@@ -12,7 +12,6 @@ import {
 import { Player, Room } from "@sharedTypes/types.ts";
 
 import { FormFieldType } from "./types.ts";
-import { StyledForm } from "./styles.ts";
 
 type JoinScreenProps = {
   onJoin: (params: {
@@ -40,7 +39,7 @@ export const JoinScreen = ({ onJoin }: JoinScreenProps) => {
   };
 
   return (
-    <StyledForm
+    <Form
       name="playerInfo"
       layout={"vertical"}
       variant={"outlined"}
@@ -97,6 +96,6 @@ export const JoinScreen = ({ onJoin }: JoinScreenProps) => {
           </Flex>
         </Form.Item>
       </Flex>
-    </StyledForm>
+    </Form>
   );
 };

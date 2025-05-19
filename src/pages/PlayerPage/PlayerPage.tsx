@@ -10,11 +10,19 @@ import { InputFactScreen } from "./screens/InputFactScreen/InputFactScreen.tsx";
 import { JoinScreen } from "./screens/JoinScreen/JoinScreen.tsx";
 import { WaitingPlayersScreen } from "./screens/WaitingPlayersScreen/WaitingPlayersScreen.tsx";
 import { useSocketEvents } from "./useSocketEvents/useSocketEvents.tsx";
+import { PlayerLayout } from "./styles.ts";
 
 const PlayerPage = () => {
   const navigate = useNavigate();
-  const { room, contextHolder, onJoin, onStart, isServerError, isVip } =
-    useSocketEvents();
+  const {
+    room,
+    contextHolder,
+    onJoin,
+    onStart,
+    isServerError,
+    isVip,
+    onSendFact,
+  } = useSocketEvents();
   const { t } = useTranslation();
 
   if (isServerError) {
@@ -33,7 +41,7 @@ const PlayerPage = () => {
   }
 
   return (
-    <>
+    <PlayerLayout>
       {contextHolder}
       {!room && <JoinScreen onJoin={onJoin} />}
       {room?.status === ROOM_STATUSES.CREATED && (
@@ -44,9 +52,9 @@ const PlayerPage = () => {
         />
       )}
       {room?.status === ROOM_STATUSES.STARTED && (
-        <InputFactScreen players={room.players} />
+        <InputFactScreen players={room.players} onSendFact={onSendFact} />
       )}
-    </>
+    </PlayerLayout>
   );
 };
 

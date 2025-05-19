@@ -35,7 +35,7 @@ const HostPage = () => {
   return (
     <>
       {contextHolder}
-      {/*TODO: вывести код комнаты*/}
+      {/*todo later: вывести код комнаты*/}
       {/*<StyledTag color="gold">{room?.code}</StyledTag>*/}
       {!room && (
         <CreateOrReturnToRoom

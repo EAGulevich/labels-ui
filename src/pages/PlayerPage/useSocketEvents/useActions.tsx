@@ -62,8 +62,22 @@ export const useActions = ({ setRoom, messageApi }: UseActionsProps) => {
     socket.emit("startGame");
   }, []);
 
+  const onSendFact = useCallback(
+    ({ factText }: { factText: string }) => {
+      socket.emit("addFact", { text: factText }, ({ data, error }) => {
+        if (data) {
+          setRoom(data.room);
+        } else if (error) {
+          console.error(error);
+        }
+      });
+    },
+    [setRoom],
+  );
+
   return {
     onJoin,
     onStart,
+    onSendFact,
   };
 };

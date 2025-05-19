@@ -1,6 +1,7 @@
 // settings
 export const ROOM_CODE_LENGTH = 4;
 export const NAME_MAX_LENGTH = 12;
+export const FACT_MAX_LENGTH = 100;
 
 export const MIN_PLAYERS = 4;
 export const MAX_PLAYERS = 9;
