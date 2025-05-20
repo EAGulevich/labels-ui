@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { message } from "antd";
 
+import { useAppSettings } from "@providers/AppSettingsProvider/AppSettingsProvider.tsx";
 import { ServerToClientEvents } from "@sharedTypes/events.ts";
 import { Room } from "@sharedTypes/types.ts";
 import { socket } from "@socket";
@@ -13,12 +14,17 @@ type UseReceiveFact = {
 
 export const useReceiveFact = ({ setRoom, messageApi }: UseReceiveFact) => {
   const { t } = useTranslation();
+  const {
+    audio: { getAudio },
+  } = useAppSettings();
 
   useEffect(() => {
     const playerAddedFact: ServerToClientEvents["playerAddedFact"] = ({
       room,
+      eventData,
     }) => {
       setRoom(room);
+      getAudio(eventData.fromPlayer.avatarToken).play();
     };
 
     socket.on("playerAddedFact", playerAddedFact);
@@ -26,5 +32,5 @@ export const useReceiveFact = ({ setRoom, messageApi }: UseReceiveFact) => {
     return () => {
       socket.off("playerAddedFact", playerAddedFact);
     };
-  }, [messageApi, setRoom, t]);
+  }, [getAudio, messageApi, setRoom, t]);
 };

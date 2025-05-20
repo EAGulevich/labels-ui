@@ -12,24 +12,31 @@ type UseSoundPlayerProps = {
 };
 
 const createAudioPromise = (name: keyof Sounds, sound: Sound) => {
-  return new Promise<{ name: keyof Sounds; sound: Sound }>((resolve) => {
-    const audioFile = new Audio(sound.src);
+  return new Promise<{ name: keyof Sounds; sound: Sound }>(
+    (resolve, reject) => {
+      const audioFile = new Audio(sound.src);
 
-    audioFile.addEventListener("canplaythrough", () => {
-      resolve({
-        name,
-        sound: {
-          ...sound,
-          play: ({ volume = 1 }) => {
-            const clonedAudio = audioFile.cloneNode() as typeof audioFile;
-            clonedAudio.volume = volume;
-            clonedAudio.play();
+      audioFile.onerror = () => {
+        reject(sound);
+      };
+
+      audioFile.addEventListener("canplaythrough", () => {
+        resolve({
+          name,
+          sound: {
+            ...sound,
+            play: (params) => {
+              const { volume = 1 } = params || {};
+              const clonedAudio = audioFile.cloneNode() as typeof audioFile;
+              clonedAudio.volume = volume;
+              clonedAudio.play();
+            },
+            isReady: true,
           },
-          isReady: true,
-        },
+        });
       });
-    });
-  });
+    },
+  );
 };
 
 export const useSoundPlayer = ({

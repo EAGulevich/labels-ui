@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { message } from "antd";
 
+import { useAppSettings } from "@providers/AppSettingsProvider/AppSettingsProvider.tsx";
 import { ServerToClientEvents } from "@sharedTypes/events.ts";
 import { Room } from "@sharedTypes/types.ts";
 import { socket } from "@socket";
@@ -16,10 +17,14 @@ export const useGameStarted = ({
   messageApi,
 }: UseGameStartedProps) => {
   const { t } = useTranslation();
+  const {
+    audio: { getAudio },
+  } = useAppSettings();
 
   useEffect(() => {
     const gameStarted: ServerToClientEvents["gameStarted"] = ({ room }) => {
       setRoom(room);
+      getAudio("attention").play();
     };
 
     socket.on("gameStarted", gameStarted);
@@ -27,5 +32,5 @@ export const useGameStarted = ({
     return () => {
       socket.off("gameStarted", gameStarted);
     };
-  }, [messageApi, setRoom, t]);
+  }, [getAudio, messageApi, setRoom, t]);
 };

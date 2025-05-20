@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 
+import { useAppSettings } from "@providers/AppSettingsProvider/AppSettingsProvider.tsx";
 import { ServerToClientEvents } from "@sharedTypes/events.ts";
 import { Room } from "@sharedTypes/types.ts";
 import { socket } from "@socket";
@@ -11,15 +12,21 @@ type UseConnectDisconnectPlayerProps = {
 export const useConnectDisconnectPlayer = ({
   setRoom,
 }: UseConnectDisconnectPlayerProps) => {
+  const {
+    audio: { getAudio },
+  } = useAppSettings();
+
   useEffect(() => {
     const onJoinedPlayer: ServerToClientEvents["joinedPlayer"] = (data) => {
       setRoom(data.room);
+      getAudio("connectPlayer").play({ volume: 0.5 });
     };
 
     const onDisconnectedPlayer: ServerToClientEvents["disconnectedPlayer"] = (
       data,
     ) => {
       setRoom(data.room);
+      getAudio("disconnectPlayer").play({ volume: 0.5 });
     };
 
     const playerHasReconnected: ServerToClientEvents["playerHasReconnected"] = (
@@ -45,5 +52,5 @@ export const useConnectDisconnectPlayer = ({
       socket.off("playerHasReconnected", playerHasReconnected);
       socket.off("playerLostConnection", playerLostConnection);
     };
-  }, [setRoom]);
+  }, [getAudio, setRoom]);
 };

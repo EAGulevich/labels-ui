@@ -3,6 +3,7 @@ import { RobotOutlined } from "@ant-design/icons";
 import { Button, Dropdown, MenuProps } from "antd";
 
 import { PlayerAvatar } from "@components/PlayerAvatar/PlayerAvatar.tsx";
+import { useAppSettings } from "@providers/AppSettingsProvider/AppSettingsProvider.tsx";
 import { AvatarToken } from "@sharedTypes/avatarTokens.ts";
 
 import { avatarItems } from "./avatarItems.tsx";
@@ -23,6 +24,10 @@ export const AvatarSelect: FC<AvatarSelectProps> = ({ value, onChange }) => {
     value || undefined,
   );
 
+  const {
+    audio: { getAudio },
+  } = useAppSettings();
+
   const items: MenuProps["items"] = useMemo(
     () =>
       avatarItems.map((item) => ({
@@ -33,6 +38,7 @@ export const AvatarSelect: FC<AvatarSelectProps> = ({ value, onChange }) => {
             icon={<PlayerAvatar token={item.key} />}
             onClick={() => {
               setAvatarToken(item.key);
+              getAudio(item.key).play();
               if (typeof onChange === "function") {
                 onChange(item.key);
               }
@@ -40,7 +46,7 @@ export const AvatarSelect: FC<AvatarSelectProps> = ({ value, onChange }) => {
           />
         ),
       })),
-    [onChange],
+    [getAudio, onChange],
   );
 
   return (

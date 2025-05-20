@@ -12,6 +12,7 @@ type InputFactScreenProps = {
 
 export const InputFactScreen = ({ players }: InputFactScreenProps) => {
   const { t } = useTranslation();
+
   return (
     <>
       <StyledTitle level={1}>{t("inputFactScreen.inputFact")}</StyledTitle>
@@ -27,15 +28,6 @@ export const InputFactScreen = ({ players }: InputFactScreenProps) => {
             }
           />
         ))}
-        <PlayerComp
-          player={{
-            isActive: true,
-            isVip: false,
-            name: t("bot"),
-            avatarToken: "ROBOT_BOT",
-          }}
-          status={"success"}
-        />
       </Players>
     </>
   );
