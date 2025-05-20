@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 
 import i18n from "../../i18n/config.ts";
 import { DEFAULT_SOUNDS } from "./constants.ts";
-import { Sounds } from "./types.ts";
+import { Sound, Sounds } from "./types.ts";
 import { useSoundPlayer } from "./useSoundPlayer.tsx";
 
 const LOCAL_STORAGE_THEME = "theme";
@@ -34,7 +34,7 @@ type AppSettingsContextType = {
     allowAudio?: boolean;
     setAllowAudio: (allow: boolean) => void;
     isAllAudioLoaded: boolean;
-    audios: Sounds;
+    getAudio: (name: keyof Sounds) => Sound;
   };
 };
 
@@ -52,7 +52,7 @@ const defaultValue: AppSettingsContextType = {
     allowAudio: undefined,
     setAllowAudio: () => null,
     isAllAudioLoaded: false,
-    audios: DEFAULT_SOUNDS,
+    getAudio: (name: keyof Sounds) => DEFAULT_SOUNDS[name],
   },
 };
 
@@ -66,7 +66,7 @@ export const AppSettingsProvider: FC<PropsWithChildren> = ({ children }) => {
   const [allowAudio, setAllowAudio] = useState<boolean | undefined>(undefined);
   const [isAllAudioLoaded, setIsAllAudioLoaded] = useState(false);
   const isAllAudioLoadingStarted = useRef(false);
-  const [audios, setAudios] = useState<Sounds>(DEFAULT_SOUNDS);
+  const audiosRef = useRef<Sounds>(DEFAULT_SOUNDS);
 
   const [themeName, setTheme] = useState<ThemeName>(
     (localStorage.getItem(LOCAL_STORAGE_THEME) as ThemeName) || DEFAULT_THEME,
@@ -84,13 +84,26 @@ export const AppSettingsProvider: FC<PropsWithChildren> = ({ children }) => {
     }
   }, [i18n.language]);
 
+  useEffect(() => {
+    if (allowAudio === false) {
+      audiosRef.current = DEFAULT_SOUNDS;
+    }
+  }, [allowAudio]);
+
   useSoundPlayer({
     allowAudio,
     setIsAllAudioLoaded,
     isAllAudioLoadingStarted,
-    setAudios,
-    audios,
+    setAudios: (sounds: Sounds) => {
+      audiosRef.current = sounds;
+    },
+    audios: audiosRef.current,
   });
+
+  const getAudio = useCallback(
+    (name: keyof Sounds) => audiosRef.current[name],
+    [],
+  );
 
   return (
     <AppSettingsContext.Provider
@@ -107,7 +120,7 @@ export const AppSettingsProvider: FC<PropsWithChildren> = ({ children }) => {
           allowAudio,
           setAllowAudio,
           isAllAudioLoaded,
-          audios,
+          getAudio,
         },
       }}
     >

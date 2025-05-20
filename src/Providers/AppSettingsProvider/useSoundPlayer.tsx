@@ -1,5 +1,6 @@
-import { RefObject, useEffect } from "react";
+import { RefObject, useEffect, useRef } from "react";
 
+import { DEFAULT_SOUNDS } from "@providers/AppSettingsProvider/constants.ts";
 import { Sound, Sounds } from "@providers/AppSettingsProvider/types.ts";
 
 type UseSoundPlayerProps = {
@@ -19,7 +20,11 @@ const createAudioPromise = (name: keyof Sounds, sound: Sound) => {
         name,
         sound: {
           ...sound,
-          element: audioFile,
+          play: ({ volume = 1 }) => {
+            const clonedAudio = audioFile.cloneNode() as typeof audioFile;
+            clonedAudio.volume = volume;
+            clonedAudio.play();
+          },
           isReady: true,
         },
       });
@@ -34,6 +39,8 @@ export const useSoundPlayer = ({
   setAudios,
   audios,
 }: UseSoundPlayerProps) => {
+  const loadedAudiosRef = useRef<Sounds>(DEFAULT_SOUNDS);
+
   useEffect(() => {
     const isNeedLoad =
       allowAudio && isAllAudioLoadingStarted?.current === false;
@@ -56,10 +63,13 @@ export const useSoundPlayer = ({
 
           setAudios(newAudios);
           setIsAllAudioLoaded(true);
+          loadedAudiosRef.current = newAudios;
         })
         .catch((error) => {
           console.error("Ошибка при загрузке аудио:", error);
         });
+    } else if (allowAudio) {
+      setAudios(loadedAudiosRef.current);
     }
   }, [
     allowAudio,

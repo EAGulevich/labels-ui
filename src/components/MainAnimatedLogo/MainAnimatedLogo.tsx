@@ -8,7 +8,7 @@ import { ANIMATION_DELAY as AUDIO_DELAY_S, LogoWrapper } from "./styles.ts";
 
 export const MainAnimatedLogo = () => {
   const {
-    audio: { isAllAudioLoaded, allowAudio, audios },
+    audio: { isAllAudioLoaded, allowAudio, getAudio },
   } = useAppSettings();
   const isReady = !allowAudio || isAllAudioLoaded;
 
@@ -18,8 +18,7 @@ export const MainAnimatedLogo = () => {
     if (isReady) {
       startAnimation();
       timerId = setTimeout(() => {
-        audios.logoLightingAudio.element.volume = 0.5;
-        audios.logoLightingAudio.element.play();
+        getAudio("logoLighting").play({ volume: 0.5 });
       }, 1000 * AUDIO_DELAY_S);
     }
     return () => {
@@ -27,7 +26,7 @@ export const MainAnimatedLogo = () => {
         clearTimeout(timerId);
       }
     };
-  }, [audios, isReady]);
+  }, [getAudio, isReady]);
 
   if (!isReady) {
     return <LogoWrapper />;

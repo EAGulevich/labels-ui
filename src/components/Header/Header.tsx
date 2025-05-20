@@ -5,6 +5,7 @@ import { Button, Flex, List, Popover } from "antd";
 
 import HeaderLogo from "@assets/headerLogo.svg?react";
 import { LngSwitcher } from "@components/LngSwitcher/LngSwitcher.tsx";
+import { MuteSwitcher } from "@components/MuteSwitcher/MuteSwitcher.tsx";
 import { ThemeSwitcher } from "@components/ThemeSwither/ThemeSwitcher.tsx";
 import { ROUTE_PATHS } from "@constants";
 
@@ -46,7 +47,11 @@ export const Header = ({ onlyMenuButton }: HeaderProps) => {
           trigger={"click"}
           content={
             <List
-              dataSource={[<ThemeSwitcher />, <LngSwitcher />]}
+              dataSource={[
+                <ThemeSwitcher />,
+                <LngSwitcher />,
+                <MuteSwitcher />,
+              ]}
               renderItem={(item) => <List.Item>{item}</List.Item>}
             />
           }

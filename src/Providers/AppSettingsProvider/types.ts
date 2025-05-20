@@ -1,12 +1,12 @@
 export type Sound = {
   src: string;
-  element: HTMLAudioElement;
+  play: (params: { volume?: HTMLAudioElement["volume"] }) => void;
   isReady: boolean;
 };
 
 export type Sounds = {
-  connectPlayerAudio: Sound;
-  disconnectPlayerAudio: Sound;
-  itemAppearanceAudio: Sound;
-  logoLightingAudio: Sound;
+  connectPlayer: Sound;
+  disconnectPlayer: Sound;
+  itemHover: Sound;
+  logoLighting: Sound;
 };

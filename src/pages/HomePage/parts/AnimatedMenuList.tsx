@@ -18,7 +18,7 @@ const motionProps: MotionProps = {
 
 export const AnimatedMenuList = () => {
   const {
-    audio: { isAllAudioLoaded, allowAudio, audios },
+    audio: { isAllAudioLoaded, allowAudio, getAudio },
   } = useAppSettings();
   const isReady = !allowAudio || isAllAudioLoaded;
   const timerIdRef = useRef<NodeJS.Timeout | undefined>(undefined);
@@ -28,11 +28,8 @@ export const AnimatedMenuList = () => {
   const { t } = useTranslation();
 
   const playAudio = useCallback(() => {
-    const clonedAudio =
-      audios.itemAppearanceAudio.element.cloneNode() as typeof audios.itemAppearanceAudio.element;
-    clonedAudio.volume = 0.1;
-    clonedAudio.play();
-  }, [audios]);
+    getAudio("itemHover").play({ volume: 0.1 });
+  }, [getAudio]);
 
   const allItems = useMemo(
     () => [
@@ -88,7 +85,6 @@ export const AnimatedMenuList = () => {
   }, [
     allItems,
     allowAudio,
-    audios,
     isAllAudioLoaded,
     isReady,
     items.length,

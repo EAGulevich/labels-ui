@@ -1,24 +1,24 @@
 import { Sounds } from "@providers/AppSettingsProvider/types.ts";
 
 export const DEFAULT_SOUNDS: Sounds = {
-  connectPlayerAudio: {
+  connectPlayer: {
     src: "sounds/connectPlayer.mp3",
-    element: new Audio(undefined),
+    play: () => null,
     isReady: false,
   },
-  disconnectPlayerAudio: {
+  disconnectPlayer: {
     src: "sounds/disconnectPlayer.mp3",
-    element: new Audio(undefined),
+    play: () => null,
     isReady: false,
   },
-  itemAppearanceAudio: {
+  itemHover: {
     src: "sounds/itemAppearance.mp3",
-    element: new Audio(undefined),
+    play: () => null,
     isReady: false,
   },
-  logoLightingAudio: {
+  logoLighting: {
     src: "sounds/logoLighting.mp3",
-    element: new Audio(undefined),
+    play: () => null,
     isReady: false,
   },
 };

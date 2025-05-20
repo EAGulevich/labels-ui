@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Button, Modal } from "antd";
+import { Alert, Button, Flex } from "antd";
 
 import { MainAnimatedLogo } from "@components/MainAnimatedLogo/MainAnimatedLogo.tsx";
 import { useAppSettings } from "@providers/AppSettingsProvider/AppSettingsProvider.tsx";
@@ -32,24 +32,30 @@ const HomePage = () => {
     setIsAudioModalOpen(false);
   };
 
+  useEffect(() => {
+    if (allowAudio !== undefined) {
+      setIsAudioModalOpen(false);
+    }
+  }, [allowAudio]);
+
   if (isAudioModalOpen) {
     return (
-      <Modal
-        title={t("audioModal.title")}
-        open={isAudioModalOpen}
-        onOk={onAllowAudio}
-        onCancel={onRefuse}
-        footer={[
-          <Button key="refuse" onClick={onRefuse}>
-            {t("audioModal.buttons.refuse")}
-          </Button>,
-          <Button key="allow" type="primary" onClick={onAllowAudio}>
-            {t("audioModal.buttons.allow")}
-          </Button>,
-        ]}
-      >
-        {t("audioModal.description")}
-      </Modal>
+      <Alert
+        message={t("audioModal.title")}
+        description={t("audioModal.description")}
+        type="info"
+        showIcon
+        action={
+          <Flex vertical gap={"small"}>
+            <Button type="primary" onClick={onAllowAudio}>
+              {t("audioModal.buttons.allow")}
+            </Button>
+            <Button danger type={"dashed"} onClick={onRefuse}>
+              {t("audioModal.buttons.refuse")}
+            </Button>
+          </Flex>
+        }
+      />
     );
   }
 
