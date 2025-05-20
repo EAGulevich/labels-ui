@@ -22,6 +22,8 @@ type AppSettingsContextType = {
   changeTheme: (themeName: ThemeName) => void;
   lng: string;
   changeLng: (lng: "ru" | "en") => void;
+  allowAudio?: boolean;
+  setAllowAudio: (allow: boolean) => void;
 };
 
 const defaultValue: AppSettingsContextType = {
@@ -30,6 +32,8 @@ const defaultValue: AppSettingsContextType = {
   changeTheme: () => null,
   lng: i18n.language,
   changeLng: () => null,
+  allowAudio: undefined,
+  setAllowAudio: () => null,
 };
 
 const AppSettingsContext = createContext(defaultValue);
@@ -39,6 +43,8 @@ export const useAppSettings = () => useContext(AppSettingsContext);
 
 export const AppSettingsProvider: FC<PropsWithChildren> = ({ children }) => {
   const { i18n } = useTranslation();
+  const [allowAudio, setAllowAudio] = useState<boolean | undefined>(undefined);
+
   const [themeName, setTheme] = useState<ThemeName>(
     (localStorage.getItem(LOCAL_STORAGE_THEME) as ThemeName) || DEFAULT_THEME,
   );
@@ -62,6 +68,8 @@ export const AppSettingsProvider: FC<PropsWithChildren> = ({ children }) => {
         changeTheme,
         lng: i18n.language,
         changeLng: i18n.changeLanguage,
+        allowAudio,
+        setAllowAudio,
       }}
     >
       {children}

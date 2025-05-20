@@ -1,40 +1,60 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router";
-import { Button, Flex } from "antd";
+import { Button, Modal } from "antd";
 
 import { MainAnimatedLogo } from "@components/MainAnimatedLogo/MainAnimatedLogo.tsx";
-import { ROUTE_PATHS } from "@constants";
+import { useAppSettings } from "@providers/AppSettingsProvider.tsx";
 import { socket } from "@socket";
 
+import { AnimatedMenuList } from "./parts/AnimatedMenuList.tsx";
+
 const HomePage = () => {
-  const navigate = useNavigate();
   const { t } = useTranslation();
+
+  const { allowAudio, setAllowAudio } = useAppSettings();
+  const [isAudioModalOpen, setIsAudioModalOpen] = useState(
+    allowAudio === undefined,
+  );
 
   useEffect(() => {
     socket.disconnect();
   }, []);
 
+  const onAllowAudio = () => {
+    setAllowAudio(true);
+    setIsAudioModalOpen(false);
+  };
+
+  const onRefuse = () => {
+    setAllowAudio(false);
+    setIsAudioModalOpen(false);
+  };
+
+  if (isAudioModalOpen) {
+    return (
+      <Modal
+        title={t("audioModal.title")}
+        open={isAudioModalOpen}
+        onOk={onAllowAudio}
+        onCancel={onRefuse}
+        footer={[
+          <Button key="refuse" onClick={onRefuse}>
+            {t("audioModal.buttons.refuse")}
+          </Button>,
+          <Button key="allow" type="primary" onClick={onAllowAudio}>
+            {t("audioModal.buttons.allow")}
+          </Button>,
+        ]}
+      >
+        {t("audioModal.description")}
+      </Modal>
+    );
+  }
+
   return (
     <>
       <MainAnimatedLogo />
-      <Flex vertical>
-        <Button
-          size={"large"}
-          type={"link"}
-          onClick={() => navigate(ROUTE_PATHS.host)}
-        >
-          {t("home.menu.newGame")}
-        </Button>
-
-        <Button
-          size={"large"}
-          type={"link"}
-          onClick={() => navigate(ROUTE_PATHS.player)}
-        >
-          {t("home.menu.join")}
-        </Button>
-      </Flex>
+      <AnimatedMenuList />
     </>
   );
 };

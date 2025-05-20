@@ -1,4 +1,12 @@
 {
+  "audioModal": {
+    "title": "Enable sound effects?",
+    "description": "You can change this in the settings at any time",
+    "buttons": {
+      "allow": "Enable",
+      "refuse": "Disable"
+    }
+  },
   "bot": "Fake",
   "home": {
     "menu": {
