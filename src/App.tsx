@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 import { Header } from "@components/Header/Header.tsx";
 import { ROUTE_PATHS } from "@constants";
-import { useAppSettings } from "@providers/AppSettingsProvider.tsx";
+import { useAppSettings } from "@providers/AppSettingsProvider/AppSettingsProvider.tsx";
 import { ThemeTokenProvider } from "@providers/ThemeTokenProvider.tsx";
 
 import { Pages } from "./pages/Pages.tsx";
@@ -23,7 +23,9 @@ export const StyledContent = styled(Layout.Content)`
 
 function App() {
   const [layoutHeight, setLayoutHeight] = useState(window.innerHeight);
-  const { themeName } = useAppSettings();
+  const {
+    theme: { themeName },
+  } = useAppSettings();
   const location = useLocation();
 
   useEffect(() => {

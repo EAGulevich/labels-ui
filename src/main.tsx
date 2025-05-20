@@ -6,7 +6,7 @@ import { createRoot } from "react-dom/client";
 import { I18nextProvider } from "react-i18next";
 import { BrowserRouter } from "react-router";
 
-import { AppSettingsProvider } from "@providers/AppSettingsProvider.tsx";
+import { AppSettingsProvider } from "@providers/AppSettingsProvider/AppSettingsProvider.tsx";
 import { AppStorageProvider } from "@providers/AppStorageProvider.tsx";
 
 import i18n from "./i18n/config";

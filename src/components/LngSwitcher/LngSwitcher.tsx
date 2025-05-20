@@ -1,9 +1,11 @@
 import { Switch } from "antd";
 
-import { useAppSettings } from "@providers/AppSettingsProvider.tsx";
+import { useAppSettings } from "@providers/AppSettingsProvider/AppSettingsProvider.tsx";
 
 export const LngSwitcher = () => {
-  const { lng, changeLng } = useAppSettings();
+  const {
+    language: { lng, changeLng },
+  } = useAppSettings();
 
   return (
     <Switch

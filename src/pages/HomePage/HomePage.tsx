@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Button, Modal } from "antd";
 
 import { MainAnimatedLogo } from "@components/MainAnimatedLogo/MainAnimatedLogo.tsx";
-import { useAppSettings } from "@providers/AppSettingsProvider.tsx";
+import { useAppSettings } from "@providers/AppSettingsProvider/AppSettingsProvider.tsx";
 import { socket } from "@socket";
 
 import { AnimatedMenuList } from "./parts/AnimatedMenuList.tsx";
@@ -11,7 +11,9 @@ import { AnimatedMenuList } from "./parts/AnimatedMenuList.tsx";
 const HomePage = () => {
   const { t } = useTranslation();
 
-  const { allowAudio, setAllowAudio } = useAppSettings();
+  const {
+    audio: { allowAudio, setAllowAudio },
+  } = useAppSettings();
   const [isAudioModalOpen, setIsAudioModalOpen] = useState(
     allowAudio === undefined,
   );

@@ -4,12 +4,10 @@ import { useNavigate } from "react-router";
 import { Button, Flex } from "antd";
 import { AnimatePresence, motion, MotionProps } from "framer-motion";
 
-import audioSrcAppearance from "@assets/sounds/itemAppearance.mp3";
 import { ROUTE_PATHS } from "@constants";
-import { useAppSettings } from "@providers/AppSettingsProvider.tsx";
+import { useAppSettings } from "@providers/AppSettingsProvider/AppSettingsProvider.tsx";
 
 const ANIMATION_DURATION_S = 0.2;
-const AUDIO_DELAY_S = ANIMATION_DURATION_S / 4;
 
 const motionProps: MotionProps = {
   initial: { opacity: 0, y: 50 },
@@ -19,23 +17,22 @@ const motionProps: MotionProps = {
 };
 
 export const AnimatedMenuList = () => {
-  const [isReady, setIsReady] = useState(false);
-  const { allowAudio } = useAppSettings();
-  const audioHover = useRef(allowAudio ? new Audio(audioSrcAppearance) : null);
+  const {
+    audio: { isAllAudioLoaded, allowAudio, audios },
+  } = useAppSettings();
+  const isReady = !allowAudio || isAllAudioLoaded;
+  const timerIdRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
   const [items, setItems] = useState<JSX.Element[]>([]);
   const navigate = useNavigate();
   const { t } = useTranslation();
 
   const playAudio = useCallback(() => {
-    const clonedAudio = audioHover.current
-      ? (audioHover.current.cloneNode() as (typeof audioHover)["current"])
-      : null;
-    if (clonedAudio) {
-      clonedAudio.volume = 0.1;
-      clonedAudio.play();
-    }
-  }, []);
+    const clonedAudio =
+      audios.itemAppearanceAudio.element.cloneNode() as typeof audios.itemAppearanceAudio.element;
+    clonedAudio.volume = 0.1;
+    clonedAudio.play();
+  }, [audios]);
 
   const allItems = useMemo(
     () => [
@@ -63,69 +60,46 @@ export const AnimatedMenuList = () => {
   );
 
   useEffect(() => {
+    clearInterval(timerIdRef.current);
+    timerIdRef.current = undefined;
     setItems([]);
   }, [allItems]);
 
   useEffect(() => {
-    let myTimer: NodeJS.Timeout | undefined = undefined;
-    if (isReady) {
-      const audioRef = audioHover.current;
-
-      const addItems = () => {
-        setItems((prevItems) => {
-          if (prevItems.length >= allItems.length) {
-            clearInterval(myTimer);
-            return prevItems;
-          }
-
-          if (audioRef) {
-            setTimeout(() => {
-              const clonedAudio = audioHover.current
-                ? (audioHover.current.cloneNode() as (typeof audioHover)["current"])
-                : null;
-              if (clonedAudio) {
-                clonedAudio.volume = 0.1;
-                clonedAudio.play();
-              }
-            }, AUDIO_DELAY_S * 1000);
-          }
-
-          return [...prevItems, allItems[prevItems.length]];
-        });
-      };
-
-      myTimer = setInterval(addItems, ANIMATION_DURATION_S * 1000);
-
-      return () => {
-        if (myTimer) {
-          clearInterval(myTimer);
+    const addItems = () => {
+      setItems((prevItems) => {
+        if (prevItems.length >= allItems.length) {
+          clearInterval(timerIdRef.current);
+          return prevItems;
         }
-      };
-    }
-  }, [allItems, isReady]);
 
-  useEffect(() => {
-    const audioRef = audioHover.current;
-
-    const startAnimationAppearanceMenu = () => {
-      setIsReady(true);
+        return [...prevItems, allItems[prevItems.length]];
+      });
     };
 
-    if (audioRef) {
-      audioRef.addEventListener("canplaythrough", startAnimationAppearanceMenu);
-    } else {
-      startAnimationAppearanceMenu();
+    if (isReady && !timerIdRef.current) {
+      timerIdRef.current = setInterval(addItems, ANIMATION_DURATION_S * 1000);
     }
 
     return () => {
-      if (audioRef) {
-        audioRef.removeEventListener(
-          "canplaythrough",
-          startAnimationAppearanceMenu,
-        );
-      }
+      clearInterval(timerIdRef.current);
+      timerIdRef.current = undefined;
     };
-  }, [allItems]);
+  }, [
+    allItems,
+    allowAudio,
+    audios,
+    isAllAudioLoaded,
+    isReady,
+    items.length,
+    playAudio,
+  ]);
+
+  useEffect(() => {
+    if (items.length) {
+      playAudio();
+    }
+  }, [items.length, playAudio]);
 
   return (
     <Flex vertical align={"center"}>

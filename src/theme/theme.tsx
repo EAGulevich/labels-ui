@@ -1,6 +1,6 @@
 import { theme, ThemeConfig } from "antd";
 
-import { ThemeName } from "@providers/AppSettingsProvider.tsx";
+import { ThemeName } from "@providers/AppSettingsProvider/AppSettingsProvider.tsx";
 
 const commonConfig: ThemeConfig = {
   token: {
