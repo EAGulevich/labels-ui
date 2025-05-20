@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { motion } from "motion/react";
 
 import { Player as PlayerComp } from "@components/Player/Player.tsx";
 import { FACT_STATUS } from "@sharedTypes/factStatuses.ts";
@@ -17,17 +18,25 @@ export const InputFactScreen = ({ players }: InputFactScreenProps) => {
     <>
       <StyledTitle level={1}>{t("inputFactScreen.inputFact")}</StyledTitle>
       <Players>
-        {players.map((player) => (
-          <PlayerComp
-            key={player.id}
-            player={player}
-            status={
-              player.factStatus === FACT_STATUS.NOT_RECEIVED
-                ? "waiting"
-                : "success"
-            }
-          />
-        ))}
+        {players.map((player) => {
+          const isDode = player.factStatus === FACT_STATUS.NOT_GUESSED;
+          return (
+            <motion.div
+              key={player.id}
+              animate={isDode ? { scale: 0.8 } : { scale: 1 }}
+            >
+              <PlayerComp
+                key={player.id}
+                player={player}
+                status={
+                  player.factStatus === FACT_STATUS.NOT_RECEIVED
+                    ? "waiting"
+                    : "success"
+                }
+              />
+            </motion.div>
+          );
+        })}
       </Players>
     </>
   );

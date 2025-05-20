@@ -2,7 +2,7 @@ import { JSX, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { Button, Flex } from "antd";
-import { AnimatePresence, motion, MotionProps } from "framer-motion";
+import { motion, MotionProps } from "motion/react";
 
 import { ROUTE_PATHS } from "@constants";
 import { useAppSettings } from "@providers/AppSettingsProvider/AppSettingsProvider.tsx";
@@ -99,13 +99,11 @@ export const AnimatedMenuList = () => {
 
   return (
     <Flex vertical align={"center"}>
-      <AnimatePresence>
-        {items.map((item, index) => (
-          <motion.div key={index} {...motionProps}>
-            {item}
-          </motion.div>
-        ))}
-      </AnimatePresence>
+      {items.map((item, index) => (
+        <motion.div key={index} {...motionProps}>
+          {item}
+        </motion.div>
+      ))}
     </Flex>
   );
 };
