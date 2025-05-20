@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Alert, Button, Flex } from "antd";
+import { Alert, Button, Flex, Spin } from "antd";
 
 import { MainAnimatedLogo } from "@components/MainAnimatedLogo/MainAnimatedLogo.tsx";
 import { useAppSettings } from "@providers/AppSettingsProvider/AppSettingsProvider.tsx";
@@ -12,7 +12,7 @@ const HomePage = () => {
   const { t } = useTranslation();
 
   const {
-    audio: { allowAudio, setAllowAudio },
+    audio: { allowAudio, setAllowAudio, isAllAudioLoaded },
   } = useAppSettings();
   const [isAudioModalOpen, setIsAudioModalOpen] = useState(
     allowAudio === undefined,
@@ -57,6 +57,10 @@ const HomePage = () => {
         }
       />
     );
+  }
+
+  if (allowAudio && !isAllAudioLoaded) {
+    return <Spin tip={t("audioModal.loadingSounds")} size="large" fullscreen />;
   }
 
   return (

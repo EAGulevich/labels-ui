@@ -5,7 +5,8 @@
     "buttons": {
       "allow": "Enable",
       "refuse": "Disable"
-    }
+    },
+    "loadingSounds": "Loading sounds..."
   },
   "home": {
     "menu": {
