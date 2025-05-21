@@ -64,3 +64,14 @@ export const StyledDivider = styled(Divider)<{ $isDividerVisible: boolean }>`
     width ${ANIMATION_SPEED},
     opacity ${ANIMATION_SPEED};
 `;
+
+export const StyledInfoHeader = styled.div`
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+
+  > * {
+    margin: 0;
+  }
+`;

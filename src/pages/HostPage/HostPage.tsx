@@ -1,9 +1,10 @@
+import { createPortal } from "react-dom";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { FrownOutlined } from "@ant-design/icons";
-import { Button, Result } from "antd";
+import { Button, Result, Tag } from "antd";
 
-import { ROUTE_PATHS } from "@constants";
+import { HEADER_INFO_CONTAINER, ROUTE_PATHS } from "@constants";
 import { ROOM_STATUSES } from "@sharedTypes/roomStatuses.ts";
 
 import { CreateOrReturnToRoom } from "./screens/CreateOrReturnToRoom/CreateOrReturnToRoom.tsx";
@@ -32,11 +33,17 @@ const HostPage = () => {
     );
   }
 
+  const headerMenuElement = document.getElementById(HEADER_INFO_CONTAINER);
+  const roomCode = room?.code;
+
+  const showCodeInHeader =
+    room?.status !== ROOM_STATUSES.CREATED && roomCode && headerMenuElement;
+
   return (
     <>
       {contextHolder}
-      {/*todo later: вывести код комнаты*/}
-      {/*<StyledTag color="gold">{room?.code}</StyledTag>*/}
+      {showCodeInHeader &&
+        createPortal(<Tag color={"gold"}>{room?.code}</Tag>, headerMenuElement)}
       {!room && (
         <CreateOrReturnToRoom
           onCreateRoom={onCreateRoom}

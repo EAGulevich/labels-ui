@@ -24,6 +24,7 @@ export const InputFactScreen = ({ players }: InputFactScreenProps) => {
             <motion.div
               key={player.id}
               animate={isDode ? { scale: 0.8 } : { scale: 1 }}
+              transition={{ duration: 1 }}
             >
               <PlayerComp
                 key={player.id}

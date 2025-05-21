@@ -4,6 +4,7 @@ import { Button, Dropdown, MenuProps } from "antd";
 
 import { PlayerAvatar } from "@components/PlayerAvatar/PlayerAvatar.tsx";
 import { useAppSettings } from "@providers/AppSettingsProvider/AppSettingsProvider.tsx";
+import { useAppStorage } from "@providers/AppStorageProvider.tsx";
 import { AvatarToken } from "@sharedTypes/avatarTokens.ts";
 
 import { avatarItems } from "./avatarItems.tsx";
@@ -28,6 +29,8 @@ export const AvatarSelect: FC<AvatarSelectProps> = ({ value, onChange }) => {
     audio: { getAudio },
   } = useAppSettings();
 
+  const { volume } = useAppStorage();
+
   const items: MenuProps["items"] = useMemo(
     () =>
       avatarItems.map((item) => ({
@@ -38,7 +41,7 @@ export const AvatarSelect: FC<AvatarSelectProps> = ({ value, onChange }) => {
             icon={<PlayerAvatar token={item.key} />}
             onClick={() => {
               setAvatarToken(item.key);
-              getAudio(item.key).play();
+              getAudio(item.key).play({ userSettingsVolume: volume });
               if (typeof onChange === "function") {
                 onChange(item.key);
               }
@@ -46,7 +49,7 @@ export const AvatarSelect: FC<AvatarSelectProps> = ({ value, onChange }) => {
           />
         ),
       })),
-    [getAudio, onChange],
+    [getAudio, onChange, volume],
   );
 
   return (

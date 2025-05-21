@@ -11,6 +11,42 @@ type UseSoundPlayerProps = {
   setAudios: (audios: Sounds) => void;
 };
 
+const calcVolume = ({
+  audioVolume,
+  userVolume,
+}: {
+  audioVolume: number;
+  userVolume: number;
+}): number => {
+  let ratio = 0.1;
+
+  switch (userVolume) {
+    case 5: {
+      ratio = 1;
+      break;
+    }
+    case 4: {
+      ratio = 0.7;
+      break;
+    }
+    case 3: {
+      ratio = 0.45;
+      break;
+    }
+    case 2: {
+      ratio = 0.2;
+      break;
+    }
+    case 1:
+    default: {
+      ratio = 0.05;
+      break;
+    }
+  }
+
+  return audioVolume * ratio;
+};
+
 const createAudioPromise = (name: keyof Sounds, sound: Sound) => {
   return new Promise<{ name: keyof Sounds; sound: Sound }>(
     (resolve, reject) => {
@@ -25,10 +61,12 @@ const createAudioPromise = (name: keyof Sounds, sound: Sound) => {
           name,
           sound: {
             ...sound,
-            play: (params) => {
-              const { volume = 1 } = params || {};
+            play: ({ volume = 1, userSettingsVolume }) => {
               const clonedAudio = audioFile.cloneNode() as typeof audioFile;
-              clonedAudio.volume = volume;
+              clonedAudio.volume = calcVolume({
+                audioVolume: volume,
+                userVolume: userSettingsVolume,
+              });
               clonedAudio.play();
             },
             isReady: true,

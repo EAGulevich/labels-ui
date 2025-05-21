@@ -7,12 +7,13 @@ import HeaderLogo from "@assets/headerLogo.svg?react";
 import { LngSwitcher } from "@components/LngSwitcher/LngSwitcher.tsx";
 import { MuteSwitcher } from "@components/MuteSwitcher/MuteSwitcher.tsx";
 import { ThemeSwitcher } from "@components/ThemeSwither/ThemeSwitcher.tsx";
-import { ROUTE_PATHS } from "@constants";
+import { HEADER_INFO_CONTAINER, ROUTE_PATHS } from "@constants";
 
 import {
   StyledDivider,
   StyledHeader,
   StyledHeaderContent,
+  StyledInfoHeader,
   SvgContainer,
 } from "./styles.tsx";
 
@@ -42,6 +43,7 @@ export const Header = ({ onlyMenuButton }: HeaderProps) => {
         >
           <HeaderLogo />
         </SvgContainer>
+        <StyledInfoHeader id={HEADER_INFO_CONTAINER} />
         <Popover
           placement="bottomRight"
           trigger={"click"}

@@ -1,9 +1,12 @@
+import { createPortal } from "react-dom";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { FrownOutlined } from "@ant-design/icons";
-import { Button, Result } from "antd";
+import { Button, Flex, Result, Typography } from "antd";
 
-import { MIN_PLAYERS, ROUTE_PATHS } from "@constants";
+import { PlayerAvatar } from "@components/PlayerAvatar/PlayerAvatar.tsx";
+import { HEADER_INFO_CONTAINER, MIN_PLAYERS, ROUTE_PATHS } from "@constants";
+import { useAppStorage } from "@providers/AppStorageProvider.tsx";
 import { ROOM_STATUSES } from "@sharedTypes/roomStatuses.ts";
 
 import { InputFactScreen } from "./screens/InputFactScreen/InputFactScreen.tsx";
@@ -23,6 +26,7 @@ const PlayerPage = () => {
     isVip,
     onSendFact,
   } = useSocketEvents();
+  const { playerId } = useAppStorage();
   const { t } = useTranslation();
 
   if (isServerError) {
@@ -40,9 +44,21 @@ const PlayerPage = () => {
     );
   }
 
+  const headerMenuElement = document.getElementById(HEADER_INFO_CONTAINER);
+  const player = room?.players.find((p) => p.id === playerId);
+
   return (
     <PlayerLayout>
       {contextHolder}
+      {player &&
+        headerMenuElement &&
+        createPortal(
+          <Flex gap={"small"} justify={"center"} align={"center"}>
+            <PlayerAvatar token={player.avatarToken} size={"small"} />
+            <Typography.Text>{player.name}</Typography.Text>
+          </Flex>,
+          headerMenuElement,
+        )}
       {!room && <JoinScreen onJoin={onJoin} />}
       {room?.status === ROOM_STATUSES.CREATED && (
         <WaitingPlayersScreen

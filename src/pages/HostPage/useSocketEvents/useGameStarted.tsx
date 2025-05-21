@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { message } from "antd";
 
 import { useAppSettings } from "@providers/AppSettingsProvider/AppSettingsProvider.tsx";
+import { useAppStorage } from "@providers/AppStorageProvider.tsx";
 import { ServerToClientEvents } from "@sharedTypes/events.ts";
 import { Room } from "@sharedTypes/types.ts";
 import { socket } from "@socket";
@@ -20,11 +21,12 @@ export const useGameStarted = ({
   const {
     audio: { getAudio },
   } = useAppSettings();
+  const { volume } = useAppStorage();
 
   useEffect(() => {
     const gameStarted: ServerToClientEvents["gameStarted"] = ({ room }) => {
       setRoom(room);
-      getAudio("attention").play();
+      getAudio("attention").play({ userSettingsVolume: volume });
     };
 
     socket.on("gameStarted", gameStarted);
@@ -32,5 +34,5 @@ export const useGameStarted = ({
     return () => {
       socket.off("gameStarted", gameStarted);
     };
-  }, [getAudio, messageApi, setRoom, t]);
+  }, [getAudio, messageApi, setRoom, t, volume]);
 };

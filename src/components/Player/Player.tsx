@@ -4,13 +4,14 @@ import { useTheme } from "styled-components";
 
 import { PlayerAvatar } from "@components/PlayerAvatar/PlayerAvatar.tsx";
 import { AvatarToken, AvatarTokenBot } from "@sharedTypes/avatarTokens.ts";
+import { FACT_STATUS } from "@sharedTypes/factStatuses.ts";
 import { type Player as PlayerType } from "@sharedTypes/types.ts";
 
 import { StyledBadge, StyledCard, StyledPlayer } from "./styles.ts";
 
 type PlayerProps = {
   status?: "success" | "waiting";
-  player: Pick<PlayerType, "name" | "isVip" | "isActive"> & {
+  player: Pick<PlayerType, "name" | "isVip" | "isActive" | "factStatus"> & {
     avatarToken: AvatarToken | AvatarTokenBot;
   };
 };
@@ -36,7 +37,10 @@ export const Player = ({ player, status }: PlayerProps) => {
           ) : undefined
         }
       >
-        <StyledCard variant={"outlined"}>
+        <StyledCard
+          variant={"outlined"}
+          isSuccess={player.factStatus === FACT_STATUS.NOT_GUESSED}
+        >
           <StyledPlayer>
             <Flex align={"center"} justify={"center"} flex={1}>
               <Spin spinning={!player.isActive}>

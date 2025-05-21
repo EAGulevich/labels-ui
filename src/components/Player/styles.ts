@@ -1,5 +1,5 @@
 import { Badge, Card } from "antd";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const StyledPlayer = styled.div`
   height: 100%;
@@ -17,12 +17,20 @@ export const StyledBadge = styled(Badge.Ribbon).attrs({
   display: ${({ isVip }) => (isVip ? "block" : "none")};
 `;
 
-export const StyledCard = styled(Card)`
+export const StyledCard = styled(Card)<{ isSuccess: boolean }>`
   width: 110px;
   aspect-ratio: 1 / 1;
   padding: 0;
   display: flex;
   justify-content: center;
+
+  ${({ isSuccess }) =>
+    isSuccess
+      ? css`
+          border-color: ${({ theme }) => theme.token.colorSuccessBorder};
+          border-width: 2px;
+        `
+      : ""}
 
   > * {
     padding: 0;

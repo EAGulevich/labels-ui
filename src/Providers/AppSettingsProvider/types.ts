@@ -2,7 +2,10 @@ import { AvatarToken, AvatarTokenBot } from "@sharedTypes/avatarTokens.ts";
 
 export type Sound = {
   src: string;
-  play: (params?: { volume?: HTMLAudioElement["volume"] }) => void;
+  play: (params: {
+    volume?: HTMLAudioElement["volume"];
+    userSettingsVolume: number;
+  }) => void;
   isReady: boolean;
 };
 

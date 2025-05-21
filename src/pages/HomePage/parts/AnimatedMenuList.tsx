@@ -6,6 +6,7 @@ import { motion, MotionProps } from "motion/react";
 
 import { ROUTE_PATHS } from "@constants";
 import { useAppSettings } from "@providers/AppSettingsProvider/AppSettingsProvider.tsx";
+import { useAppStorage } from "@providers/AppStorageProvider.tsx";
 
 const ANIMATION_DURATION_S = 0.2;
 
@@ -22,14 +23,15 @@ export const AnimatedMenuList = () => {
   } = useAppSettings();
   const isReady = !allowAudio || isAllAudioLoaded;
   const timerIdRef = useRef<NodeJS.Timeout | undefined>(undefined);
+  const { volume } = useAppStorage();
 
   const [items, setItems] = useState<JSX.Element[]>([]);
   const navigate = useNavigate();
   const { t } = useTranslation();
 
   const playAudio = useCallback(() => {
-    getAudio("itemHover").play({ volume: 0.1 });
-  }, [getAudio]);
+    getAudio("itemHover").play({ userSettingsVolume: volume });
+  }, [getAudio, volume]);
 
   const allItems = useMemo(
     () => [
@@ -57,10 +59,12 @@ export const AnimatedMenuList = () => {
   );
 
   useEffect(() => {
-    clearInterval(timerIdRef.current);
-    timerIdRef.current = undefined;
-    setItems([]);
-  }, [allItems]);
+    if (items.length === allItems.length) {
+      clearInterval(timerIdRef.current);
+      timerIdRef.current = undefined;
+      setItems(allItems);
+    }
+  }, [allItems, items.length]);
 
   useEffect(() => {
     const addItems = () => {
