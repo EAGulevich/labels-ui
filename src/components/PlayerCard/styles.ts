@@ -1,9 +1,13 @@
-import { Badge, Card } from "antd";
+import { Badge, Card, Typography } from "antd";
 import styled, { css } from "styled-components";
 
 const VIP_BADGE_CLASS_NAME = "vip-badge";
 
 export const Wrapper = styled.div`
+  box-shadow: inset ${({ theme }) => theme.token.colorTextDescription} 0px 0px
+    10px 2px;
+  border-radius: 4px;
+
   .${VIP_BADGE_CLASS_NAME} {
     > :first-child {
       vertical-align: middle;
@@ -28,15 +32,18 @@ export const StyledBadge = styled(Badge.Ribbon).attrs({
   display: ${({ isVip }) => (isVip ? "block" : "none")};
 `;
 
-export const StyledCard = styled(Card)<{ isSuccess: boolean }>`
+export const StyledCard = styled(Card)<{ $isSuccess: boolean }>`
   width: 110px;
   aspect-ratio: 1 / 1;
   padding: 0;
   display: flex;
   justify-content: center;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
 
-  ${({ isSuccess }) =>
-    isSuccess
+  ${({ $isSuccess }) =>
+    $isSuccess
       ? css`
           border-color: ${({ theme }) => theme.token.colorSuccessBorder};
           border-width: 2px;
@@ -46,4 +53,8 @@ export const StyledCard = styled(Card)<{ isSuccess: boolean }>`
   > * {
     padding: 0;
   }
+`;
+
+export const PlayerName = styled(Typography.Text)`
+  text-align: center;
 `;

@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { motion } from "motion/react";
 
-import { Player as PlayerComp } from "@components/Player/Player.tsx";
+import { PlayerCard } from "@components/PlayerCard/PlayerCard.tsx";
 import { FACT_STATUS } from "@sharedTypes/factStatuses.ts";
 import { Player } from "@sharedTypes/types.ts";
 
@@ -26,7 +26,7 @@ export const InputFactScreen = ({ players }: InputFactScreenProps) => {
               animate={isDode ? { scale: 0.8 } : { scale: 1 }}
               transition={{ duration: 1 }}
             >
-              <PlayerComp
+              <PlayerCard
                 key={player.id}
                 player={player}
                 status={

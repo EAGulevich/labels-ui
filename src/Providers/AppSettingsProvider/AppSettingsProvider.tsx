@@ -17,7 +17,10 @@ import { useSoundPlayer } from "./useSoundPlayer.tsx";
 
 const LOCAL_STORAGE_THEME = "theme";
 const LOCAL_STORAGE_LNG = "lng";
+const LOCAL_STORAGE_DISCUSSION_TIME_S = "voteTime";
+
 const DEFAULT_THEME: ThemeName = "dark";
+const DEFAULT_VOTE_TIME = 100;
 
 export type ThemeName = "dark" | "light";
 
@@ -35,6 +38,10 @@ type AppSettingsContextType = {
     setAllowAudio: (allow: boolean) => void;
     isAllAudioLoaded: boolean;
     getAudio: (name: keyof Sounds) => Sound;
+  };
+  discussion: {
+    discussionTime: number;
+    changeDiscussionTime: (time: number) => void;
   };
 };
 
@@ -54,6 +61,12 @@ const defaultValue: AppSettingsContextType = {
     isAllAudioLoaded: false,
     getAudio: (name: keyof Sounds) => DEFAULT_SOUNDS[name],
   },
+  discussion: {
+    discussionTime: +(
+      localStorage.getItem(LOCAL_STORAGE_DISCUSSION_TIME_S) || DEFAULT_VOTE_TIME
+    ),
+    changeDiscussionTime: () => null,
+  },
 };
 
 const AppSettingsContext = createContext(defaultValue);
@@ -67,6 +80,11 @@ export const AppSettingsProvider: FC<PropsWithChildren> = ({ children }) => {
   const [isAllAudioLoaded, setIsAllAudioLoaded] = useState(false);
   const isAllAudioLoadingStarted = useRef(false);
   const audiosRef = useRef<Sounds>(DEFAULT_SOUNDS);
+  const [discussionTime, setDiscussionTime] = useState(
+    +(
+      localStorage.getItem(LOCAL_STORAGE_DISCUSSION_TIME_S) || DEFAULT_VOTE_TIME
+    ),
+  );
 
   const [themeName, setTheme] = useState<ThemeName>(
     (localStorage.getItem(LOCAL_STORAGE_THEME) as ThemeName) || DEFAULT_THEME,
@@ -75,6 +93,11 @@ export const AppSettingsProvider: FC<PropsWithChildren> = ({ children }) => {
   const changeTheme = useCallback((theme: ThemeName) => {
     localStorage.setItem(LOCAL_STORAGE_THEME, theme);
     setTheme(theme);
+  }, []);
+
+  const changeDiscussionTime = useCallback((time: number) => {
+    localStorage.setItem(LOCAL_STORAGE_DISCUSSION_TIME_S, time.toString());
+    setDiscussionTime(time);
   }, []);
 
   useEffect(() => {
@@ -121,6 +144,10 @@ export const AppSettingsProvider: FC<PropsWithChildren> = ({ children }) => {
           setAllowAudio,
           isAllAudioLoaded,
           getAudio,
+        },
+        discussion: {
+          discussionTime: discussionTime,
+          changeDiscussionTime: changeDiscussionTime,
         },
       }}
     >

@@ -87,6 +87,10 @@
       "send": "Отправить"
     }
   },
+  "roundScreen": {
+    "time": "Время",
+    "modalVote": "Голосование"
+  },
   "messages": {
     "youEnteredInRoom": "Вы вошли в комнату",
     "youHaveBecomeVIP": "Вы стали VIP",

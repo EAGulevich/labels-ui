@@ -15,6 +15,10 @@ const commonConfig: ThemeConfig = {
     Card: {
       bodyPadding: 0,
     },
+    Modal: {
+      titleFontSize: 40,
+      headerBg: "transparent",
+    },
   },
 };
 

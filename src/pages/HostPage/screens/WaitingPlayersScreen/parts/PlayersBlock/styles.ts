@@ -1,4 +1,4 @@
-import { Badge, Card, Skeleton, Statistic } from "antd";
+import { Card, Skeleton, Statistic } from "antd";
 import styled from "styled-components";
 
 import { MAX_PLAYERS } from "@constants";
@@ -19,22 +19,6 @@ export const PlayersCounter = styled(Statistic)`
   .${PLAYERS_COUNTER_TITLE_CLASS} {
     margin: 10px 0;
   }
-`;
-
-export const StyledBadge = styled(Badge.Ribbon).attrs({
-  text: "VIP",
-  color: "gold",
-  placement: "start",
-})<{ isVip: boolean }>`
-  display: ${({ isVip }) => (isVip ? "block" : "none")};
-`;
-
-export const PlayerInfo = styled.div`
-  height: 100%;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
 `;
 
 export const StyledSkeleton = styled(Skeleton.Node)``;

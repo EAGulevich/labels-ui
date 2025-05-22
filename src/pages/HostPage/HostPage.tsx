@@ -9,6 +9,7 @@ import { ROOM_STATUSES } from "@sharedTypes/roomStatuses.ts";
 
 import { CreateOrReturnToRoom } from "./screens/CreateOrReturnToRoom/CreateOrReturnToRoom.tsx";
 import { InputFactScreen } from "./screens/InputFactScreen/InputFactScreen.tsx";
+import { RoundScreen } from "./screens/RoundScreen/RoundScreen.tsx";
 import { WaitingPlayersScreen } from "./screens/WaitingPlayersScreen/WaitingPlayersScreen.tsx";
 import { useSocketEvents } from "./useSocketEvents/useSocketEvents.tsx";
 
@@ -56,6 +57,18 @@ const HostPage = () => {
 
       {room?.status === ROOM_STATUSES.STARTED && (
         <InputFactScreen players={room.players} />
+      )}
+
+      {room?.status == ROOM_STATUSES.ROUND && (
+        <RoundScreen
+          facts={room.facts}
+          // TODO: voting
+          // votingFact={{
+          //   text: room.facts[0].text,
+          //   candidates: room.players,
+          // }}
+          players={room.players}
+        />
       )}
     </>
   );

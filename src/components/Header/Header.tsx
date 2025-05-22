@@ -4,6 +4,7 @@ import { MenuOutlined } from "@ant-design/icons";
 import { Button, Flex, List, Popover } from "antd";
 
 import HeaderLogo from "@assets/headerLogo.svg?react";
+import { DiscussionTimeSlider } from "@components/DiscussionTimeSlider/DiscussionTimeSlider.tsx";
 import { LngSwitcher } from "@components/LngSwitcher/LngSwitcher.tsx";
 import { MuteSwitcher } from "@components/MuteSwitcher/MuteSwitcher.tsx";
 import { ThemeSwitcher } from "@components/ThemeSwither/ThemeSwitcher.tsx";
@@ -53,6 +54,8 @@ export const Header = ({ onlyMenuButton }: HeaderProps) => {
                 <ThemeSwitcher />,
                 <LngSwitcher />,
                 <MuteSwitcher />,
+                // TODO: только для хоста
+                <DiscussionTimeSlider />,
               ]}
               renderItem={(item) => <List.Item>{item}</List.Item>}
             />

@@ -16,6 +16,7 @@
   "dependencies": {
     "@ant-design/v5-patch-for-react-19": "^1.0.3",
     "antd": "^5.24.7",
+    "auto-text-size": "^0.2.3",
     "dotenv": "^16.5.0",
     "i18next": "^25.0.1",
     "motion": "^12.12.1",

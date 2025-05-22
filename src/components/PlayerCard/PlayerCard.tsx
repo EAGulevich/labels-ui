@@ -1,22 +1,27 @@
 import { CheckCircleTwoTone, ClockCircleTwoTone } from "@ant-design/icons";
-import { Badge, Flex, Spin, Typography } from "antd";
+import { Badge, Flex, Spin } from "antd";
 import { useTheme } from "styled-components";
 
 import { PlayerAvatar } from "@components/PlayerAvatar/PlayerAvatar.tsx";
 import { AvatarToken, AvatarTokenBot } from "@sharedTypes/avatarTokens.ts";
-import { FACT_STATUS } from "@sharedTypes/factStatuses.ts";
 import { type Player as PlayerType } from "@sharedTypes/types.ts";
 
-import { StyledBadge, StyledCard, StyledPlayer, Wrapper } from "./styles.ts";
+import {
+  PlayerName,
+  StyledBadge,
+  StyledCard,
+  StyledPlayer,
+  Wrapper,
+} from "./styles.ts";
 
 type PlayerProps = {
   status?: "success" | "waiting";
   player: Pick<PlayerType, "name" | "isVip" | "isActive" | "factStatus"> & {
-    avatarToken: AvatarToken | AvatarTokenBot;
+    avatarToken?: AvatarToken | AvatarTokenBot;
   };
 };
 
-export const Player = ({ player, status }: PlayerProps) => {
+export const PlayerCard = ({ player, status }: PlayerProps) => {
   const { token } = useTheme();
 
   return (
@@ -38,19 +43,16 @@ export const Player = ({ player, status }: PlayerProps) => {
             ) : undefined
           }
         >
-          <StyledCard
-            variant={"outlined"}
-            isSuccess={player.factStatus === FACT_STATUS.NOT_GUESSED}
-          >
+          <StyledCard variant={"outlined"} $isSuccess={status === "success"}>
             <StyledPlayer>
-              <Flex align={"center"} justify={"center"} flex={1}>
+              <Flex align={"end"} justify={"center"} flex={1}>
                 <Spin spinning={!player.isActive}>
                   <PlayerAvatar token={player.avatarToken} />
                 </Spin>
               </Flex>
 
               <Flex align={"center"} justify={"center"} flex={1}>
-                <Typography.Text>{player.name}</Typography.Text>
+                <PlayerName>{player.name}</PlayerName>
               </Flex>
             </StyledPlayer>
           </StyledCard>

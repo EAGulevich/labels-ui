@@ -5,6 +5,6 @@ export const StyledAvatar = styled(Avatar)<
   AvatarProps & { background: string }
 >`
   background: ${({ background }) => background};
-  border: 2px solid ${({ theme }) => theme.token.colorBorder};
+  border: 2px solid ${({ theme }) => theme.token.colorTextSecondary};
   padding: 2px;
 `;

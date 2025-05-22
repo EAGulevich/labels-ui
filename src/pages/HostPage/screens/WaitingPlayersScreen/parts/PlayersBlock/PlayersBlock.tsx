@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Flex, Typography } from "antd";
 import { useTheme } from "styled-components";
 
-import { PlayerAvatar } from "@components/PlayerAvatar/PlayerAvatar.tsx";
+import { PlayerCard } from "@components/PlayerCard/PlayerCard.tsx";
 import { MAX_PLAYERS, MIN_PLAYERS } from "@constants";
 import { Room } from "@sharedTypes/types.ts";
 
@@ -11,11 +11,9 @@ import {
   DECORATIVE_PLACE_CLASS,
   DECORATIVE_PLACES_COUNT,
   EMPTY_PLACE_CLASS,
-  PlayerInfo,
   PLAYERS_COUNTER_TITLE_CLASS,
   PlayersCounter,
   PlayersGrid,
-  StyledBadge,
   StyledCard,
   StyledSkeleton,
 } from "./styles.ts";
@@ -50,18 +48,7 @@ export const PlayersBlock: FC<PlayersBlockProps> = ({ players }) => {
       </Flex>
       <PlayersGrid>
         {players.map((player) => (
-          <StyledBadge key={player.id} isVip={player.isVip}>
-            <StyledCard size={"small"}>
-              <PlayerInfo>
-                <Flex align={"center"} justify={"center"} flex={1}>
-                  <PlayerAvatar token={player.avatarToken} />
-                </Flex>
-                <Flex align={"center"} justify={"center"} flex={1}>
-                  <Typography.Text>{player.name}</Typography.Text>
-                </Flex>
-              </PlayerInfo>
-            </StyledCard>
-          </StyledBadge>
+          <PlayerCard player={player} />
         ))}
         {Array(MAX_PLAYERS - players.length)
           .fill(EMPTY_PLACE_CLASS)

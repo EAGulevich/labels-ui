@@ -87,6 +87,10 @@
       "send": "Send"
     }
   },
+  "roundScreen": {
+    "time": "Time",
+    "modalVote": "Voting"
+  },
   "messages": {
     "youEnteredInRoom": "You entered in room",
     "youHaveBecomeVIP": "You have become VIP",
