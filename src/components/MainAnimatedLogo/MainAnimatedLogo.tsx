@@ -14,20 +14,19 @@ export const MainAnimatedLogo = () => {
   const { volume } = useAppStorage();
 
   const isReady = !allowAudio || isAllAudioLoaded;
-  const isMounted = useRef(false);
+  const timerIdRef = useRef<NodeJS.Timeout | null>(null);
+  const isMountedRef = useRef(false);
 
   useEffect(() => {
-    let timerId: NodeJS.Timeout | null = null;
-
-    if (isReady && !isMounted.current) {
-      isMounted.current = true;
+    const timerId = timerIdRef.current;
+    if (isReady && !isMountedRef.current) {
+      isMountedRef.current = true;
       startAnimation();
-      timerId = setTimeout(() => {
+      timerIdRef.current = setTimeout(() => {
         getAudio("logoLighting").play({ userSettingsVolume: volume });
       }, 1000 * AUDIO_DELAY_S);
     }
     return () => {
-      isMounted.current = false;
       if (timerId) {
         clearTimeout(timerId);
       }
