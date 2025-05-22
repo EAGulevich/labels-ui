@@ -19,6 +19,8 @@ const StyledPageLayout = styled(Layout)<{ height: string }>`
 export const StyledContent = styled(Layout.Content)`
   padding: 20px;
   overflow: auto;
+  display: flex;
+  flex-direction: column;
 `;
 
 function App() {
