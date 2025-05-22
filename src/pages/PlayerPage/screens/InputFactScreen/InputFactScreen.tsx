@@ -60,6 +60,8 @@ export const InputFactScreen = ({
               },
             ]}
           >
+            {/*TODO: подсказка про формат*/}
+            {/*TODO: textarea*/}
             <Input showCount maxLength={FACT_MAX_LENGTH} />
           </Form.Item>
           <Form.Item label={null}>
