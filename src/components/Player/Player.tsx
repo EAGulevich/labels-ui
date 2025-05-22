@@ -7,7 +7,7 @@ import { AvatarToken, AvatarTokenBot } from "@sharedTypes/avatarTokens.ts";
 import { FACT_STATUS } from "@sharedTypes/factStatuses.ts";
 import { type Player as PlayerType } from "@sharedTypes/types.ts";
 
-import { StyledBadge, StyledCard, StyledPlayer } from "./styles.ts";
+import { StyledBadge, StyledCard, StyledPlayer, Wrapper } from "./styles.ts";
 
 type PlayerProps = {
   status?: "success" | "waiting";
@@ -20,40 +20,42 @@ export const Player = ({ player, status }: PlayerProps) => {
   const { token } = useTheme();
 
   return (
-    <StyledBadge isVip={player.isVip}>
-      <Badge
-        count={
-          status === "waiting" ? (
-            <ClockCircleTwoTone
-              style={{ fontSize: 22 }}
-              spin
-              twoToneColor={token.colorError}
-            />
-          ) : status === "success" ? (
-            <CheckCircleTwoTone
-              style={{ fontSize: 22 }}
-              twoToneColor={token.colorSuccess}
-            />
-          ) : undefined
-        }
-      >
-        <StyledCard
-          variant={"outlined"}
-          isSuccess={player.factStatus === FACT_STATUS.NOT_GUESSED}
+    <Wrapper>
+      <StyledBadge isVip={player.isVip}>
+        <Badge
+          count={
+            status === "waiting" ? (
+              <ClockCircleTwoTone
+                style={{ fontSize: 22 }}
+                spin
+                twoToneColor={token.colorError}
+              />
+            ) : status === "success" ? (
+              <CheckCircleTwoTone
+                style={{ fontSize: 22 }}
+                twoToneColor={token.colorSuccess}
+              />
+            ) : undefined
+          }
         >
-          <StyledPlayer>
-            <Flex align={"center"} justify={"center"} flex={1}>
-              <Spin spinning={!player.isActive}>
-                <PlayerAvatar token={player.avatarToken} />
-              </Spin>
-            </Flex>
+          <StyledCard
+            variant={"outlined"}
+            isSuccess={player.factStatus === FACT_STATUS.NOT_GUESSED}
+          >
+            <StyledPlayer>
+              <Flex align={"center"} justify={"center"} flex={1}>
+                <Spin spinning={!player.isActive}>
+                  <PlayerAvatar token={player.avatarToken} />
+                </Spin>
+              </Flex>
 
-            <Flex align={"center"} justify={"center"} flex={1}>
-              <Typography.Text>{player.name}</Typography.Text>
-            </Flex>
-          </StyledPlayer>
-        </StyledCard>
-      </Badge>
-    </StyledBadge>
+              <Flex align={"center"} justify={"center"} flex={1}>
+                <Typography.Text>{player.name}</Typography.Text>
+              </Flex>
+            </StyledPlayer>
+          </StyledCard>
+        </Badge>
+      </StyledBadge>
+    </Wrapper>
   );
 };

@@ -1,6 +1,16 @@
 import { Badge, Card } from "antd";
 import styled, { css } from "styled-components";
 
+const VIP_BADGE_CLASS_NAME = "vip-badge";
+
+export const Wrapper = styled.div`
+  .${VIP_BADGE_CLASS_NAME} {
+    > :first-child {
+      vertical-align: middle;
+    }
+  }
+`;
+
 export const StyledPlayer = styled.div`
   height: 100%;
   width: 100%;
@@ -13,6 +23,7 @@ export const StyledBadge = styled(Badge.Ribbon).attrs({
   text: "VIP",
   color: "gold",
   placement: "start",
+  rootClassName: VIP_BADGE_CLASS_NAME,
 })<{ isVip: boolean }>`
   display: ${({ isVip }) => (isVip ? "block" : "none")};
 `;
