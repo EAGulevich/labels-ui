@@ -15,3 +15,6 @@ export const ROUTE_PATHS = {
   host: "/room",
   player: "/game",
 } as const;
+
+// elems
+export const HEADER_INFO_CONTAINER = "HEADER_INFO_CONTAINER";
