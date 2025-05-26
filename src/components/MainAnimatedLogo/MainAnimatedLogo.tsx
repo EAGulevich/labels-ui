@@ -17,13 +17,15 @@ export const MainAnimatedLogo = () => {
   const timerIdRef = useRef<NodeJS.Timeout | null>(null);
   const isMountedRef = useRef(false);
 
+  const logoSound = getAudio("logoLighting");
+
   useEffect(() => {
     const timerId = timerIdRef.current;
     if (isReady && !isMountedRef.current) {
       isMountedRef.current = true;
       startAnimation();
       timerIdRef.current = setTimeout(() => {
-        getAudio("logoLighting").play({ userSettingsVolume: volume });
+        logoSound.play({ userSettingsVolume: volume });
       }, 1000 * AUDIO_DELAY_S);
     }
     return () => {
@@ -31,7 +33,7 @@ export const MainAnimatedLogo = () => {
         clearTimeout(timerId);
       }
     };
-  }, [getAudio, isReady, volume]);
+  }, [isReady, logoSound, volume]);
 
   if (!isReady) {
     return <LogoWrapper />;
