@@ -1,11 +1,13 @@
 import { useState } from "react";
+import { createPortal } from "react-dom";
 import { useTranslation } from "react-i18next";
 import { FieldTimeOutlined } from "@ant-design/icons";
-import { Button, Flex, Progress } from "antd";
+import { Button, Flex, Progress, Spin, Typography } from "antd";
 import { Statistic } from "antd";
 import { useTheme } from "styled-components";
 
-import { PlayerCard } from "@components/PlayerCard/PlayerCard.tsx";
+import { PlayerAvatar } from "@components/PlayerAvatar/PlayerAvatar.tsx";
+import { FOOTER_CONTENT } from "@constants";
 import { useAppSettings } from "@providers/AppSettingsProvider/AppSettingsProvider.tsx";
 import { Player } from "@sharedTypes/types.ts";
 
@@ -32,7 +34,7 @@ export const Footer = ({ players }: FooterProps) => {
     ? (timeLeft / 1000 / (DISCUSSION_TIME_MS / 1000)) * 100
     : 0;
 
-  return (
+  return createPortal(
     <Wrapper>
       <Progress
         strokeColor={
@@ -69,9 +71,15 @@ export const Footer = ({ players }: FooterProps) => {
       </Flex>
       <PlayersList>
         {players.map((p) => (
-          <PlayerCard key={p.id} player={p} />
+          <Flex key={p.id} align={"center"}>
+            <Spin spinning={!p.isActive}>
+              <PlayerAvatar token={p.avatarToken} />
+            </Spin>
+            <Typography.Text>{p.name}</Typography.Text>
+          </Flex>
         ))}
       </PlayersList>
-    </Wrapper>
+    </Wrapper>,
+    document.getElementById(FOOTER_CONTENT)!,
   );
 };

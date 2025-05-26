@@ -1,4 +1,4 @@
-import { Flex } from "antd";
+import { useCallback, useLayoutEffect, useState } from "react";
 import { AutoTextSize } from "auto-text-size";
 import { motion } from "motion/react";
 
@@ -6,13 +6,58 @@ import { PlayerCard } from "@components/PlayerCard/PlayerCard.tsx";
 import { FACT_STATUS } from "@sharedTypes/factStatuses.ts";
 import { Fact } from "@sharedTypes/types.ts";
 
-import { FactBlock, GridFacts } from "./styles.ts";
+import { FactBlock, GridFacts, PlayerWithFact } from "./styles.ts";
 
 type FactsGridProps = {
   facts: Fact[];
 };
 
+const MAX_HEIGHT = 110;
+
+const getRowHeight = (rowCount: number) => {
+  const gridContainer = document.querySelector("main")?.firstElementChild;
+  if (gridContainer) {
+    const gridStyles = window.getComputedStyle(gridContainer);
+
+    const newRowHeight = Number.parseInt(
+      (
+        (Number.parseInt(gridStyles.height) -
+          Number.parseInt(gridStyles.padding) * 2 -
+          Number.parseInt(gridStyles.gap) * 4) /
+          Math.ceil(rowCount / 2) -
+        1
+      ).toString(),
+    );
+
+    return +newRowHeight < MAX_HEIGHT ? +newRowHeight : MAX_HEIGHT;
+  } else {
+    return MAX_HEIGHT;
+  }
+};
+
 export const FactsGrid = ({ facts }: FactsGridProps) => {
+  const [rowHeight, setRowHeight] = useState(1);
+
+  const setupRowHeight = useCallback(() => {
+    const newRowHeight = getRowHeight(facts.length);
+
+    if (+newRowHeight < MAX_HEIGHT) {
+      setRowHeight(+newRowHeight);
+    } else {
+      setRowHeight(MAX_HEIGHT);
+    }
+  }, [facts.length]);
+
+  useLayoutEffect(() => {
+    setupRowHeight();
+
+    window.addEventListener("resize", setupRowHeight);
+
+    return () => {
+      window.removeEventListener("resize", setupRowHeight);
+    };
+  }, [setupRowHeight]);
+
   return (
     <GridFacts>
       {facts.map((item, index) => (
@@ -31,8 +76,9 @@ export const FactsGrid = ({ facts }: FactsGridProps) => {
             delay: (index + 1) * 0.5,
           }}
         >
-          <Flex gap={2}>
+          <PlayerWithFact $height={rowHeight + "px"}>
             <PlayerCard
+              height={rowHeight + "px"}
               player={{
                 name: "- - -",
                 isVip: false,
@@ -44,7 +90,7 @@ export const FactsGrid = ({ facts }: FactsGridProps) => {
             <FactBlock>
               <AutoTextSize mode={"box"}>{item.text}</AutoTextSize>
             </FactBlock>
-          </Flex>
+          </PlayerWithFact>
         </motion.div>
       ))}
     </GridFacts>

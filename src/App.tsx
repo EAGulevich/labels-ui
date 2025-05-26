@@ -4,7 +4,7 @@ import { ConfigProvider as AntConfigProvider, Layout } from "antd";
 import styled from "styled-components";
 
 import { Header } from "@components/Header/Header.tsx";
-import { ROUTE_PATHS } from "@constants";
+import { FOOTER_CONTENT, ROUTE_PATHS } from "@constants";
 import { useAppSettings } from "@providers/AppSettingsProvider/AppSettingsProvider.tsx";
 import { ThemeTokenProvider } from "@providers/ThemeTokenProvider.tsx";
 
@@ -21,6 +21,11 @@ export const StyledContent = styled(Layout.Content)`
   overflow: auto;
   display: flex;
   flex-direction: column;
+`;
+
+export const StyledFooter = styled(Layout.Footer)`
+  padding: 0 20px;
+  background: transparent;
 `;
 
 function App() {
@@ -41,6 +46,7 @@ function App() {
       <ThemeTokenProvider>
         <StyledPageLayout height={layoutHeight + "px"}>
           <Header onlyMenuButton={location.pathname === ROUTE_PATHS.home} />
+          <StyledFooter id={FOOTER_CONTENT} />
           <StyledContent>
             <Pages />
           </StyledContent>

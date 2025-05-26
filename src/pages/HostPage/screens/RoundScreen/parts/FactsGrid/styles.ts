@@ -1,3 +1,4 @@
+import { Flex } from "antd";
 import styled from "styled-components";
 
 export const GridFacts = styled.div`
@@ -8,16 +9,22 @@ export const GridFacts = styled.div`
   margin: -20px -20px 0 -20px;
   padding: 20px;
   overflow: hidden;
+  flex: 1;
 `;
 
 export const FactBlock = styled.div`
   max-width: 100%;
   margin: 0 auto;
-  height: 110px;
-  padding: 20px;
+  padding: 10px;
+  height: 100%;
   text-align: center;
   width: 100%;
   box-shadow: inset ${({ theme }) => theme.token.colorTextDescription} 0px 0px
     10px 2px;
   border-radius: 4px;
+`;
+
+export const PlayerWithFact = styled(Flex)<{ $height: string }>`
+  gap: 2px;
+  height: ${({ $height }) => $height};
 `;

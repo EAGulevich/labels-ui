@@ -7,6 +7,9 @@ export const Wrapper = styled.div`
   box-shadow: inset ${({ theme }) => theme.token.colorTextDescription} 0px 0px
     10px 2px;
   border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   .${VIP_BADGE_CLASS_NAME} {
     > :first-child {
@@ -32,8 +35,12 @@ export const StyledBadge = styled(Badge.Ribbon).attrs({
   display: ${({ isVip }) => (isVip ? "block" : "none")};
 `;
 
-export const StyledCard = styled(Card)<{ $isSuccess: boolean }>`
-  width: 110px;
+export const StyledCard = styled(Card)<{
+  $isSuccess: boolean;
+  $height?: string;
+}>`
+  height: ${({ $height }) => $height || "100%"};
+  width: ${({ $height }) => $height || "110px"};
   aspect-ratio: 1 / 1;
   padding: 0;
   display: flex;

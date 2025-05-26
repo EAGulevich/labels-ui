@@ -17,4 +17,5 @@ export const ROUTE_PATHS = {
 } as const;
 
 // elems
+export const FOOTER_CONTENT = "FOOTER_CONTENT";
 export const HEADER_INFO_CONTAINER = "HEADER_INFO_CONTAINER";

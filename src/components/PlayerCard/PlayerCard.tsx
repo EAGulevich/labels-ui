@@ -19,9 +19,10 @@ type PlayerProps = {
   player: Pick<PlayerType, "name" | "isVip" | "isActive" | "factStatus"> & {
     avatarToken?: AvatarToken | AvatarTokenBot;
   };
+  height?: string;
 };
 
-export const PlayerCard = ({ player, status }: PlayerProps) => {
+export const PlayerCard = ({ player, status, height }: PlayerProps) => {
   const { token } = useTheme();
 
   return (
@@ -43,14 +44,17 @@ export const PlayerCard = ({ player, status }: PlayerProps) => {
             ) : undefined
           }
         >
-          <StyledCard variant={"outlined"} $isSuccess={status === "success"}>
+          <StyledCard
+            variant={"outlined"}
+            $isSuccess={status === "success"}
+            $height={height}
+          >
             <StyledPlayer>
               <Flex align={"end"} justify={"center"} flex={1}>
                 <Spin spinning={!player.isActive}>
                   <PlayerAvatar token={player.avatarToken} />
                 </Spin>
               </Flex>
-
               <Flex align={"center"} justify={"center"} flex={1}>
                 <PlayerName>{player.name}</PlayerName>
               </Flex>
