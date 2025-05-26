@@ -22,6 +22,7 @@ export const PlayersCounter = styled(Statistic)`
 `;
 
 export const StyledSkeleton = styled(Skeleton.Node)``;
+
 export const StyledCard = styled(Card)`
   display: flex;
   align-items: center;
@@ -30,10 +31,6 @@ export const StyledCard = styled(Card)`
   width: 100%;
   text-align: center;
   aspect-ratio: 1 / 1;
-
-  > * {
-    height: 100%;
-  }
 `;
 
 export const PlayersGrid = styled.div`

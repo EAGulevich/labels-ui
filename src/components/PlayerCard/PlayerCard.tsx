@@ -34,12 +34,12 @@ export const PlayerCard = ({ player, status, height }: PlayerProps) => {
               <ClockCircleTwoTone
                 style={{ fontSize: 22 }}
                 spin
-                twoToneColor={token.colorError}
+                twoToneColor={token.colorErrorActive}
               />
             ) : status === "success" ? (
               <CheckCircleTwoTone
                 style={{ fontSize: 22 }}
-                twoToneColor={token.colorSuccess}
+                twoToneColor={token.colorSuccessActive}
               />
             ) : undefined
           }

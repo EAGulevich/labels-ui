@@ -48,7 +48,9 @@ export const PlayersBlock: FC<PlayersBlockProps> = ({ players }) => {
       </Flex>
       <PlayersGrid>
         {players.map((player) => (
-          <PlayerCard player={player} />
+          <StyledCard key={player.id}>
+            <PlayerCard player={player} />
+          </StyledCard>
         ))}
         {Array(MAX_PLAYERS - players.length)
           .fill(EMPTY_PLACE_CLASS)

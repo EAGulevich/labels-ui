@@ -34,6 +34,11 @@ export const Footer = ({ players }: FooterProps) => {
     ? (timeLeft / 1000 / (DISCUSSION_TIME_MS / 1000)) * 100
     : 0;
 
+  const startTimer = () => {
+    setDeadline(Date.now() + DISCUSSION_TIME_MS);
+    setTimeLeft(DISCUSSION_TIME_MS);
+  };
+
   return createPortal(
     <Wrapper>
       <Progress
@@ -53,22 +58,16 @@ export const Footer = ({ players }: FooterProps) => {
               onChange={(value) => setTimeLeft(+(value || 0))}
             />
           ) : (
-            <FieldTimeOutlined style={{ fontSize: 40, marginLeft: "4px" }} />
+            <div>
+              <FieldTimeOutlined style={{ fontSize: 40, marginLeft: "4px" }} />
+              {/*TODO: убрать кнопку*/}
+              <Button type={"text"} size={"small"} onClick={startTimer}>
+                запустить
+              </Button>
+            </div>
           )
         }
       />
-      {/*TODO: убрать кнопку*/}
-      <Flex align={"center"}>
-        <Button
-          type={"text"}
-          onClick={() => {
-            setDeadline(Date.now() + DISCUSSION_TIME_MS);
-            setTimeLeft(DISCUSSION_TIME_MS);
-          }}
-        >
-          запустить
-        </Button>
-      </Flex>
       <PlayersList>
         {players.map((p) => (
           <Flex key={p.id} align={"center"}>

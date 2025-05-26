@@ -39,21 +39,19 @@ export const StyledCard = styled(Card)<{
   $isSuccess: boolean;
   $height?: string;
 }>`
-  height: ${({ $height }) => $height || "100%"};
   width: ${({ $height }) => $height || "110px"};
   aspect-ratio: 1 / 1;
-  padding: 0;
+  padding: 4px;
   display: flex;
   justify-content: center;
   border: none;
   border-radius: 4px;
   background: transparent;
 
-  ${({ $isSuccess }) =>
+  ${({ $isSuccess, theme }) =>
     $isSuccess
       ? css`
-          border-color: ${({ theme }) => theme.token.colorSuccessBorder};
-          border-width: 2px;
+          border: 1px solid ${theme.token.colorSuccessActive};
         `
       : ""}
 

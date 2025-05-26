@@ -2,10 +2,11 @@ import { Flex } from "antd";
 import styled from "styled-components";
 
 export const Wrapper = styled(Flex).attrs({
-  gap: "small",
+  gap: "middle",
   justify: "space-between",
 })`
   margin-top: auto;
+  align-items: center;
 `;
 
 export const PlayersList = styled(Flex).attrs({
@@ -13,11 +14,10 @@ export const PlayersList = styled(Flex).attrs({
   wrap: true,
 })`
   margin: 0 auto;
-  column-gap: 20px;
-  row-gap: 10px;
+  gap: 8px;
 
   > * {
-    width: calc((100% - 20px * 4) / 5);
+    width: calc((100% - 8px * 4) / 5);
     gap: 4px;
   }
 `;
