@@ -3,13 +3,20 @@ import styled, { css } from "styled-components";
 
 const VIP_BADGE_CLASS_NAME = "vip-badge";
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.div<{ mark?: boolean }>`
   box-shadow: inset ${({ theme }) => theme.token.colorTextDescription} 0px 0px
     10px 2px;
   border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  ${({ mark }) =>
+    mark
+      ? css`
+          scale: 1.1;
+        `
+      : ""};
 
   .${VIP_BADGE_CLASS_NAME} {
     > :first-child {

@@ -102,6 +102,16 @@
     "playerLostConnection": "Потеряно соединение с игроком {{playerName}}",
     "playerReconnected": "Игрок {{playerName}} снова в комнате"
   },
+  "discussionScreen": {
+    "title": "Обсудите, кому принадлежат факты"
+  },
+  "playerVoteScreen": {
+    "title": "Кому принадлежит факт?",
+    "youVoted": "Вы проголосовали за"
+  },
+  "gameOverScreen": {
+    "title": "Игра завершена"
+  },
   "errorMessages": {
     "ROOM_NOT_FOUND_BY_HOST_ID_REENTER_ERROR": "Не удалось вернуться в ранее созданную комнату",
     "MAX_ROOM_CAPACITY_JOIN_ERROR": "В комнате максимальное число игроков",

@@ -25,8 +25,7 @@ export const useNewRound = ({ setRoom, messageApi }: UseGameStartedProps) => {
       room,
     }) => {
       setRoom(room);
-
-      getAudio("attention").play({ userSettingsVolume: volume });
+      //   TODO: вибрация
     };
 
     socket.on("newRoundStarted", newRoundStarted);

@@ -91,6 +91,16 @@
     "time": "Time",
     "modalVote": "Voting"
   },
+  "discussionScreen": {
+    "title": "Discuss who owns the facts"
+  },
+  "playerVoteScreen": {
+    "title": "Who owns the fact?",
+    "youVoted": "You voted for"
+  },
+  "gameOverScreen": {
+    "title": "Game over"
+  },
   "messages": {
     "youEnteredInRoom": "You entered in room",
     "youHaveBecomeVIP": "You have become VIP",

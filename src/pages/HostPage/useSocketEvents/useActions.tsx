@@ -21,6 +21,10 @@ export const useActions = ({ setRoom, messageApi }: UseActionsProps) => {
     });
   }, [changeRoomHostId, setRoom]);
 
+  const startVoting = useCallback(() => {
+    socket.emit("startVoting");
+  }, []);
+
   const onReenterRoom = useCallback(() => {
     socket.emit(
       "reenterRoom",
@@ -42,6 +46,7 @@ export const useActions = ({ setRoom, messageApi }: UseActionsProps) => {
   }, [changeRoomHostId, messageApi, removeRoomHostId, roomHostId, setRoom]);
 
   return {
+    startVoting,
     onCreateRoom,
     onReenterRoom: roomHostId ? onReenterRoom : undefined,
   };

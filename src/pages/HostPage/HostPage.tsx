@@ -16,8 +16,14 @@ import { useSocketEvents } from "./useSocketEvents/useSocketEvents.tsx";
 const HostPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { room, isServerError, onCreateRoom, onReenterRoom, contextHolder } =
-    useSocketEvents();
+  const {
+    room,
+    isServerError,
+    onCreateRoom,
+    onReenterRoom,
+    contextHolder,
+    startVoting,
+  } = useSocketEvents();
 
   if (isServerError) {
     return (
@@ -59,15 +65,16 @@ const HostPage = () => {
         <InputFactScreen players={room.players} />
       )}
 
-      {room?.status == ROOM_STATUSES.ROUND && (
+      {(room?.status == ROOM_STATUSES.ROUND ||
+        room?.status === ROOM_STATUSES.VOTING) && (
         <RoundScreen
           facts={room.facts}
-          // TODO: voting
-          // votingFact={{
-          //   text: room.facts[0].text,
-          //   candidates: room.players,
-          // }}
+          votingFact={room.votingFact}
           players={room.players}
+          onTimerFinish={startVoting}
+          roomStatus={room.status}
+          round={room.round}
+          story={room.story}
         />
       )}
     </>

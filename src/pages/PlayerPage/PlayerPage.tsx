@@ -7,10 +7,14 @@ import { Button, Flex, Result, Typography } from "antd";
 import { PlayerAvatar } from "@components/PlayerAvatar/PlayerAvatar.tsx";
 import { HEADER_INFO_CONTAINER, MIN_PLAYERS, ROUTE_PATHS } from "@constants";
 import { useAppStorage } from "@providers/AppStorageProvider.tsx";
+import { FACT_STATUS } from "@sharedTypes/factStatuses.ts";
 import { ROOM_STATUSES } from "@sharedTypes/roomStatuses.ts";
 
+import { DiscussionScreen } from "./screens/DiscussionScreen/DiscussionScreen.tsx";
+import { GameOverScreen } from "./screens/GameOverScreen/GameOverScreen.tsx";
 import { InputFactScreen } from "./screens/InputFactScreen/InputFactScreen.tsx";
 import { JoinScreen } from "./screens/JoinScreen/JoinScreen.tsx";
+import { VoteScreen } from "./screens/VoteScreen/VoteScreen.tsx";
 import { WaitingPlayersScreen } from "./screens/WaitingPlayersScreen/WaitingPlayersScreen.tsx";
 import { useSocketEvents } from "./useSocketEvents/useSocketEvents.tsx";
 import { PlayerLayout } from "./styles.ts";
@@ -25,6 +29,7 @@ const PlayerPage = () => {
     isServerError,
     isVip,
     onSendFact,
+    addVote,
   } = useSocketEvents();
   const { playerId } = useAppStorage();
   const { t } = useTranslation();
@@ -46,6 +51,11 @@ const PlayerPage = () => {
 
   const headerMenuElement = document.getElementById(HEADER_INFO_CONTAINER);
   const player = room?.players.find((p) => p.id === playerId);
+
+  const isAllGuessed =
+    room?.status === ROOM_STATUSES.ROUND &&
+    !room?.players.filter((p) => p.factStatus === FACT_STATUS.NOT_GUESSED)
+      .length;
 
   return (
     <PlayerLayout>
@@ -69,6 +79,17 @@ const PlayerPage = () => {
       )}
       {room?.status === ROOM_STATUSES.STARTED && (
         <InputFactScreen players={room.players} onSendFact={onSendFact} />
+      )}
+
+      {room?.status === ROOM_STATUSES.ROUND &&
+        (isAllGuessed ? (
+          <GameOverScreen room={room} />
+        ) : (
+          <DiscussionScreen facts={room.facts} />
+        ))}
+
+      {room?.status === ROOM_STATUSES.VOTING && (
+        <VoteScreen votingFact={room.votingFact} addVote={addVote} />
       )}
     </PlayerLayout>
   );

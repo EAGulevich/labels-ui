@@ -19,11 +19,11 @@ export const InputFactScreen = ({ players }: InputFactScreenProps) => {
       <StyledTitle level={1}>{t("inputFactScreen.inputFact")}</StyledTitle>
       <Players>
         {players.map((player) => {
-          const isDode = player.factStatus === FACT_STATUS.NOT_GUESSED;
+          const isDone = player.factStatus === FACT_STATUS.NOT_GUESSED;
           return (
             <motion.div
               key={player.id}
-              animate={isDode ? { scale: 0.8 } : { scale: 1 }}
+              animate={isDone ? { scale: 0.8 } : { scale: 1 }}
               transition={{ duration: 1 }}
             >
               <PlayerCard

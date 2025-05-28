@@ -24,7 +24,23 @@ export const FactBlock = styled.div`
   border-radius: 4px;
 `;
 
-export const PlayerWithFact = styled(Flex)<{ $height: string }>`
+export const PlayerWithFact = styled(Flex)<{
+  $height: string;
+  isGuessed?: boolean;
+}>`
   gap: 2px;
   height: ${({ $height }) => $height};
+
+  > * {
+    transition-property: box-shadow;
+    transition-duration: 1s;
+    box-shadow: inset
+      ${({ theme, isGuessed }) =>
+        isGuessed === true
+          ? theme.token.colorSuccessActive
+          : isGuessed === false
+            ? theme.token.colorErrorActive
+            : theme.token.colorTextDescription}
+      0px 0px 10px 2px;
+  }
 `;

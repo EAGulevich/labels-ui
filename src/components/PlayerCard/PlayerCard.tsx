@@ -20,13 +20,20 @@ type PlayerProps = {
     avatarToken?: AvatarToken | AvatarTokenBot;
   };
   height?: string;
+  onClick?: () => void;
+  mark?: boolean;
 };
 
-export const PlayerCard = ({ player, status, height }: PlayerProps) => {
+export const PlayerCard = ({
+  player,
+  status,
+  height,
+  ...props
+}: PlayerProps) => {
   const { token } = useTheme();
 
   return (
-    <Wrapper>
+    <Wrapper {...props}>
       <StyledBadge isVip={player.isVip}>
         <Badge
           count={

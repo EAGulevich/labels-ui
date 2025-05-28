@@ -62,6 +62,14 @@ export const useActions = ({ setRoom, messageApi }: UseActionsProps) => {
     socket.emit("startGame");
   }, []);
 
+  const addVote = useCallback((candidateId: string) => {
+    socket.emit("addVote", { candidateId }, ({ voted }) => {
+      if (voted) {
+        //  TODO: вибрация на телефон
+      }
+    });
+  }, []);
+
   const onSendFact = useCallback(
     ({ factText }: { factText: string }) => {
       socket.emit("addFact", { text: factText }, ({ data, error }) => {
@@ -79,5 +87,6 @@ export const useActions = ({ setRoom, messageApi }: UseActionsProps) => {
     onJoin,
     onStart,
     onSendFact,
+    addVote,
   };
 };

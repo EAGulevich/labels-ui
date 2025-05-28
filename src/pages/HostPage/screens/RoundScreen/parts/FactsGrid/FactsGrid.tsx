@@ -76,15 +76,20 @@ export const FactsGrid = ({ facts }: FactsGridProps) => {
             delay: (index + 1) * 0.5,
           }}
         >
-          <PlayerWithFact $height={rowHeight + "px"}>
+          <PlayerWithFact
+            $height={rowHeight + "px"}
+            isGuessed={!item.supposedPlayer ? undefined : item.isGuessed}
+          >
             <PlayerCard
               height={rowHeight + "px"}
-              player={{
-                name: "- - -",
-                isVip: false,
-                isActive: true,
-                factStatus: FACT_STATUS.NOT_RECEIVED,
-              }}
+              player={
+                item.supposedPlayer || {
+                  name: "- - -",
+                  isVip: false,
+                  isActive: true,
+                  factStatus: FACT_STATUS.NOT_RECEIVED,
+                }
+              }
             />
 
             <FactBlock>
