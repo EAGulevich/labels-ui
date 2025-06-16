@@ -116,7 +116,8 @@
     "ROOM_NOT_FOUND_BY_HOST_ID_REENTER_ERROR": "Не удалось вернуться в ранее созданную комнату",
     "MAX_ROOM_CAPACITY_JOIN_ERROR": "В комнате максимальное число игроков",
     "GAME_ALREADY_STARTED_JOIN_ERROR": "Эта игра уже началась, дождитесь ее завершения или подключитесь к другой комнате",
-    "ROOM_NOT_FOUND_JOIN_ERROR": "Неверный код комнаты"
+    "ROOM_NOT_FOUND_JOIN_ERROR": "Неверный код комнаты",
+    "PLAYER_NAME_ALREADY_EXISTS_JOIN_ERROR": "Имя занято, пожалуйста введите другое"
   },
   "errors": {
     "500": {

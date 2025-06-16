@@ -116,7 +116,8 @@
     "ROOM_NOT_FOUND_BY_HOST_ID_REENTER_ERROR": "Failed to return to a previously created room",
     "MAX_ROOM_CAPACITY_JOIN_ERROR": "Maximum number of players in a room",
     "GAME_ALREADY_STARTED_JOIN_ERROR": "This game has already started, wait until it ends or connect to another room",
-    "ROOM_NOT_FOUND_JOIN_ERROR": "Wrong room code"
+    "ROOM_NOT_FOUND_JOIN_ERROR": "Wrong room code",
+    "PLAYER_NAME_ALREADY_EXISTS_JOIN_ERROR": "Name taken, please enter another one"
   },
   "errors": {
     "500": {
