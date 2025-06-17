@@ -1,7 +1,7 @@
 import { Divider, Layout } from "antd";
 import styled from "styled-components";
 
-const HEADER_HEIGHT = 40;
+const HEADER_HEIGHT = 48;
 const HEADER_HEIGHT_PX = HEADER_HEIGHT + "px";
 const ANIMATION_SPEED = "1.2s";
 

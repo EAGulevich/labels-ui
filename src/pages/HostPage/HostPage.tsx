@@ -2,7 +2,7 @@ import { createPortal } from "react-dom";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { FrownOutlined } from "@ant-design/icons";
-import { Button, Result, Tag } from "antd";
+import { Button, Result } from "antd";
 
 import { HEADER_INFO_CONTAINER, ROUTE_PATHS } from "@constants";
 import { ROOM_STATUSES } from "@sharedTypes/roomStatuses.ts";
@@ -12,6 +12,7 @@ import { InputFactScreen } from "./screens/InputFactScreen/InputFactScreen.tsx";
 import { RoundScreen } from "./screens/RoundScreen/RoundScreen.tsx";
 import { WaitingPlayersScreen } from "./screens/WaitingPlayersScreen/WaitingPlayersScreen.tsx";
 import { useSocketEvents } from "./useSocketEvents/useSocketEvents.tsx";
+import { RoomCodeTag } from "./styles.ts";
 
 const HostPage = () => {
   const { t } = useTranslation();
@@ -50,7 +51,7 @@ const HostPage = () => {
     <>
       {contextHolder}
       {showCodeInHeader &&
-        createPortal(<Tag color={"gold"}>{room?.code}</Tag>, headerMenuElement)}
+        createPortal(<RoomCodeTag>{roomCode}</RoomCodeTag>, headerMenuElement)}
       {!room && (
         <CreateOrReturnToRoom
           onCreateRoom={onCreateRoom}
