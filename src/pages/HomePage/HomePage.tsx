@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Alert, Button, Flex, Spin } from "antd";
+import { Button, Spin } from "antd";
 
 import { MainAnimatedLogo } from "@components/MainAnimatedLogo/MainAnimatedLogo.tsx";
 import { useAppSettings } from "@providers/AppSettingsProvider/AppSettingsProvider.tsx";
 import { socket } from "@socket";
 
 import { AnimatedMenuList } from "./parts/AnimatedMenuList.tsx";
+import { AudioAlert, AudioAlertAction } from "./styles.ts";
 
 const HomePage = () => {
   const { t } = useTranslation();
@@ -40,20 +41,20 @@ const HomePage = () => {
 
   if (isAudioModalOpen) {
     return (
-      <Alert
+      <AudioAlert
         message={t("audioModal.title")}
         description={t("audioModal.description")}
         type="info"
         showIcon
         action={
-          <Flex vertical gap={"small"}>
+          <AudioAlertAction>
             <Button type="primary" onClick={onAllowAudio}>
               {t("audioModal.buttons.allow")}
             </Button>
             <Button danger type={"dashed"} onClick={onRefuse}>
               {t("audioModal.buttons.refuse")}
             </Button>
-          </Flex>
+          </AudioAlertAction>
         }
       />
     );
