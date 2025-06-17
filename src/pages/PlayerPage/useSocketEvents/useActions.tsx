@@ -1,8 +1,10 @@
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router";
 import { TranslatedError } from "@utils/TranslatedError.tsx";
 import { message } from "antd";
 
+import { QUERY_PARAM_ROOM_CODE } from "@constants";
 import { useAppStorage } from "@providers/AppStorageProvider.tsx";
 import { Player, Room } from "@sharedTypes/types.ts";
 import { socket } from "@socket";
@@ -15,6 +17,7 @@ type UseActionsProps = {
 export const useActions = ({ setRoom, messageApi }: UseActionsProps) => {
   const { t } = useTranslation();
   const { playerId, changePlayerId } = useAppStorage();
+  const navigate = useNavigate();
 
   const onJoin = useCallback(
     ({
@@ -22,7 +25,7 @@ export const useActions = ({ setRoom, messageApi }: UseActionsProps) => {
       player,
     }: {
       roomCode: Room["code"];
-      player: Pick<Player, "name" | "avatarToken">;
+      player: Pick<Player, "name">;
     }) => {
       socket.emit(
         "joinRoom",
@@ -35,6 +38,11 @@ export const useActions = ({ setRoom, messageApi }: UseActionsProps) => {
           if (data?.room) {
             changePlayerId(data.eventData.joinedPlayer.id);
             setRoom(data.room);
+
+            navigate({
+              search: `?${QUERY_PARAM_ROOM_CODE}=${data.room.code}`,
+            });
+
             messageApi.open({
               type: "success",
               content: t("messages.youEnteredInRoom"),
@@ -55,7 +63,25 @@ export const useActions = ({ setRoom, messageApi }: UseActionsProps) => {
         },
       );
     },
-    [playerId, changePlayerId, setRoom, messageApi, t],
+    [playerId, changePlayerId, setRoom, navigate, messageApi, t],
+  );
+
+  const onChangePlayerAvatar = useCallback(
+    (avatarToken: Player["avatarToken"]) => {
+      socket.emit("changeAvatar", { avatarToken }, ({ data, error }) => {
+        if (data?.room) {
+          setRoom(data.room);
+        }
+
+        if (error) {
+          messageApi.open({
+            type: "error",
+            content: <TranslatedError errorCode={error.code} />,
+          });
+        }
+      });
+    },
+    [messageApi, setRoom],
   );
 
   const onStart = useCallback(() => {
@@ -88,5 +114,6 @@ export const useActions = ({ setRoom, messageApi }: UseActionsProps) => {
     onStart,
     onSendFact,
     addVote,
+    onChangePlayerAvatar,
   };
 };

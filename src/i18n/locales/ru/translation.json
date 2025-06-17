@@ -38,9 +38,17 @@
     "players": "Игроки",
     "waitingAllPlayers": "Ожидаем подключения игроков",
     "waitingVipStarts": "Ждем, когда VIP-игрок начнет игру",
+    "selectAvatar": {
+      "title": "Выберите аватар",
+      "buttons": {
+        "ready": "Готово"
+      }
+    },
     "vipScreen": {
       "title": "Если все игроки подключились, жми",
-      "btnTitle": "Начать"
+      "buttons": {
+        "start": "Начать"
+      }
     }
   },
   "joinScreen": {
@@ -56,12 +64,6 @@
           "label": "Код комнаты",
           "errors": {
             "required": "Пожалуйста, введите код комнаты"
-          }
-        },
-        "avatar": {
-          "label": "Аватар",
-          "errors": {
-            "required": "Пожалуйста, выберите аватар"
           }
         }
       }
@@ -117,6 +119,7 @@
     "MAX_ROOM_CAPACITY_JOIN_ERROR": "В комнате максимальное число игроков",
     "GAME_ALREADY_STARTED_JOIN_ERROR": "Эта игра уже началась, дождитесь ее завершения или подключитесь к другой комнате",
     "ROOM_NOT_FOUND_JOIN_ERROR": "Неверный код комнаты",
+    "CHANGE_AVATAR_ALREADY_USED_ERROR": "Не удалось изменить аватар, т.к. он занят другим игроком",
     "PLAYER_NAME_ALREADY_EXISTS_JOIN_ERROR": "Имя занято, пожалуйста введите другое"
   },
   "errors": {

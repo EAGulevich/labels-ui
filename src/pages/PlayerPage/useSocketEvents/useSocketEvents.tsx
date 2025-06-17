@@ -10,6 +10,7 @@ import { useGameStarted } from "./useGameStarted.tsx";
 import { useHostConnectDisconnect } from "./useHostConnectDisconnect.tsx";
 import { useNewRound } from "./useNewRound.tsx";
 import { useNewVip } from "./useNewVip.tsx";
+import { usePlayerChangedAvatar } from "./usePlayerChangedAvatar.tsx";
 import { usePlayerConnectDisconnect } from "./usePlayerConnectDisconnect.tsx";
 import { useReceiveFact } from "./useReceiveFact.tsx";
 import { useVoting } from "./useVoting.tsx";
@@ -30,11 +31,13 @@ export const useSocketEvents = () => {
   useReceiveFact({ setRoom, messageApi });
   useVoting({ setRoom, messageApi });
   useNewRound({ setRoom, messageApi });
+  usePlayerChangedAvatar({ setRoom, messageApi });
 
-  const { onJoin, onStart, onSendFact, addVote } = useActions({
-    setRoom,
-    messageApi,
-  });
+  const { onJoin, onStart, onSendFact, addVote, onChangePlayerAvatar } =
+    useActions({
+      setRoom,
+      messageApi,
+    });
   const isVip = !!room?.players.find((p) => p.isVip && p.id === playerId);
 
   return {
@@ -46,5 +49,6 @@ export const useSocketEvents = () => {
     onStart,
     onSendFact,
     addVote,
+    onChangePlayerAvatar,
   };
 };

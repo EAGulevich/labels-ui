@@ -30,6 +30,7 @@ const PlayerPage = () => {
     isVip,
     onSendFact,
     addVote,
+    onChangePlayerAvatar,
   } = useSocketEvents();
   const { playerId } = useAppStorage();
   const { t } = useTranslation();
@@ -70,11 +71,15 @@ const PlayerPage = () => {
           headerMenuElement,
         )}
       {!room && <JoinScreen onJoin={onJoin} />}
-      {room?.status === ROOM_STATUSES.CREATED && (
+      {player && room?.status === ROOM_STATUSES.CREATED && (
         <WaitingPlayersScreen
           isVip={isVip}
           isMinNumberOfPlayers={room.players.length >= MIN_PLAYERS}
           onStart={onStart}
+          isAvatarSelected={!player.isAvatarAutoSelected}
+          player={player}
+          players={room.players}
+          onChangePlayerAvatar={onChangePlayerAvatar}
         />
       )}
       {room?.status === ROOM_STATUSES.STARTED && (

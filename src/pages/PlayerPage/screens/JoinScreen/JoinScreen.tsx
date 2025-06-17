@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router";
 import { Button, Flex, Form, FormProps, Input } from "antd";
 
-import { AvatarSelect } from "@components/AvatarSelect/AvatarSelect.tsx";
 import {
   NAME_MAX_LENGTH,
   QUERY_PARAM_ROOM_CODE,
@@ -16,7 +15,7 @@ import { FormFieldType } from "./types.ts";
 type JoinScreenProps = {
   onJoin: (params: {
     roomCode: Room["code"];
-    player: Pick<Player, "name" | "avatarToken">;
+    player: Pick<Player, "name">;
   }) => void;
 };
 
@@ -63,18 +62,7 @@ export const JoinScreen = ({ onJoin }: JoinScreenProps) => {
             formatter={(str) => str.toUpperCase()}
           />
         </Form.Item>
-        <Form.Item<FormFieldType>
-          label={t("joinScreen.form.fields.avatar.label")}
-          name="avatarToken"
-          rules={[
-            {
-              required: true,
-              message: t("joinScreen.form.fields.avatar.errors.required"),
-            },
-          ]}
-        >
-          <AvatarSelect />
-        </Form.Item>
+
         <Form.Item<FormFieldType>
           label={t("joinScreen.form.fields.name.label")}
           name="name"

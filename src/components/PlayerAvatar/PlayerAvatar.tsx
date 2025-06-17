@@ -10,12 +10,14 @@ import { AVATARS } from "./constants.tsx";
 type PlayerAvatarProps = {
   token?: AvatarToken | AvatarTokenBot;
   size?: AvatarProps["size"];
+  onClick?: () => void;
 };
 
-export const PlayerAvatar = ({ token, size }: PlayerAvatarProps) => {
+export const PlayerAvatar = ({ token, size, onClick }: PlayerAvatarProps) => {
   const { token: colorToken } = useTheme();
   return (
     <StyledAvatar
+      onClick={onClick}
       background={token ? AVATARS[token].background : "transparent"}
       size={size || "large"}
       shape={"square"}

@@ -38,9 +38,17 @@
     "players": "Players",
     "waitingAllPlayers": "We are waiting for players to connect",
     "waitingVipStarts": "Waiting for the VIP player to start the game",
+    "selectAvatar": {
+      "title": "Choose avatar",
+      "buttons": {
+        "ready": "Ready"
+      }
+    },
     "vipScreen": {
       "title": "If all players are connected, press",
-      "btnTitle": "Start"
+      "buttons": {
+        "start": "Start"
+      }
     }
   },
   "joinScreen": {
@@ -56,12 +64,6 @@
           "label": "Room code",
           "errors": {
             "required": "Please input room code"
-          }
-        },
-        "avatar": {
-          "label": "Avatar",
-          "errors": {
-            "required": "Please choose avatar"
           }
         }
       }
@@ -117,6 +119,7 @@
     "MAX_ROOM_CAPACITY_JOIN_ERROR": "Maximum number of players in a room",
     "GAME_ALREADY_STARTED_JOIN_ERROR": "This game has already started, wait until it ends or connect to another room",
     "ROOM_NOT_FOUND_JOIN_ERROR": "Wrong room code",
+    "CHANGE_AVATAR_ALREADY_USED_ERROR": "Couldn't change avatar because it is used by another player",
     "PLAYER_NAME_ALREADY_EXISTS_JOIN_ERROR": "Name taken, please enter another one"
   },
   "errors": {
