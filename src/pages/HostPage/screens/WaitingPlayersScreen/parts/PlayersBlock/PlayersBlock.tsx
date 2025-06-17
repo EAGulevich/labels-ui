@@ -31,7 +31,7 @@ export const PlayersBlock: FC<PlayersBlockProps> = ({ players }) => {
       <Flex>
         <PlayersCounter
           valueStyle={{
-            color: players.length > MIN_PLAYERS ? "inherit" : token.colorError,
+            color: players.length >= MIN_PLAYERS ? "inherit" : token.colorError,
           }}
           title={
             <Typography.Title
