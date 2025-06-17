@@ -5,13 +5,13 @@ import {
   LoadingOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Drawer, Flex, Steps, StepsProps, Typography } from "antd";
+import { Drawer, Flex, StepsProps, Typography } from "antd";
 import maxBy from "lodash.maxby";
 
 import { PlayerCard } from "@components/PlayerCard/PlayerCard.tsx";
 import { Candidate, Player, Room } from "@sharedTypes/types.ts";
 
-import { VoteBlock, VotePoint } from "./styles.ts";
+import { StyledSteps, VoteBlock, VotePoint } from "./styles.ts";
 
 // TODO: в контекст нафиг - 2 штуки - для хоста и для игрока
 type VotingModalContentProps = {
@@ -80,13 +80,13 @@ export const VotingModalContent = ({
           <Typography.Title level={3} type={"secondary"}>
             {t("roundScreen.modalVote").toUpperCase()}
           </Typography.Title>
+          <StyledSteps direction={"horizontal"} items={items} />
         </Flex>
       }
       placement="bottom"
       size={"large"}
       closable={false}
       open={true}
-      footer={<Steps direction={"horizontal"} items={items} />}
     >
       <Flex vertical align={"center"}>
         <Typography.Title level={1}>{votingFact?.text}</Typography.Title>
