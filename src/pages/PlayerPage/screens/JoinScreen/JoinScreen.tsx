@@ -23,7 +23,7 @@ type JoinScreenProps = {
 export const JoinScreen = ({ onJoin }: JoinScreenProps) => {
   const [searchParams] = useSearchParams();
   const [roomCode] = useState<string>(
-    searchParams.get(QUERY_PARAM_ROOM_CODE) || "",
+    searchParams.get(QUERY_PARAM_ROOM_CODE)?.toUpperCase() || "",
   );
 
   const { t } = useTranslation();
