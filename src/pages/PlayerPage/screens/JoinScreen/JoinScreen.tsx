@@ -11,6 +11,7 @@ import {
 import { Player, Room } from "@sharedTypes/types.ts";
 
 import { FormFieldType } from "./types.ts";
+import { StyledInputOptWrapper } from "./styles.ts";
 
 type JoinScreenProps = {
   onJoin: (params: {
@@ -45,6 +46,7 @@ export const JoinScreen = ({ onJoin }: JoinScreenProps) => {
       initialValues={{ roomCode: roomCode }}
       onFinish={onFinish}
       autoComplete="off"
+      size={"large"}
     >
       <Flex vertical gap={"small"}>
         <Form.Item<FormFieldType>
@@ -57,10 +59,12 @@ export const JoinScreen = ({ onJoin }: JoinScreenProps) => {
             },
           ]}
         >
-          <Input.OTP
-            length={ROOM_CODE_LENGTH}
-            formatter={(str) => str.toUpperCase()}
-          />
+          <StyledInputOptWrapper>
+            <Input.OTP
+              length={ROOM_CODE_LENGTH}
+              formatter={(str) => str.toUpperCase()}
+            />
+          </StyledInputOptWrapper>
         </Form.Item>
 
         <Form.Item<FormFieldType>
