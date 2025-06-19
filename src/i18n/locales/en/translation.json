@@ -132,6 +132,11 @@
       "title": "404",
       "subTitle": "Sorry, the page you visited does not exist",
       "btnTitle": "Back Home"
+    },
+    "gameWasNotFound": {
+      "title": "Game not found",
+      "subTitle": "You can start a new game",
+      "btnTitle": "Back Home"
     }
   }
 }

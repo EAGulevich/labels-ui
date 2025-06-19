@@ -1,8 +1,7 @@
-import { useState } from "react";
 import { message } from "antd";
 
 import { useAppStorage } from "@providers/AppStorageProvider.tsx";
-import { Room } from "@sharedTypes/types.ts";
+import { useGameState } from "@providers/GameStateProvider.tsx";
 
 import { useActions } from "./useActions.tsx";
 import { useConnectDisconnect } from "./useConnectDisconnect.tsx";
@@ -20,7 +19,7 @@ export const useSocketEvents = () => {
 
   const [messageApi, contextHolder] = message.useMessage();
 
-  const [room, setRoom] = useState<Room | null>(null);
+  const { room, setRoom } = useGameState();
 
   const { isServerError } = useConnectDisconnect();
 
@@ -41,7 +40,6 @@ export const useSocketEvents = () => {
   const isVip = !!room?.players.find((p) => p.isVip && p.id === playerId);
 
   return {
-    room,
     contextHolder,
     onJoin,
     isServerError,

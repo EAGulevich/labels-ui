@@ -1,18 +1,19 @@
-import { FC } from "react";
 import { Row } from "antd";
 
-import { Room } from "@sharedTypes/types.ts";
+import { ErrorFallback } from "@components/Error/ErrorFallback.tsx";
+import { useGameState } from "@providers/GameStateProvider.tsx";
 
 import { InviteBlock } from "./parts/InviteBlock/InviteBlock.tsx";
 import { PlayersBlock } from "./parts/PlayersBlock/PlayersBlock.tsx";
 import { WrapperInviteBlock, WrapperPlayersBlock } from "./styles.ts";
 
-type WaitingPlayersScreenProps = {
-  room: Room;
-};
-export const WaitingPlayersScreen: FC<WaitingPlayersScreenProps> = ({
-  room,
-}) => {
+export const WaitingPlayersScreen = () => {
+  const { room } = useGameState();
+
+  if (!room) {
+    return <ErrorFallback />;
+  }
+
   return (
     <>
       <Row justify={"center"}>

@@ -1,6 +1,8 @@
 import { useTranslation } from "react-i18next";
 import { Button, Result, Spin } from "antd";
 
+import { MIN_PLAYERS } from "@constants";
+import { useGameState } from "@providers/GameStateProvider.tsx";
 import { AvatarToken } from "@sharedTypes/avatarTokens.ts";
 import { Player } from "@sharedTypes/types.ts";
 
@@ -8,28 +10,25 @@ import { AvatarSelect } from "./AvatarSelect/AvatarSelect.tsx";
 
 type WaitingPlayersScreenProps = {
   isVip: boolean;
-  isMinNumberOfPlayers: boolean;
   onStart: () => void;
   isAvatarSelected: boolean;
   player: Player;
-  players: Player[];
   onChangePlayerAvatar: (avatarToken: Player["avatarToken"]) => void;
 };
 
 export const WaitingPlayersScreen = ({
-  isMinNumberOfPlayers,
   isVip,
   onStart,
   isAvatarSelected,
   player,
-  players,
   onChangePlayerAvatar,
 }: WaitingPlayersScreenProps) => {
   const { t } = useTranslation();
+  const { room } = useGameState();
 
   const usedAvatarTokens = Object.values(AvatarToken).filter(
     (token) =>
-      players.some((player) => player.avatarToken === token) &&
+      room?.players.some((player) => player.avatarToken === token) &&
       player.avatarToken !== token,
   );
 
@@ -43,7 +42,7 @@ export const WaitingPlayersScreen = ({
     );
   }
 
-  if (!isMinNumberOfPlayers) {
+  if ((room?.players.length || 0) < MIN_PLAYERS) {
     return (
       <Spin
         tip={t("waitingPlayersScreen.waitingAllPlayers")}

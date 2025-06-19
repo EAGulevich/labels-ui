@@ -1,7 +1,6 @@
-import { useState } from "react";
 import { message } from "antd";
 
-import { Room } from "@sharedTypes/types.ts";
+import { useGameState } from "@providers/GameStateProvider.tsx";
 
 import { useActions } from "./useActions.tsx";
 import { useConnectDisconnect } from "./useConnectDisconnect.tsx";
@@ -14,8 +13,7 @@ import { useVoting } from "./useVoting.tsx";
 
 export const useSocketEvents = () => {
   const [messageApi, contextHolder] = message.useMessage();
-
-  const [room, setRoom] = useState<Room | undefined>(undefined);
+  const { setRoom } = useGameState();
 
   const { isServerError } = useConnectDisconnect();
   const { onReenterRoom, onCreateRoom, startVoting } = useActions({
@@ -32,7 +30,6 @@ export const useSocketEvents = () => {
 
   return {
     contextHolder,
-    room,
     isServerError,
     onCreateRoom,
     onReenterRoom,

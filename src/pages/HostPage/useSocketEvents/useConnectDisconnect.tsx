@@ -35,6 +35,7 @@ export const useConnectDisconnect = () => {
     return () => {
       socket.off("connect", onConnect);
       socket.off("connect_error", onConnectError);
+
       // socket.disconnect();
     };
   }, [removeRoomHostId, roomHostId]);

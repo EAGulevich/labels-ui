@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { message } from "antd";
 
@@ -7,7 +7,7 @@ import { Room } from "@sharedTypes/types.ts";
 import { socket } from "@socket";
 
 type UseReceiveFact = {
-  setRoom: Dispatch<SetStateAction<Room | undefined>>;
+  setRoom: (room: Room) => void;
   messageApi: ReturnType<typeof message.useMessage>[0];
 };
 

@@ -12,23 +12,21 @@ import { useTheme } from "styled-components";
 
 import { FACT_MAX_LENGTH } from "@constants";
 import { useAppStorage } from "@providers/AppStorageProvider.tsx";
+import { useGameState } from "@providers/GameStateProvider.tsx";
 import { FACT_STATUS } from "@sharedTypes/factStatuses.ts";
-import { Player } from "@sharedTypes/types.ts";
 
 import { FormFieldType } from "./types.ts";
 
 type InputFactScreenProps = {
-  players: Player[];
   onSendFact: (data: { factText: string }) => void;
 };
 
-export const InputFactScreen = ({
-  players,
-  onSendFact,
-}: InputFactScreenProps) => {
+export const InputFactScreen = ({ onSendFact }: InputFactScreenProps) => {
   const { token } = useTheme();
   const { t } = useTranslation();
   const { playerId } = useAppStorage();
+  const { room } = useGameState();
+  const { players = [] } = room || {};
 
   const onFinishFact: FormProps<FormFieldType>["onFinish"] = ({ fact }) => {
     onSendFact({ factText: fact });

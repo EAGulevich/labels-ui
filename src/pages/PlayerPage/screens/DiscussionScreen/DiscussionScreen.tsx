@@ -1,14 +1,13 @@
 import { useTranslation } from "react-i18next";
 import { List, Typography } from "antd";
 
-import { Room } from "@sharedTypes/types.ts";
+import { useGameState } from "@providers/GameStateProvider.tsx";
 
-type DiscussionScreenProps = {
-  facts: Room["facts"];
-};
-
-export const DiscussionScreen = ({ facts }: DiscussionScreenProps) => {
+export const DiscussionScreen = () => {
   const { t } = useTranslation();
+  const { room } = useGameState();
+  const { facts = [] } = room || {};
+
   return (
     <List
       header={

@@ -8,47 +8,38 @@ import {
 import { Drawer, Flex, StepsProps, Typography } from "antd";
 import maxBy from "lodash.maxby";
 
+import { ErrorFallback } from "@components/Error/ErrorFallback.tsx";
 import { PlayerCard } from "@components/PlayerCard/PlayerCard.tsx";
-import { Candidate, Player, Room } from "@sharedTypes/types.ts";
+import { useGameState } from "@providers/GameStateProvider.tsx";
+import { Candidate } from "@sharedTypes/types.ts";
 
 import { StyledSteps, VoteBlock, VotePoint } from "./styles.ts";
 
-// TODO: в контекст нафиг - 2 штуки - для хоста и для игрока
-type VotingModalContentProps = {
-  votingFact: Room["votingFact"];
-  facts: Room["facts"];
-  round: Room["round"];
-  story: Room["story"];
-  players: Player[];
-};
-
 // TODO: на весь экран, чтобы не было видно промежуточных результатов или в отдельную экран
-export const VotingModalContent = ({
-  votingFact,
-  facts,
-  round,
-  story,
-  players,
-}: VotingModalContentProps) => {
+export const VotingModalContent = () => {
   const { t } = useTranslation();
+  const { room } = useGameState();
+  if (!room) {
+    return <ErrorFallback />;
+  }
 
   const voteKey: keyof Candidate = "voteCount";
-  const playerIdWithMaxVotes = maxBy(votingFact?.candidates, voteKey);
+  const playerIdWithMaxVotes = maxBy(room.votingFact?.candidates, voteKey);
 
   const isOnlyMax =
-    votingFact?.candidates.filter(
+    room.votingFact?.candidates.filter(
       (c) => c.voteCount === playerIdWithMaxVotes?.voteCount,
     ).length === 1;
 
-  const votedFacts = story[round]?.length || 0;
+  const votedFacts = room.story[room.round]?.length || 0;
   const isAllPlayersVotedForFact =
-    votingFact?.candidates.reduce((prev, cur) => {
+    room.votingFact?.candidates.reduce((prev, cur) => {
       return prev + cur.voteCount;
     }, 0) ===
-    players.length - 1;
+    room.players.length - 1;
 
   // TODO: вынести
-  const items: StepsProps["items"] = facts
+  const items: StepsProps["items"] = room.facts
     .filter((f) => !f.isGuessed)
     .map((_f, i) =>
       votedFacts === i
@@ -62,9 +53,10 @@ export const VotingModalContent = ({
               icon: <UserOutlined />,
             }
           : {
-              status: story[round][i] === "NOBODY" ? "error" : "finish",
+              status:
+                room.story[room.round][i] === "NOBODY" ? "error" : "finish",
               icon:
-                story[round][i] === "NOBODY" ? (
+                room.story[room.round][i] === "NOBODY" ? (
                   <CloseOutlined />
                 ) : (
                   // TODO: style
@@ -89,10 +81,10 @@ export const VotingModalContent = ({
       open={true}
     >
       <Flex vertical align={"center"}>
-        <Typography.Title level={1}>{votingFact?.text}</Typography.Title>
+        <Typography.Title level={1}>{room.votingFact?.text}</Typography.Title>
       </Flex>
       <Flex justify={"center"} gap={"small"} wrap>
-        {votingFact?.candidates.map((c) => (
+        {room.votingFact?.candidates.map((c) => (
           <Flex
             vertical
             key={c.id}

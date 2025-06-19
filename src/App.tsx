@@ -5,6 +5,7 @@ import { ConfigProvider as AntConfigProvider } from "antd";
 import { Header } from "@components/Header/Header.tsx";
 import { FOOTER_CONTENT, ROUTE_PATHS } from "@constants";
 import { useAppSettings } from "@providers/AppSettingsProvider/AppSettingsProvider.tsx";
+import { GameStateProvider } from "@providers/GameStateProvider.tsx";
 import { ThemeTokenProvider } from "@providers/ThemeTokenProvider.tsx";
 
 import { Pages } from "./pages/Pages.tsx";
@@ -27,13 +28,15 @@ function App() {
   return (
     <AntConfigProvider theme={getThemeByName(themeName)}>
       <ThemeTokenProvider>
-        <StyledPageLayout height={layoutHeight + "px"}>
-          <Header onlyMenuButton={location.pathname === ROUTE_PATHS.home} />
-          <StyledFooter id={FOOTER_CONTENT} />
-          <StyledContent>
-            <Pages />
-          </StyledContent>
-        </StyledPageLayout>
+        <GameStateProvider>
+          <StyledPageLayout height={layoutHeight + "px"}>
+            <Header onlyMenuButton={location.pathname === ROUTE_PATHS.home} />
+            <StyledFooter id={FOOTER_CONTENT} />
+            <StyledContent>
+              <Pages />
+            </StyledContent>
+          </StyledPageLayout>
+        </GameStateProvider>
       </ThemeTokenProvider>
     </AntConfigProvider>
   );

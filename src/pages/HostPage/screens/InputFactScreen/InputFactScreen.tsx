@@ -1,24 +1,27 @@
 import { useTranslation } from "react-i18next";
 import { motion } from "motion/react";
 
+import { ErrorFallback } from "@components/Error/ErrorFallback.tsx";
 import { PlayerCard } from "@components/PlayerCard/PlayerCard.tsx";
+import { useGameState } from "@providers/GameStateProvider.tsx";
 import { FACT_STATUS } from "@sharedTypes/factStatuses.ts";
-import { Player } from "@sharedTypes/types.ts";
 
 import { Players, StyledTitle } from "./styles.ts";
 
-type InputFactScreenProps = {
-  players: Player[];
-};
-
-export const InputFactScreen = ({ players }: InputFactScreenProps) => {
+export const InputFactScreen = () => {
   const { t } = useTranslation();
+
+  const { room } = useGameState();
+
+  if (!room) {
+    return <ErrorFallback />;
+  }
 
   return (
     <>
       <StyledTitle level={1}>{t("inputFactScreen.inputFact")}</StyledTitle>
       <Players>
-        {players.map((player) => {
+        {room.players.map((player) => {
           const isDone = player.factStatus === FACT_STATUS.NOT_GUESSED;
           return (
             <motion.div

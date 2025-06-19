@@ -3,17 +3,19 @@ import { useTranslation } from "react-i18next";
 import { Flex, Typography } from "antd";
 
 import { PlayerCard } from "@components/PlayerCard/PlayerCard.tsx";
-import { Candidate, Room } from "@sharedTypes/types.ts";
+import { useGameState } from "@providers/GameStateProvider.tsx";
+import { Candidate } from "@sharedTypes/types.ts";
 
 type VoteScreenProps = {
-  votingFact: Room["votingFact"];
   addVote: (candidateId: string) => void;
 };
 
 // TODO: разраничить переводы для host и для player
 // TODO запрет на голосование за один и тот же факт дважды
-export const VoteScreen = ({ votingFact, addVote }: VoteScreenProps) => {
+export const VoteScreen = ({ addVote }: VoteScreenProps) => {
   const { t } = useTranslation();
+  const { room } = useGameState();
+  const { votingFact } = room || {};
   const [sendVoteForFact, setSendVoteForFact] = useState("");
   const [voteCandidate, setVoteCandidate] = useState<Candidate | null>(null);
 

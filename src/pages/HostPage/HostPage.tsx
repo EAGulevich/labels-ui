@@ -5,6 +5,7 @@ import { FrownOutlined } from "@ant-design/icons";
 import { Button, Result } from "antd";
 
 import { HEADER_INFO_CONTAINER, ROUTE_PATHS } from "@constants";
+import { useGameState } from "@providers/GameStateProvider.tsx";
 import { ROOM_STATUSES } from "@sharedTypes/roomStatuses.ts";
 
 import { CreateOrReturnToRoom } from "./screens/CreateOrReturnToRoom/CreateOrReturnToRoom.tsx";
@@ -17,8 +18,9 @@ import { RoomCodeTag } from "./styles.ts";
 const HostPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { room } = useGameState();
+
   const {
-    room,
     isServerError,
     onCreateRoom,
     onReenterRoom,
@@ -58,25 +60,13 @@ const HostPage = () => {
           onReenterRoom={onReenterRoom}
         />
       )}
-      {room?.status === ROOM_STATUSES.CREATED && (
-        <WaitingPlayersScreen room={room} />
-      )}
+      {room?.status === ROOM_STATUSES.CREATED && <WaitingPlayersScreen />}
 
-      {room?.status === ROOM_STATUSES.STARTED && (
-        <InputFactScreen players={room.players} />
-      )}
+      {room?.status === ROOM_STATUSES.STARTED && <InputFactScreen />}
 
       {(room?.status == ROOM_STATUSES.ROUND ||
         room?.status === ROOM_STATUSES.VOTING) && (
-        <RoundScreen
-          facts={room.facts}
-          votingFact={room.votingFact}
-          players={room.players}
-          onTimerFinish={startVoting}
-          roomStatus={room.status}
-          round={room.round}
-          story={room.story}
-        />
+        <RoundScreen onTimerFinish={startVoting} />
       )}
     </>
   );

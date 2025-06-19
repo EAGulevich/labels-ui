@@ -7,26 +7,21 @@ import { useTheme } from "styled-components";
 import { PlayerAvatar } from "@components/PlayerAvatar/PlayerAvatar.tsx";
 import { FOOTER_CONTENT } from "@constants";
 import { useAppSettings } from "@providers/AppSettingsProvider/AppSettingsProvider.tsx";
+import { useGameState } from "@providers/GameStateProvider.tsx";
 import { FACT_STATUS } from "@sharedTypes/factStatuses.ts";
-import { Player } from "@sharedTypes/types.ts";
 
 import { PlayerItem, PlayersList, Wrapper } from "./styles.ts";
 
 type FooterProps = {
-  players: Player[];
   startTimer: boolean;
   onTimerFinish: () => void;
-  round: number;
 };
 
 const { Countdown } = Statistic;
 
-export const Footer = ({
-  players,
-  startTimer,
-  onTimerFinish,
-  round,
-}: FooterProps) => {
+export const Footer = ({ startTimer, onTimerFinish }: FooterProps) => {
+  const { room } = useGameState();
+
   const { token } = useTheme();
   const { t } = useTranslation();
   const [deadline, setDeadline] = useState<number | undefined>(undefined);
@@ -72,13 +67,15 @@ export const Footer = ({
             />
           ) : (
             // TODO: перевести Раунд
-            <Typography.Text type={"secondary"}>Раунд {round}</Typography.Text>
+            <Typography.Text type={"secondary"}>
+              Раунд {room?.round}
+            </Typography.Text>
           )
         }
       />
 
       <PlayersList>
-        {players.map((p) => {
+        {room?.players.map((p) => {
           const isGuessed = p.factStatus === FACT_STATUS.GUESSED;
           return (
             <PlayerItem isGuessed={isGuessed}>
