@@ -16,7 +16,6 @@ const commonConfig: ThemeConfig = {
       bodyPadding: 0,
     },
     Modal: {
-      titleFontSize: 40,
       headerBg: "transparent",
     },
   },

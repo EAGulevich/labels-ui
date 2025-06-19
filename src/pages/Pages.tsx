@@ -1,12 +1,10 @@
 import { lazy, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Route, Routes } from "react-router";
-import { Button, Spin } from "antd";
+import { Button, Flex, Modal, Spin } from "antd";
 
 import { ROUTE_PATHS } from "@constants";
 import { useAppSettings } from "@providers/AppSettingsProvider/AppSettingsProvider.tsx";
-
-import { AudioAlert, AudioAlertAction } from "./HomePage/styles.ts";
 
 const HomePageRouteComponent = lazy(() => import("./HomePage/HomePage.tsx"));
 const HostPageRouteComponent = lazy(() => import("./HostPage/HostPage.tsx"));
@@ -46,22 +44,23 @@ export const Pages = () => {
 
   if (isAudioModalOpen) {
     return (
-      <AudioAlert
-        message={t("audioModal.title")}
-        description={t("audioModal.description")}
-        type="info"
-        showIcon
-        action={
-          <AudioAlertAction>
-            <Button type="primary" onClick={onAllowAudio}>
-              {t("audioModal.buttons.allow")}
-            </Button>
+      <Modal
+        open={isAudioModalOpen}
+        title={t("audioModal.title")}
+        onCancel={onRefuse}
+        footer={
+          <Flex justify={"end"} gap={"large"}>
             <Button danger type={"dashed"} onClick={onRefuse}>
               {t("audioModal.buttons.refuse")}
             </Button>
-          </AudioAlertAction>
+            <Button type="primary" onClick={onAllowAudio}>
+              {t("audioModal.buttons.allow")}
+            </Button>
+          </Flex>
         }
-      />
+      >
+        {t("audioModal.description")}
+      </Modal>
     );
   }
 
