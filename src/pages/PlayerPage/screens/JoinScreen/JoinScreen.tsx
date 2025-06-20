@@ -49,23 +49,23 @@ export const JoinScreen = ({ onJoin }: JoinScreenProps) => {
       size={"large"}
     >
       <Flex vertical gap={"small"}>
-        <Form.Item<FormFieldType>
-          label={t("joinScreen.form.fields.roomCode.label")}
-          name="roomCode"
-          rules={[
-            {
-              required: true,
-              message: t("joinScreen.form.fields.roomCode.errors.required"),
-            },
-          ]}
-        >
-          <StyledInputOptWrapper>
+        <StyledInputOptWrapper>
+          <Form.Item<FormFieldType>
+            label={t("joinScreen.form.fields.roomCode.label")}
+            name="roomCode"
+            rules={[
+              {
+                required: true,
+                message: t("joinScreen.form.fields.roomCode.errors.required"),
+              },
+            ]}
+          >
             <Input.OTP
               length={ROOM_CODE_LENGTH}
               formatter={(str) => str.toUpperCase()}
             />
-          </StyledInputOptWrapper>
-        </Form.Item>
+          </Form.Item>
+        </StyledInputOptWrapper>
 
         <Form.Item<FormFieldType>
           label={t("joinScreen.form.fields.name.label")}
