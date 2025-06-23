@@ -1,7 +1,10 @@
 import { Card, Skeleton, Statistic } from "antd";
 import styled from "styled-components";
 
-import { MAX_PLAYERS } from "@constants";
+import {
+  ANIMATION_DURATION_COUNT_DOWN_BEFORE_START_S,
+  MAX_PLAYERS,
+} from "@constants";
 
 export const PLAYERS_COUNTER_TITLE_CLASS = "counter-title";
 export const DECORATIVE_PLACE_CLASS = "decorative";
@@ -73,4 +76,12 @@ export const PlayersGrid = styled.div`
   .${DECORATIVE_PLACE_CLASS}_7 {
     grid-area: 3 / 1 / 4 / 2;
   }
+`;
+
+export const CountDownItem = styled.div<{ visible?: boolean }>`
+  font-size: 80px;
+  opacity: ${({ visible }) => (visible ? 1 : 0)};
+  transition: opacity
+    ${({ visible }) =>
+      visible ? `${ANIMATION_DURATION_COUNT_DOWN_BEFORE_START_S}s` : "0s"};
 `;

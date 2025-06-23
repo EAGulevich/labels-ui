@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { message } from "antd";
 
+import { ANIMATION_DURATION_COUNT_DOWN_BEFORE_START_S } from "@constants";
 import { useAppSettings } from "@providers/AppSettingsProvider/AppSettingsProvider.tsx";
 import { useAppStorage } from "@providers/AppStorageProvider.tsx";
 import { ServerToClientEvents } from "@sharedTypes/events.ts";
@@ -10,12 +11,14 @@ import { socket } from "@socket";
 
 type UseGameStartedProps = {
   setRoom: (room: Room) => void;
+  setShowCountDownBeforeStart: (show: boolean) => void;
   messageApi: ReturnType<typeof message.useMessage>[0];
 };
 
 export const useGameStarted = ({
   setRoom,
   messageApi,
+  setShowCountDownBeforeStart,
 }: UseGameStartedProps) => {
   const { t } = useTranslation();
   const {
@@ -26,7 +29,15 @@ export const useGameStarted = ({
   useEffect(() => {
     const gameStarted: ServerToClientEvents["gameStarted"] = ({ room }) => {
       setRoom(room);
-      getAudio("attention").play({ userSettingsVolume: volume });
+      setShowCountDownBeforeStart(true);
+
+      setTimeout(
+        () => {
+          setShowCountDownBeforeStart(false);
+          getAudio("attention").play({ userSettingsVolume: volume });
+        },
+        ANIMATION_DURATION_COUNT_DOWN_BEFORE_START_S * 4 * 1000,
+      );
     };
 
     socket.on("gameStarted", gameStarted);
@@ -34,5 +45,5 @@ export const useGameStarted = ({
     return () => {
       socket.off("gameStarted", gameStarted);
     };
-  }, [getAudio, messageApi, setRoom, t, volume]);
+  }, [getAudio, messageApi, setRoom, setShowCountDownBeforeStart, t, volume]);
 };

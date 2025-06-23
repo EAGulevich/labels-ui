@@ -13,7 +13,7 @@ import { useVoting } from "./useVoting.tsx";
 
 export const useSocketEvents = () => {
   const [messageApi, contextHolder] = message.useMessage();
-  const { setRoom } = useGameState();
+  const { setRoom, setShowCountDownBeforeStart } = useGameState();
 
   const { isServerError } = useConnectDisconnect();
   const { onReenterRoom, onCreateRoom, startVoting } = useActions({
@@ -22,7 +22,7 @@ export const useSocketEvents = () => {
   });
 
   useConnectDisconnectPlayer({ setRoom });
-  useGameStarted({ setRoom, messageApi });
+  useGameStarted({ setRoom, messageApi, setShowCountDownBeforeStart });
   useReceiveFact({ setRoom, messageApi });
   useNewRound({ setRoom, messageApi });
   useVoting({ setRoom, messageApi });

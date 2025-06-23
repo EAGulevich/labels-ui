@@ -7,7 +7,11 @@ import { InviteBlock } from "./parts/InviteBlock/InviteBlock.tsx";
 import { PlayersBlock } from "./parts/PlayersBlock/PlayersBlock.tsx";
 import { WrapperInviteBlock, WrapperPlayersBlock } from "./styles.ts";
 
-export const WaitingPlayersScreen = () => {
+export const WaitingPlayersScreen = ({
+  showCountDown,
+}: {
+  showCountDown: boolean;
+}) => {
   const { room } = useGameState();
 
   if (!room) {
@@ -21,7 +25,10 @@ export const WaitingPlayersScreen = () => {
           <InviteBlock roomCode={room.code} />
         </WrapperInviteBlock>
         <WrapperPlayersBlock>
-          <PlayersBlock players={room.players} />
+          <PlayersBlock
+            players={room.players.filter((p) => !p.isFake)}
+            showCountDown={showCountDown}
+          />
         </WrapperPlayersBlock>
       </Row>
     </>

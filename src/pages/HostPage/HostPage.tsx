@@ -18,7 +18,7 @@ import { RoomCodeTag } from "./styles.ts";
 const HostPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { room } = useGameState();
+  const { room, showCountDownBeforeStart } = useGameState();
 
   const {
     isServerError,
@@ -60,9 +60,13 @@ const HostPage = () => {
           onReenterRoom={onReenterRoom}
         />
       )}
-      {room?.status === ROOM_STATUSES.CREATED && <WaitingPlayersScreen />}
+      {(room?.status === ROOM_STATUSES.CREATED || showCountDownBeforeStart) && (
+        <WaitingPlayersScreen showCountDown={showCountDownBeforeStart} />
+      )}
 
-      {room?.status === ROOM_STATUSES.STARTED && <InputFactScreen />}
+      {room?.status === ROOM_STATUSES.STARTED && !showCountDownBeforeStart && (
+        <InputFactScreen />
+      )}
 
       {(room?.status == ROOM_STATUSES.ROUND ||
         room?.status === ROOM_STATUSES.VOTING) && (
