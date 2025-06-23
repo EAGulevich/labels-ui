@@ -1,3 +1,7 @@
+import { version } from "../package.json";
+
+export const VERSION = "v" + version;
+
 // settings
 export const ROOM_CODE_LENGTH = 4;
 export const NAME_MAX_LENGTH = 12;
