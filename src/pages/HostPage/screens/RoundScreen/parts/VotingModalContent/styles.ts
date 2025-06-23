@@ -19,5 +19,23 @@ export const VoteBlock = styled.div`
 `;
 
 export const StyledSteps = styled(Steps)<StepProps>`
-  width: calc(80px * ${({ items }) => items?.length});
+  padding: 0 40px;
+
+  //TODO: классы
+  .ant-steps-item-description {
+    word-wrap: break-word;
+  }
+
+  .ant-steps-item.ant-steps-item-error,
+  .ant-steps-item.ant-steps-item-finish {
+    .ant-steps-item-tail {
+      &::after {
+        background-color: ${({ theme }) => theme.token.colorPrimary};
+      }
+    }
+  }
+`;
+
+export const FactTitle = styled.div`
+  text-align: center;
 `;

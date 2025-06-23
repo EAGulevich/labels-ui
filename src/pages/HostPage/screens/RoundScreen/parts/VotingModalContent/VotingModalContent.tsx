@@ -1,24 +1,33 @@
+import { useLayoutEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import {
-  CheckCircleOutlined,
-  CloseOutlined,
-  LoadingOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
-import { Drawer, Flex, StepsProps, Typography } from "antd";
+import { Drawer, Flex, Typography } from "antd";
 import maxBy from "lodash.maxby";
+import { useTheme } from "styled-components";
 
 import { ErrorFallback } from "@components/Error/ErrorFallback.tsx";
 import { PlayerCard } from "@components/PlayerCard/PlayerCard.tsx";
 import { useGameState } from "@providers/GameStateProvider.tsx";
 import { Candidate } from "@sharedTypes/types.ts";
 
-import { StyledSteps, VoteBlock, VotePoint } from "./styles.ts";
+import { getStepsOfVoting } from "./parts/getStepsOfVoting.tsx";
+import { FactTitle, StyledSteps, VoteBlock, VotePoint } from "./styles.ts";
 
-// TODO: на весь экран, чтобы не было видно промежуточных результатов или в отдельную экран
 export const VotingModalContent = () => {
+  const [drawerHeight, setDrawerHeight] = useState<string>("0px");
+  const { token } = useTheme();
   const { t } = useTranslation();
   const { room } = useGameState();
+
+  useLayoutEffect(() => {
+    const drawerTopMargin =
+      document.getElementsByTagName("footer")[0].clientHeight +
+      document.getElementsByTagName("header")[0].clientHeight +
+      10 +
+      "px";
+
+    setDrawerHeight(`calc(100vh - ${drawerTopMargin})`);
+  }, []);
+
   if (!room) {
     return <ErrorFallback />;
   }
@@ -31,48 +40,38 @@ export const VotingModalContent = () => {
       (c) => c.voteCount === playerIdWithMaxVotes?.voteCount,
     ).length === 1;
 
-  const votedFacts = room.story[room.round]?.length || 0;
   const isAllPlayersVotedForFact =
     room.votingFact?.candidates.reduce((prev, cur) => {
       return prev + cur.voteCount;
     }, 0) ===
     room.players.length - 1;
 
-  // TODO: вынести
-  const items: StepsProps["items"] = room.facts
-    .filter((f) => !f.isGuessed)
-    .map((_f, i) =>
-      votedFacts === i
-        ? {
-            status: "process",
-            icon: <LoadingOutlined />,
-          }
-        : i > votedFacts - 1
-          ? {
-              status: "wait",
-              icon: <UserOutlined />,
-            }
-          : {
-              status:
-                room.story[room.round][i] === "NOBODY" ? "error" : "finish",
-              icon:
-                room.story[room.round][i] === "NOBODY" ? (
-                  <CloseOutlined />
-                ) : (
-                  // TODO: style
-                  <CheckCircleOutlined style={{ color: "green" }} />
-                ),
-            },
-    );
-
   return (
     <Drawer
+      styles={{
+        content: {
+          backgroundColor: token.colorBgContainer + "20",
+          backdropFilter: "blur(12px)",
+          borderTopLeftRadius: "10px",
+          borderTopRightRadius: "10px",
+          boxShadow: `inset 0px 4px 20px 0px ${token.colorText}`,
+        },
+        wrapper: {
+          minHeight: drawerHeight,
+          maxHeight: drawerHeight,
+        },
+      }}
       title={
         <Flex justify={"center"} align={"center"} vertical>
           <Typography.Title level={3} type={"secondary"}>
             {t("roundScreen.modalVote").toUpperCase()}
           </Typography.Title>
-          <StyledSteps direction={"horizontal"} items={items} />
+          <StyledSteps
+            size={"small"}
+            labelPlacement={"vertical"}
+            direction={"horizontal"}
+            items={getStepsOfVoting({ room, token })}
+          />
         </Flex>
       }
       placement="bottom"
@@ -80,15 +79,14 @@ export const VotingModalContent = () => {
       closable={false}
       open={true}
     >
-      <Flex vertical align={"center"}>
+      <FactTitle>
         <Typography.Title level={1}>{room.votingFact?.text}</Typography.Title>
-      </Flex>
+      </FactTitle>
       <Flex justify={"center"} gap={"small"} wrap>
         {room.votingFact?.candidates.map((c) => (
           <Flex
             vertical
             key={c.id}
-            // TODO: вынести в стили
             style={{
               transition: "opacity 1s",
               opacity:
@@ -100,7 +98,7 @@ export const VotingModalContent = () => {
             }}
           >
             <PlayerCard
-              player={c}
+              player={{ ...c, isVip: false, isActive: true }}
               mark={isOnlyMax && c.id === playerIdWithMaxVotes?.id}
             />
             <VoteBlock>
