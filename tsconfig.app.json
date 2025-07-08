@@ -14,7 +14,7 @@
       "@home/*": ["./src/page/HomePage/*"],
       "@host/*": ["./src/page/HostPage/*"],
       "@player/*": ["./src/page/PlayerPage/*"],
-      "@sharedTypes/*": ["./src/_sharedTypesFromServer/*"],
+      "@shared/*": ["./src/_shared/*"],
       "@socket": ["./src/socket.ts"],
       "@constants": ["./src/constants.ts"],
       "@utils/*": ["./src/utils/*"]
@@ -39,5 +39,5 @@
     "types": ["vite-plugin-svgr/client"]
   },
   "include": ["src"],
-  "exclude": ["copy-types.mjs"]
+  "exclude": ["copy-shared.mjs"]
 }

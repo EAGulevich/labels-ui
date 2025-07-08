@@ -3,15 +3,13 @@ import { useTranslation } from "react-i18next";
 import { Flex, Typography } from "antd";
 import { useTheme } from "styled-components";
 
+import { MAX_PLAYERS, MIN_PLAYERS } from "@shared/constants/validations.ts";
+import { RoomClient } from "@shared/types";
+
 import { PlayerCard } from "@components/PlayerCard/PlayerCard.tsx";
-import {
-  ANIMATION_DURATION_COUNT_DOWN_BEFORE_START_S,
-  MAX_PLAYERS,
-  MIN_PLAYERS,
-} from "@constants";
+import { ANIMATION_DURATION_COUNT_DOWN_BEFORE_START_S } from "@constants";
 import { useAppSettings } from "@providers/AppSettingsProvider/AppSettingsProvider.tsx";
 import { useAppStorage } from "@providers/AppStorageProvider.tsx";
-import { Room } from "@sharedTypes/types.ts";
 
 import {
   CountDownItem,
@@ -26,7 +24,7 @@ import {
 } from "./styles.ts";
 
 type PlayersBlockProps = {
-  players: Room["players"];
+  players: RoomClient["players"];
   showCountDown: boolean;
 };
 

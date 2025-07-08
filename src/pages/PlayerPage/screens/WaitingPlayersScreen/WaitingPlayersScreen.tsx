@@ -1,23 +1,21 @@
 import { useTranslation } from "react-i18next";
 import { Button, Result, Spin } from "antd";
 
-import { MIN_PLAYERS } from "@constants";
+import { MIN_PLAYERS } from "@shared/constants/validations.ts";
+import { AvatarToken, PlayerClient } from "@shared/types";
+
 import { useGameState } from "@providers/GameStateProvider.tsx";
-import { AvatarToken } from "@sharedTypes/avatarTokens.ts";
-import { Player } from "@sharedTypes/types.ts";
 
 import { AvatarSelect } from "./AvatarSelect/AvatarSelect.tsx";
 
 type WaitingPlayersScreenProps = {
-  isVip: boolean;
   onStart: () => void;
   isAvatarSelected: boolean;
-  player: Player;
-  onChangePlayerAvatar: (avatarToken: Player["avatarToken"]) => void;
+  player: PlayerClient;
+  onChangePlayerAvatar: (avatarToken: PlayerClient["avatar"]["token"]) => void;
 };
 
 export const WaitingPlayersScreen = ({
-  isVip,
   onStart,
   isAvatarSelected,
   player,
@@ -28,14 +26,14 @@ export const WaitingPlayersScreen = ({
 
   const usedAvatarTokens = Object.values(AvatarToken).filter(
     (token) =>
-      room?.players.some((player) => player.avatarToken === token) &&
-      player.avatarToken !== token,
+      room?.players.some((player) => player.avatar.token === token) &&
+      player.avatar.token !== token,
   );
 
   if (!isAvatarSelected) {
     return (
       <AvatarSelect
-        value={player.avatarToken}
+        value={player.avatar.token}
         disabledItems={usedAvatarTokens}
         onChange={onChangePlayerAvatar}
       />
@@ -51,7 +49,7 @@ export const WaitingPlayersScreen = ({
       />
     );
   }
-  if (isVip) {
+  if (player.isVip) {
     return (
       <Result
         status="info"

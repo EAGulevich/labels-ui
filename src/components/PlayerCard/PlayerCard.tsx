@@ -2,9 +2,9 @@ import { CheckCircleTwoTone, ClockCircleTwoTone } from "@ant-design/icons";
 import { Badge, Flex, Spin } from "antd";
 import { useTheme } from "styled-components";
 
+import { PlayerClient } from "@shared/types";
+
 import { PlayerAvatar } from "@components/PlayerAvatar/PlayerAvatar.tsx";
-import { AvatarToken, AvatarTokenBot } from "@sharedTypes/avatarTokens.ts";
-import { type Player as PlayerType } from "@sharedTypes/types.ts";
 
 import {
   PlayerName,
@@ -16,8 +16,8 @@ import {
 
 type PlayerProps = {
   status?: "success" | "waiting";
-  player: Pick<PlayerType, "name" | "isVip" | "isActive" | "factStatus"> & {
-    avatarToken?: AvatarToken | AvatarTokenBot;
+  player: Pick<PlayerClient, "name" | "isVip" | "isActive" | "factStatus"> & {
+    avatar: { token: PlayerClient["avatar"]["token"] | undefined };
   };
   height?: string;
   onClick?: () => void;
@@ -59,7 +59,7 @@ export const PlayerCard = ({
             <StyledPlayer>
               <Flex align={"end"} justify={"center"} flex={1}>
                 <Spin spinning={!player.isActive}>
-                  <PlayerAvatar token={player.avatarToken} />
+                  <PlayerAvatar token={player.avatar.token} />
                 </Spin>
               </Flex>
               <Flex align={"center"} justify={"center"} flex={1}>

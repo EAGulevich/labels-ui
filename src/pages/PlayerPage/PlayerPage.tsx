@@ -4,12 +4,12 @@ import { useNavigate } from "react-router";
 import { FrownOutlined } from "@ant-design/icons";
 import { Button, Flex, Result, Typography } from "antd";
 
+import { FACT_STATUSES, ROOM_STATUSES } from "@shared/types";
+
 import { PlayerAvatar } from "@components/PlayerAvatar/PlayerAvatar.tsx";
 import { HEADER_INFO_CONTAINER, ROUTE_PATHS } from "@constants";
 import { useAppStorage } from "@providers/AppStorageProvider.tsx";
 import { useGameState } from "@providers/GameStateProvider.tsx";
-import { FACT_STATUS } from "@sharedTypes/factStatuses.ts";
-import { ROOM_STATUSES } from "@sharedTypes/roomStatuses.ts";
 
 import { DiscussionScreen } from "./screens/DiscussionScreen/DiscussionScreen.tsx";
 import { GameOverScreen } from "./screens/GameOverScreen/GameOverScreen.tsx";
@@ -27,14 +27,14 @@ const PlayerPage = () => {
     onJoin,
     onStart,
     isServerError,
-    isVip,
     onSendFact,
     addVote,
+    onShowResult,
     onChangePlayerAvatar,
   } = useSocketEvents();
-  const { playerId } = useAppStorage();
   const { t } = useTranslation();
   const { room } = useGameState();
+  const { userId } = useAppStorage();
 
   if (isServerError) {
     return (
@@ -52,12 +52,11 @@ const PlayerPage = () => {
   }
 
   const headerMenuElement = document.getElementById(HEADER_INFO_CONTAINER);
-  const player = room?.players.find((p) => p.id === playerId);
+  const player = room?.players.find((p) => p.id === userId);
 
-  const isAllGuessed =
-    room?.status === ROOM_STATUSES.ROUND &&
-    !room?.players.filter((p) => p.factStatus === FACT_STATUS.NOT_GUESSED)
-      .length;
+  const isNotAllGuessed = !!room?.players.some(
+    (p) => p.factStatus === FACT_STATUSES.NOT_GUESSED,
+  );
 
   return (
     <PlayerLayout>
@@ -66,30 +65,38 @@ const PlayerPage = () => {
         headerMenuElement &&
         createPortal(
           <Flex gap={"small"} justify={"center"} align={"center"}>
-            <PlayerAvatar token={player.avatarToken} size={"small"} />
+            <PlayerAvatar token={player.avatar.token} size={"small"} />
             <Typography.Text>{player.name}</Typography.Text>
           </Flex>,
           headerMenuElement,
         )}
       {!room && <JoinScreen onJoin={onJoin} />}
-      {player && room?.status === ROOM_STATUSES.CREATED && (
+      {player && room?.status === ROOM_STATUSES.LOBBY && (
         <WaitingPlayersScreen
-          isVip={isVip}
           onStart={onStart}
-          isAvatarSelected={!player.isAvatarAutoSelected}
+          isAvatarSelected={!player.avatar.isAutoSelected}
           player={player}
           onChangePlayerAvatar={onChangePlayerAvatar}
         />
       )}
-      {room?.status === ROOM_STATUSES.STARTED && (
+      {room?.status === ROOM_STATUSES.SUBMITTING_FACTS && (
         <InputFactScreen onSendFact={onSendFact} />
       )}
 
       {room?.status === ROOM_STATUSES.ROUND &&
-        (isAllGuessed ? <GameOverScreen /> : <DiscussionScreen />)}
+        !room.votingData &&
+        isNotAllGuessed && <DiscussionScreen />}
+      {room?.status === ROOM_STATUSES.ROUND && !isNotAllGuessed && (
+        <GameOverScreen
+          onShowResult={player?.isVip ? onShowResult : undefined}
+        />
+      )}
 
-      {room?.status === ROOM_STATUSES.VOTING && (
-        <VoteScreen addVote={addVote} />
+      {!!room?.votingData && <VoteScreen addVote={addVote} />}
+
+      {room?.status === ROOM_STATUSES.RESULTS && (
+        // TODO
+        <div> Полный список баллов по раундам</div>
       )}
     </PlayerLayout>
   );

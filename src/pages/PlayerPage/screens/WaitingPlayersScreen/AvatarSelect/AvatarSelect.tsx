@@ -5,14 +5,13 @@ import { Button, Flex, Typography } from "antd";
 import { PlayerAvatar } from "@components/PlayerAvatar/PlayerAvatar.tsx";
 import { useAppSettings } from "@providers/AppSettingsProvider/AppSettingsProvider.tsx";
 import { useAppStorage } from "@providers/AppStorageProvider.tsx";
-import { AvatarToken } from "@sharedTypes/avatarTokens.ts";
-import { Player } from "@sharedTypes/types.ts";
+import { AvatarToken, PlayerClient } from "@shared/types";
 
 import { AvatarItem, FlexItem } from "./styles.ts";
 
 type AvatarSelectProps = {
-  value: Player["avatarToken"];
-  onChange: (token: Player["avatarToken"]) => void;
+  value: PlayerClient["avatar"]["token"];
+  onChange: (token: PlayerClient["avatar"]["token"]) => void;
   disabledItems: AvatarToken[];
 };
 

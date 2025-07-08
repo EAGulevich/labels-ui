@@ -1,18 +1,15 @@
 import { useEffect } from "react";
 
+import { ServerToClientEvents } from "@shared/types";
+
 import { useAppSettings } from "@providers/AppSettingsProvider/AppSettingsProvider.tsx";
 import { useAppStorage } from "@providers/AppStorageProvider.tsx";
-import { ServerToClientEvents } from "@sharedTypes/events.ts";
-import { Room } from "@sharedTypes/types.ts";
+import { useGameState } from "@providers/GameStateProvider.tsx";
 import { socket } from "@socket";
 
-type UseConnectDisconnectPlayerProps = {
-  setRoom: (room: Room) => void;
-};
+export const useConnectDisconnectPlayer = () => {
+  const { setRoom } = useGameState();
 
-export const useConnectDisconnectPlayer = ({
-  setRoom,
-}: UseConnectDisconnectPlayerProps) => {
   const {
     audio: { getAudio },
   } = useAppSettings();
@@ -20,8 +17,8 @@ export const useConnectDisconnectPlayer = ({
   const { volume } = useAppStorage();
 
   useEffect(() => {
-    const onJoinedPlayer: ServerToClientEvents["joinedPlayer"] = (data) => {
-      setRoom(data.room);
+    const onJoinedPlayer: ServerToClientEvents["joinedPlayer"] = ({ room }) => {
+      setRoom(room);
       getAudio("connectPlayer").play({ userSettingsVolume: volume });
     };
 

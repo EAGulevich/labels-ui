@@ -42,14 +42,6 @@ const Theme: ThemeConfig = {
   ...commonConfig,
   token: {
     ...commonConfig.token,
-    colorSuccess: "#23d98d",
-    colorPrimary: "#9353d3",
-    colorInfo: "#9353d3",
-    colorWarning: "#ffca3a",
-    colorError: "#ff6b6b",
-    colorTextBase: "#1b1526",
-    colorBgBase: "#f2e8ff",
-    colorLink: "1b1526e0",
   },
 };
 

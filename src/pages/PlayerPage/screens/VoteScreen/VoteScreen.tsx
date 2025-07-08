@@ -2,12 +2,13 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Flex, Typography } from "antd";
 
+import { FACT_STATUSES, PlayerClient } from "@shared/types";
+
 import { PlayerCard } from "@components/PlayerCard/PlayerCard.tsx";
 import { useGameState } from "@providers/GameStateProvider.tsx";
-import { Candidate } from "@sharedTypes/types.ts";
 
 type VoteScreenProps = {
-  addVote: (candidateId: string) => void;
+  addVote: (params: { candidateId: string; factId: number }) => void;
 };
 
 // TODO: разраничить переводы для host и для player
@@ -15,28 +16,47 @@ type VoteScreenProps = {
 export const VoteScreen = ({ addVote }: VoteScreenProps) => {
   const { t } = useTranslation();
   const { room } = useGameState();
-  const { votingFact } = room || {};
-  const [sendVoteForFact, setSendVoteForFact] = useState("");
-  const [voteCandidate, setVoteCandidate] = useState<Candidate | null>(null);
+  const [sendVoteForFact, setSendVoteForFact] = useState<number | null>(null);
+  const [voteCandidate, setVoteCandidate] = useState<Pick<
+    PlayerClient,
+    "id" | "name" | "avatar"
+  > | null>(null);
 
   // TODO: если перезагрузить страницу, то можно проголосовать дважды!!! - так не должно быть
-  if (sendVoteForFact === votingFact?.id && voteCandidate) {
+  if (
+    sendVoteForFact === room?.votingData?.currentVotingFact.id &&
+    voteCandidate
+  ) {
     return (
       <Flex vertical justify={"center"} align={"center"}>
         {/*TODO: styles*/}
         <Typography.Title level={1} style={{ textAlign: "center" }}>
-          {votingFact?.text}
+          {room.votingData.currentVotingFact.text}
         </Typography.Title>
         <Typography.Title level={4} type={"secondary"}>
           {t("playerVoteScreen.youVoted")}
         </Typography.Title>
         <Flex>
-          <PlayerCard player={voteCandidate} />
+          <PlayerCard
+            player={{
+              ...voteCandidate,
+              // TODO: передача лишнего
+              isVip: false,
+              isActive: true,
+              factStatus: FACT_STATUSES.NOT_GUESSED,
+            }}
+          />
         </Flex>
       </Flex>
     );
   }
 
+  if (!room?.votingData) {
+    // todo
+    return "Error";
+  }
+
+  const currentVotingFactId = room.votingData.currentVotingFact.id;
   return (
     <Flex align={"center"} vertical>
       <Typography.Title level={4} type={"secondary"}>
@@ -44,17 +64,26 @@ export const VoteScreen = ({ addVote }: VoteScreenProps) => {
       </Typography.Title>
       {/*TODO: styles*/}
       <Typography.Title level={1} style={{ textAlign: "center" }}>
-        {votingFact?.text}
+        {room.votingData.currentVotingFact.text}
       </Typography.Title>
       <Flex wrap align={"center"} justify={"center"} gap={"large"}>
-        {votingFact?.candidates.map((c) => (
+        {room.votingData.candidates.map((c) => (
           <PlayerCard
-            key={c.id}
-            player={c}
+            key={c.candidate.id}
+            player={{
+              // TODO: передача лишнего
+              ...c.candidate,
+              isVip: false,
+              isActive: true,
+              factStatus: FACT_STATUSES.NOT_GUESSED,
+            }}
             onClick={() => {
-              addVote(c.id);
-              setSendVoteForFact(votingFact?.id);
-              setVoteCandidate(c);
+              addVote({
+                candidateId: c.candidate.id,
+                factId: currentVotingFactId,
+              });
+              setSendVoteForFact(currentVotingFactId);
+              setVoteCandidate(c.candidate);
             }}
           />
         ))}

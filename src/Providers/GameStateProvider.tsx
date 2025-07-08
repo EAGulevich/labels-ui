@@ -6,11 +6,11 @@ import {
   useState,
 } from "react";
 
-import { Room } from "@sharedTypes/types.ts";
+import { RoomClient } from "@shared/types";
 
 type GameStateContextType = {
-  room: Room | null;
-  setRoom: (room: Room | null) => void;
+  room: RoomClient | null;
+  setRoom: (room: RoomClient | null) => void;
 
   showCountDownBeforeStart: boolean;
   setShowCountDownBeforeStart: (show: boolean) => void;
@@ -30,7 +30,8 @@ const GameStateContext = createContext(defaultValue);
 export const useGameState = () => useContext(GameStateContext);
 
 export const GameStateProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [room, setRoom] = useState<Room | null>(null);
+  const [room, setRoom] = useState<RoomClient | null>(null);
+
   const [showCountDownBeforeStart, setShowCountDownBeforeStart] =
     useState(false);
 
@@ -39,6 +40,7 @@ export const GameStateProvider: FC<PropsWithChildren> = ({ children }) => {
       value={{
         room,
         setRoom,
+
         showCountDownBeforeStart,
         setShowCountDownBeforeStart,
       }}

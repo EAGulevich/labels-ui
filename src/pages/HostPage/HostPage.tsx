@@ -4,10 +4,12 @@ import { useNavigate } from "react-router";
 import { FrownOutlined } from "@ant-design/icons";
 import { Button, Result } from "antd";
 
+import { ROOM_STATUSES } from "@shared/types";
+
 import { HEADER_INFO_CONTAINER, ROUTE_PATHS } from "@constants";
 import { useGameState } from "@providers/GameStateProvider.tsx";
-import { ROOM_STATUSES } from "@sharedTypes/roomStatuses.ts";
 
+import { GameResultScreen } from "../PlayerPage/screens/GameResultScreen/GameResultScreen.tsx";
 import { CreateOrReturnToRoom } from "./screens/CreateOrReturnToRoom/CreateOrReturnToRoom.tsx";
 import { InputFactScreen } from "./screens/InputFactScreen/InputFactScreen.tsx";
 import { RoundScreen } from "./screens/RoundScreen/RoundScreen.tsx";
@@ -47,7 +49,7 @@ const HostPage = () => {
   const roomCode = room?.code;
 
   const showCodeInHeader =
-    room?.status !== ROOM_STATUSES.CREATED && roomCode && headerMenuElement;
+    room?.status !== ROOM_STATUSES.LOBBY && roomCode && headerMenuElement;
 
   return (
     <>
@@ -60,18 +62,18 @@ const HostPage = () => {
           onReenterRoom={onReenterRoom}
         />
       )}
-      {(room?.status === ROOM_STATUSES.CREATED || showCountDownBeforeStart) && (
+      {(room?.status === ROOM_STATUSES.LOBBY || showCountDownBeforeStart) && (
         <WaitingPlayersScreen showCountDown={showCountDownBeforeStart} />
       )}
 
-      {room?.status === ROOM_STATUSES.STARTED && !showCountDownBeforeStart && (
-        <InputFactScreen />
-      )}
+      {room?.status === ROOM_STATUSES.SUBMITTING_FACTS &&
+        !showCountDownBeforeStart && <InputFactScreen />}
 
-      {(room?.status == ROOM_STATUSES.ROUND ||
-        room?.status === ROOM_STATUSES.VOTING) && (
+      {room?.status == ROOM_STATUSES.ROUND && (
         <RoundScreen onTimerFinish={startVoting} />
       )}
+
+      {room?.status == ROOM_STATUSES.RESULTS && <GameResultScreen />}
     </>
   );
 };

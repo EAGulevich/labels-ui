@@ -2,20 +2,20 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { message } from "antd";
 
-import { ServerToClientEvents } from "@sharedTypes/events.ts";
-import { Room } from "@sharedTypes/types.ts";
+import { ServerToClientEvents } from "@shared/types";
+
+import { useGameState } from "@providers/GameStateProvider.tsx";
 import { socket } from "@socket";
 
 type UsePlayerConnectDisconnectProps = {
-  setRoom: (room: Room) => void;
   messageApi: ReturnType<typeof message.useMessage>[0];
 };
 
 export const usePlayerConnectDisconnect = ({
-  setRoom,
   messageApi,
 }: UsePlayerConnectDisconnectProps) => {
   const { t } = useTranslation();
+  const { setRoom } = useGameState();
 
   useEffect(() => {
     const joinRoom: ServerToClientEvents["joinedPlayer"] = (data) => {
@@ -24,7 +24,7 @@ export const usePlayerConnectDisconnect = ({
       messageApi.open({
         type: "info",
         content: t("messages.joinedPlayer", {
-          playerName: data.eventData.joinedPlayer.name,
+          playerName: data.extra.joinedPlayer.name,
         }),
       });
     };
@@ -37,7 +37,7 @@ export const usePlayerConnectDisconnect = ({
       messageApi.open({
         type: "info",
         content: t("messages.playerReconnected", {
-          playerName: data.eventData.reconnectedPlayer.name,
+          playerName: data.extra.reconnectedPlayer.name,
         }),
       });
     };
@@ -49,7 +49,7 @@ export const usePlayerConnectDisconnect = ({
       messageApi.open({
         type: "warning",
         content: t("messages.playerLeft", {
-          playerName: data.eventData.disconnectedPlayer.name,
+          playerName: data.extra.disconnectedPlayerName,
         }),
       });
     };
@@ -61,7 +61,7 @@ export const usePlayerConnectDisconnect = ({
       messageApi.open({
         type: "warning",
         content: t("messages.playerLostConnection", {
-          playerName: data.eventData.markedInactivePlayer.name,
+          playerName: data.extra.markedInactivePlayer.name,
         }),
       });
     };

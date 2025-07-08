@@ -3,51 +3,54 @@ import { TranslatedError } from "@utils/TranslatedError.tsx";
 import { message } from "antd";
 
 import { useAppStorage } from "@providers/AppStorageProvider.tsx";
-import { Room } from "@sharedTypes/types.ts";
+import { useGameState } from "@providers/GameStateProvider.tsx";
 import { socket } from "@socket";
 
 type UseActionsProps = {
-  setRoom: (room: Room) => void;
   messageApi: ReturnType<typeof message.useMessage>[0];
 };
 
-export const useActions = ({ setRoom, messageApi }: UseActionsProps) => {
-  const { roomHostId, changeRoomHostId, removeRoomHostId } = useAppStorage();
+export const useActions = ({ messageApi }: UseActionsProps) => {
+  const { setRoom } = useGameState();
+  const { userId, setUserId } = useAppStorage();
 
   const onCreateRoom = useCallback(() => {
-    socket.emit("createRoom", null, ({ room, eventData }) => {
-      changeRoomHostId(eventData.newRoomHostId);
-      setRoom(room);
+    socket.emit("createRoom", null, (res) => {
+      if (res.success) {
+        setUserId(res.extra.userId);
+        setRoom(res.room);
+      } else {
+        //   TODO
+      }
     });
-  }, [changeRoomHostId, setRoom]);
+  }, [setRoom, setUserId]);
 
   const startVoting = useCallback(() => {
-    socket.emit("startVoting");
+    socket.emit("startVoting", null, () => {
+      //   todo
+    });
   }, []);
 
   const onReenterRoom = useCallback(() => {
-    socket.emit(
-      "reenterRoom",
-      { roomHostId: roomHostId || "" },
-      ({ data, error }) => {
-        if (data) {
-          changeRoomHostId(data.eventData.newRoomHostId);
-          setRoom(data.room);
-        } else if (error) {
-          messageApi.open({
-            type: "error",
+    socket.emit("reenterRoom", null, (res) => {
+      if (res.success) {
+        // todo здесь ведь не надо пересохранение делать?
+        // setUserId(res.extra.userId);
 
-            content: <TranslatedError errorCode={error.code} />,
-          });
-          removeRoomHostId();
-        }
-      },
-    );
-  }, [changeRoomHostId, messageApi, removeRoomHostId, roomHostId, setRoom]);
+        setRoom(res.room);
+      } else {
+        messageApi.open({
+          type: "error",
+          content: <TranslatedError errorCode={res.error.enumCode} />,
+        });
+        setUserId("");
+      }
+    });
+  }, [messageApi, setRoom, setUserId]);
 
   return {
     startVoting,
     onCreateRoom,
-    onReenterRoom: roomHostId ? onReenterRoom : undefined,
+    onReenterRoom: userId ? onReenterRoom : undefined,
   };
 };

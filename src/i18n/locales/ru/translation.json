@@ -115,12 +115,26 @@
     "title": "Игра завершена"
   },
   "errorMessages": {
-    "ROOM_NOT_FOUND_BY_HOST_ID_REENTER_ERROR": "Не удалось вернуться в ранее созданную комнату",
-    "MAX_ROOM_CAPACITY_JOIN_ERROR": "В комнате максимальное число игроков",
-    "GAME_ALREADY_STARTED_JOIN_ERROR": "Эта игра уже началась, дождитесь ее завершения или подключитесь к другой комнате",
-    "ROOM_NOT_FOUND_JOIN_ERROR": "Неверный код комнаты",
-    "CHANGE_AVATAR_ALREADY_USED_ERROR": "Не удалось изменить аватар, т.к. он занят другим игроком",
-    "PLAYER_NAME_ALREADY_EXISTS_JOIN_ERROR": "Имя занято, пожалуйста введите другое"
+    "SERVER_ERROR": "Произошла внутренняя ошибка сервера",
+    "ROOM_NOT_FOUND": "Комната не найдена",
+    "PLAYER_NOT_FOUND": "Игрок не найден",
+    "FACT_NOT_FOUND": "Факт не найден",
+    "GAME_ALREADY_STARTED": "Игра уже началась",
+    "NOT_ENOUGH_PLAYERS": "Недостаточно игроков",
+    "ROOM_AT_MAX_CAPACITY": "Комната достигла максимальной вместимости",
+    "VOTING_PHASE_NOT_ACTIVE": "Фаза голосования не активна",
+    "WRONG_FACT_VOTING": "Нельзя голосовать за этот факт",
+    "PLAYER_NAME_ALREADY_EXISTS": "Имя уже занято другим игроком",
+    "PLAYER_NAME_TOO_LONG": "Имя игрока превышает допустимую длину",
+    "PLAYER_NAME_TOO_SHORT": "Имя игрока слишком короткое",
+    "AVATAR_ALREADY_TAKEN": "Выбранный аватар уже используется",
+    "PLAYER_ALREADY_SUBMITTED_FACT": "Игрок уже отправил факт",
+    "DUPLICATE_FACT": "Обнаружен повторяющийся факт",
+    "FACT_TEXT_TOO_LONG": "Текст факта слишком длинный",
+    "FACT_TEXT_TOO_SHORT": "Текст факта слишком короткий",
+    "VOTING_DATA_NOT_FOUND": "Не найдено данных для голосования",
+    "GAME_RESULTS_NOT_FOUND": "Не удалось получить результаты игры",
+    "ALREADY_VOTED_FOR_FACT_IN_CURRENT_ROUND": "Вы уже голосовали за этот факт в текущем раунде"
   },
   "errors": {
     "500": {

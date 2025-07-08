@@ -2,25 +2,26 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { message } from "antd";
 
+import { ServerToClientEvents } from "@shared/types";
+
 import { useAppStorage } from "@providers/AppStorageProvider.tsx";
-import { ServerToClientEvents } from "@sharedTypes/events.ts";
-import { Room } from "@sharedTypes/types.ts";
+import { useGameState } from "@providers/GameStateProvider.tsx";
 import { socket } from "@socket";
 
 type UseNewVipProps = {
-  setRoom: (room: Room) => void;
   messageApi: ReturnType<typeof message.useMessage>[0];
 };
 
-export const useNewVip = ({ setRoom, messageApi }: UseNewVipProps) => {
+export const useNewVip = ({ messageApi }: UseNewVipProps) => {
   const { t } = useTranslation();
-  const { playerId } = useAppStorage();
+  const { setRoom } = useGameState();
+  const { userId } = useAppStorage();
 
   useEffect(() => {
     const updateVipPlayer: ServerToClientEvents["updateVipPlayer"] = (data) => {
       setRoom(data.room);
 
-      if (data.eventData.newVipPlayer.id === playerId) {
+      if (data.extra.newVipPlayer.id === userId) {
         messageApi.open({
           type: "info",
           content: t("messages.youHaveBecomeVIP"),
@@ -29,7 +30,7 @@ export const useNewVip = ({ setRoom, messageApi }: UseNewVipProps) => {
         messageApi.open({
           type: "info",
           content: t("messages.playerHasBecomeVIP", {
-            playerName: data.eventData.newVipPlayer.name,
+            playerName: data.extra.newVipPlayer.name,
           }),
         });
       }
@@ -40,5 +41,5 @@ export const useNewVip = ({ setRoom, messageApi }: UseNewVipProps) => {
     return () => {
       socket.off("updateVipPlayer", updateVipPlayer);
     };
-  }, [messageApi, playerId, setRoom, t]);
+  }, [messageApi, setRoom, t, userId]);
 };

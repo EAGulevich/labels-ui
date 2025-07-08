@@ -5,22 +5,16 @@ import { socket } from "@socket";
 
 export const useConnectDisconnect = () => {
   const [isServerError, setIsServerError] = useState(false);
-  const { roomHostId, removeRoomHostId } = useAppStorage();
+  const { userId, setUserId } = useAppStorage();
 
   useEffect(() => {
     const onConnect = () => {
-      if (roomHostId) {
-        socket.emit(
-          "findRoomByHostId",
-          {
-            roomHostId,
-          },
-          ({ foundedRoom }) => {
-            if (!foundedRoom) {
-              removeRoomHostId();
-            }
-          },
-        );
+      if (userId) {
+        socket.emit("findRoomByHostId", null, ({ foundedRoom }) => {
+          if (!foundedRoom) {
+            setUserId("");
+          }
+        });
       }
     };
 
@@ -38,7 +32,7 @@ export const useConnectDisconnect = () => {
 
       // socket.disconnect();
     };
-  }, [removeRoomHostId, roomHostId]);
+  }, [setUserId, userId]);
 
   return {
     isServerError,

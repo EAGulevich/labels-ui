@@ -10,10 +10,14 @@ import {
 } from "antd";
 import { useTheme } from "styled-components";
 
-import { FACT_MAX_LENGTH } from "@constants";
+import {
+  FACT_TEXT_MAX_LENGTH,
+  FACT_TEXT_MIN_LENGTH,
+} from "@shared/constants/validations.ts";
+import { FACT_STATUSES } from "@shared/types";
+
 import { useAppStorage } from "@providers/AppStorageProvider.tsx";
 import { useGameState } from "@providers/GameStateProvider.tsx";
-import { FACT_STATUS } from "@sharedTypes/factStatuses.ts";
 
 import { FormFieldType } from "./types.ts";
 
@@ -24,8 +28,9 @@ type InputFactScreenProps = {
 export const InputFactScreen = ({ onSendFact }: InputFactScreenProps) => {
   const { token } = useTheme();
   const { t } = useTranslation();
-  const { playerId } = useAppStorage();
   const { room } = useGameState();
+  const { userId } = useAppStorage();
+
   const { players = [] } = room || {};
 
   const onFinishFact: FormProps<FormFieldType>["onFinish"] = ({ fact }) => {
@@ -33,8 +38,8 @@ export const InputFactScreen = ({ onSendFact }: InputFactScreenProps) => {
   };
 
   const isFactSend =
-    players.find((p) => p.id === playerId)?.factStatus !==
-    FACT_STATUS.NOT_RECEIVED;
+    players.find((p) => p.id === userId)?.factStatus !==
+    FACT_STATUSES.NOT_RECEIVED;
 
   if (!isFactSend) {
     return (
@@ -53,14 +58,20 @@ export const InputFactScreen = ({ onSendFact }: InputFactScreenProps) => {
             rules={[
               {
                 required: true,
-                max: FACT_MAX_LENGTH,
+                max: FACT_TEXT_MAX_LENGTH,
+                min: FACT_TEXT_MIN_LENGTH,
                 message: t("inputFactScreen.form.fields.fact.errors.required"),
               },
             ]}
           >
             {/*TODO: подсказка про формат*/}
             {/*TODO: textarea*/}
-            <Input showCount maxLength={FACT_MAX_LENGTH} />
+            {/* todo: MIN MAX ОБРАБОТАТЬ*/}
+            <Input
+              showCount
+              maxLength={FACT_TEXT_MAX_LENGTH}
+              min={FACT_TEXT_MIN_LENGTH}
+            />
           </Form.Item>
           <Form.Item label={null}>
             <Flex vertical>
@@ -75,7 +86,7 @@ export const InputFactScreen = ({ onSendFact }: InputFactScreenProps) => {
   }
 
   const factsLength = players.filter(
-    (p) => p.factStatus !== FACT_STATUS.NOT_RECEIVED,
+    (p) => p.factStatus !== FACT_STATUSES.NOT_RECEIVED,
   ).length;
 
   return (

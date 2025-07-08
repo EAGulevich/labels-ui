@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { useTranslation } from "react-i18next";
-import { Progress, Spin, Statistic, Typography } from "antd";
+import { Badge, Progress, Spin, Statistic, Typography } from "antd";
 import { useTheme } from "styled-components";
+
+import { FACT_STATUSES } from "@shared/types";
 
 import { PlayerAvatar } from "@components/PlayerAvatar/PlayerAvatar.tsx";
 import { FOOTER_CONTENT } from "@constants";
 import { useAppSettings } from "@providers/AppSettingsProvider/AppSettingsProvider.tsx";
 import { useGameState } from "@providers/GameStateProvider.tsx";
-import { FACT_STATUS } from "@sharedTypes/factStatuses.ts";
 
 import { PlayerItem, PlayersList, Wrapper } from "./styles.ts";
 
@@ -68,7 +69,7 @@ export const Footer = ({ startTimer, onTimerFinish }: FooterProps) => {
           ) : (
             // TODO: перевести Раунд
             <Typography.Text type={"secondary"}>
-              Раунд {room?.round}
+              Раунд {room?.currentRound}
             </Typography.Text>
           )
         }
@@ -76,14 +77,30 @@ export const Footer = ({ startTimer, onTimerFinish }: FooterProps) => {
 
       <PlayersList>
         {room?.players.map((p) => {
-          const isGuessed = p.factStatus === FACT_STATUS.GUESSED;
+          const isGuessed = p.factStatus === FACT_STATUSES.GUESSED;
           return (
-            <PlayerItem isGuessed={isGuessed}>
-              <Spin spinning={!p.isActive}>
-                <PlayerAvatar token={p.avatarToken} />
-              </Spin>
-              <Typography.Text delete={isGuessed}>
-                {p.name.toUpperCase()}
+            <PlayerItem key={p.id} $isGuessed={isGuessed}>
+              <Badge
+                count={p.isVip ? "VIP" : undefined}
+                size={"small"}
+                color={"gold"}
+              >
+                <Spin spinning={!p.isActive}>
+                  <PlayerAvatar token={p.avatar.token} />
+                </Spin>
+              </Badge>
+
+              <Typography.Text
+                type={!p.isActive ? "secondary" : undefined}
+                style={{
+                  textAlign: "center",
+                  textShadow:
+                    p.factStatus === "GUESSED"
+                      ? "none"
+                      : `0 0 40px ${token.colorWhite}, 0 0 10px ${token.colorWhite}, 0 0 20px ${token.colorWhite}`,
+                }}
+              >
+                {p.name}
               </Typography.Text>
             </PlayerItem>
           );

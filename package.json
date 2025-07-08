@@ -11,7 +11,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint . --fix",
     "preview": "vite preview",
-    "copy-types": "node copy-types.mjs",
+    "copy-shared": "node copy-shared.mjs",
     "tsc-watch": "tsc -b --watch"
   },
   "dependencies": {

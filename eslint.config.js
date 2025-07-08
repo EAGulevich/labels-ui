@@ -31,9 +31,11 @@ export default tsEslint
               ["^\\u0000"],
               // Packages. `react` related packages come first.
               ["^react", "^@?\\w"],
+              // shared
+              ["^(@shared)(/.*|$)"],
               // Internal packages.
               [
-                "^(@assets|@components|@home|@host|@player|@sharedTypes|@socket|@constants|@providers)(/.*|$)",
+                "^(@assets|@components|@home|@host|@player|@socket|@constants|@providers)(/.*|$)",
               ],
               // Relative paths.
               [

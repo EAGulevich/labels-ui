@@ -2,25 +2,22 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { message } from "antd";
 
+import { ServerToClientEvents } from "@shared/types";
+
 import { ANIMATION_DURATION_COUNT_DOWN_BEFORE_START_S } from "@constants";
 import { useAppSettings } from "@providers/AppSettingsProvider/AppSettingsProvider.tsx";
 import { useAppStorage } from "@providers/AppStorageProvider.tsx";
-import { ServerToClientEvents } from "@sharedTypes/events.ts";
-import { Room } from "@sharedTypes/types.ts";
+import { useGameState } from "@providers/GameStateProvider.tsx";
 import { socket } from "@socket";
 
 type UseGameStartedProps = {
-  setRoom: (room: Room) => void;
-  setShowCountDownBeforeStart: (show: boolean) => void;
   messageApi: ReturnType<typeof message.useMessage>[0];
 };
 
-export const useGameStarted = ({
-  setRoom,
-  messageApi,
-  setShowCountDownBeforeStart,
-}: UseGameStartedProps) => {
+export const useGameStarted = ({ messageApi }: UseGameStartedProps) => {
   const { t } = useTranslation();
+  const { setRoom, setShowCountDownBeforeStart } = useGameState();
+
   const {
     audio: { getAudio },
   } = useAppSettings();

@@ -115,12 +115,26 @@
     "playerReconnected": "Player {{playerName}} has reconnected"
   },
   "errorMessages": {
-    "ROOM_NOT_FOUND_BY_HOST_ID_REENTER_ERROR": "Failed to return to a previously created room",
-    "MAX_ROOM_CAPACITY_JOIN_ERROR": "Maximum number of players in a room",
-    "GAME_ALREADY_STARTED_JOIN_ERROR": "This game has already started, wait until it ends or connect to another room",
-    "ROOM_NOT_FOUND_JOIN_ERROR": "Wrong room code",
-    "CHANGE_AVATAR_ALREADY_USED_ERROR": "Couldn't change avatar because it is used by another player",
-    "PLAYER_NAME_ALREADY_EXISTS_JOIN_ERROR": "Name taken, please enter another one"
+    "SERVER_ERROR": "Internal server error occurred",
+    "ROOM_NOT_FOUND": "Requested room not found",
+    "PLAYER_NOT_FOUND": "Player not found in the system",
+    "FACT_NOT_FOUND": "Specified fact does not exist",
+    "GAME_ALREADY_STARTED": "Game session has already begun",
+    "NOT_ENOUGH_PLAYERS": "Minimum number of players not reached",
+    "ROOM_AT_MAX_CAPACITY": "Room has reached maximum player limit",
+    "VOTING_PHASE_NOT_ACTIVE": "Voting is not currently active",
+    "WRONG_FACT_VOTING": "Attempted to vote for incorrect fact",
+    "PLAYER_NAME_ALREADY_EXISTS": "Player name is already taken",
+    "PLAYER_NAME_TOO_LONG": "Player name exceeds maximum length",
+    "PLAYER_NAME_TOO_SHORT": "Player name is too short",
+    "AVATAR_ALREADY_TAKEN": "Selected avatar is already in use",
+    "PLAYER_ALREADY_SUBMITTED_FACT": "Player has already submitted a fact",
+    "DUPLICATE_FACT": "Duplicate fact content detected",
+    "FACT_TEXT_TOO_LONG": "Fact text exceeds maximum length",
+    "FACT_TEXT_TOO_SHORT": "Fact text is too short",
+    "VOTING_DATA_NOT_FOUND": "No voting data found",
+    "GAME_RESULTS_NOT_FOUND": "Failed to retrieve game results",
+    "ALREADY_VOTED_FOR_FACT_IN_CURRENT_ROUND": "You have already voted for this fact in the current round"
   },
   "errors": {
     "500": {

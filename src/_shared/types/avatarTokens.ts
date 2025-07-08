@@ -10,4 +10,5 @@ export enum AvatarToken {
   "ROBOT_9" = "ROBOT_9",
 }
 
-export type AvatarTokenBot = "ROBOT_BOT";
+export type BotAvatarToken = "ROBOT_BOT";
+export const BOT_AVATAR_TOKEN: BotAvatarToken = "ROBOT_BOT";

@@ -1,5 +1,7 @@
 import { ReactElement } from "react";
 
+import { AvatarToken, BotAvatarToken } from "@shared/types";
+
 import Robot_1_Svg from "@assets/avatars/robot_1.svg?react";
 import Robot_2_Svg from "@assets/avatars/robot_2.svg?react";
 import Robot_3_Svg from "@assets/avatars/robot_3.svg?react";
@@ -10,10 +12,9 @@ import Robot_7_Svg from "@assets/avatars/robot_7.svg?react";
 import Robot_8_Svg from "@assets/avatars/robot_8.svg?react";
 import Robot_9_Svg from "@assets/avatars/robot_9.svg?react";
 import Robot_bot_Svg from "@assets/avatars/robot_bot.svg?react";
-import { AvatarToken, AvatarTokenBot } from "@sharedTypes/avatarTokens.ts";
 
 export const AVATARS: {
-  [key in AvatarToken | AvatarTokenBot]: {
+  [key in AvatarToken | BotAvatarToken]: {
     background: string;
     icon: ReactElement;
   };

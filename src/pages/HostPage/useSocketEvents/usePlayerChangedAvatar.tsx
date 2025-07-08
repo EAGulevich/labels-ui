@@ -2,22 +2,18 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { message } from "antd";
 
-import { useAppStorage } from "@providers/AppStorageProvider.tsx";
-import { ServerToClientEvents } from "@sharedTypes/events.ts";
-import { Room } from "@sharedTypes/types.ts";
+import { ServerToClientEvents } from "@shared/types";
+
+import { useGameState } from "@providers/GameStateProvider.tsx";
 import { socket } from "@socket";
 
 type UseNewVipProps = {
-  setRoom: (room: Room) => void;
   messageApi: ReturnType<typeof message.useMessage>[0];
 };
 
-export const usePlayerChangedAvatar = ({
-  setRoom,
-  messageApi,
-}: UseNewVipProps) => {
+export const usePlayerChangedAvatar = ({ messageApi }: UseNewVipProps) => {
   const { t } = useTranslation();
-  const { playerId } = useAppStorage();
+  const { setRoom } = useGameState();
 
   useEffect(() => {
     const playerChangedAvatar: ServerToClientEvents["playerChangedAvatar"] = ({
@@ -31,5 +27,5 @@ export const usePlayerChangedAvatar = ({
     return () => {
       socket.off("playerChangedAvatar", playerChangedAvatar);
     };
-  }, [messageApi, playerId, setRoom, t]);
+  }, [messageApi, setRoom, t]);
 };

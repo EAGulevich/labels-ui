@@ -4,19 +4,21 @@ import { useSearchParams } from "react-router";
 import { Button, Flex, Form, FormProps, Input } from "antd";
 
 import {
-  NAME_MAX_LENGTH,
-  QUERY_PARAM_ROOM_CODE,
+  PLAYER_NAME_MAX_LENGTH,
+  PLAYER_NAME_MIN_LENGTH,
   ROOM_CODE_LENGTH,
-} from "@constants";
-import { Player, Room } from "@sharedTypes/types.ts";
+} from "@shared/constants/validations.ts";
+import { PlayerClient, RoomClient } from "@shared/types";
+
+import { QUERY_PARAM_ROOM_CODE } from "@constants";
 
 import { FormFieldType } from "./types.ts";
 import { StyledInputOptWrapper } from "./styles.ts";
 
 type JoinScreenProps = {
   onJoin: (params: {
-    roomCode: Room["code"];
-    player: Pick<Player, "name">;
+    roomCode: RoomClient["code"];
+    player: Pick<PlayerClient, "name">;
   }) => void;
 };
 
@@ -67,18 +69,24 @@ export const JoinScreen = ({ onJoin }: JoinScreenProps) => {
           </Form.Item>
         </StyledInputOptWrapper>
 
+        {/*TODO min max сообщение красивое*/}
         <Form.Item<FormFieldType>
           label={t("joinScreen.form.fields.name.label")}
           name="name"
           rules={[
             {
               required: true,
-              max: NAME_MAX_LENGTH,
+              max: PLAYER_NAME_MAX_LENGTH,
+              min: PLAYER_NAME_MIN_LENGTH,
               message: t("joinScreen.form.fields.name.errors.required"),
             },
           ]}
         >
-          <Input showCount maxLength={NAME_MAX_LENGTH} />
+          <Input
+            showCount
+            maxLength={PLAYER_NAME_MAX_LENGTH}
+            minLength={PLAYER_NAME_MIN_LENGTH}
+          />
         </Form.Item>
         <Form.Item label={null}>
           <Flex vertical>

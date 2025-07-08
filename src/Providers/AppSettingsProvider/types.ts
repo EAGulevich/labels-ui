@@ -1,4 +1,4 @@
-import { AvatarToken, AvatarTokenBot } from "@sharedTypes/avatarTokens.ts";
+import { AvatarToken, BotAvatarToken } from "@shared/types";
 
 export type Sound = {
   src: string;
@@ -18,5 +18,5 @@ export type Sounds = {
 } & {
   [key in AvatarToken]: Sound;
 } & {
-  [key in AvatarTokenBot]: Sound;
+  [key in BotAvatarToken]: Sound;
 };

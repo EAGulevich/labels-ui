@@ -2,19 +2,21 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { message } from "antd";
 
+import { ServerToClientEvents } from "@shared/types";
+
 import { useAppSettings } from "@providers/AppSettingsProvider/AppSettingsProvider.tsx";
 import { useAppStorage } from "@providers/AppStorageProvider.tsx";
-import { ServerToClientEvents } from "@sharedTypes/events.ts";
-import { Room } from "@sharedTypes/types.ts";
+import { useGameState } from "@providers/GameStateProvider.tsx";
 import { socket } from "@socket";
 
 type UseGameStartedProps = {
-  setRoom: (room: Room) => void;
   messageApi: ReturnType<typeof message.useMessage>[0];
 };
 
-export const useNewRound = ({ setRoom, messageApi }: UseGameStartedProps) => {
+export const useNewRound = ({ messageApi }: UseGameStartedProps) => {
   const { t } = useTranslation();
+  const { setRoom } = useGameState();
+
   const {
     audio: { getAudio },
   } = useAppSettings();
@@ -25,7 +27,6 @@ export const useNewRound = ({ setRoom, messageApi }: UseGameStartedProps) => {
       room,
     }) => {
       setRoom(room);
-
       getAudio("attention").play({ userSettingsVolume: volume });
     };
 

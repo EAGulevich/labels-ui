@@ -6,64 +6,74 @@ import {
 } from "@ant-design/icons";
 import { GlobalToken, StepsProps } from "antd";
 
-import { Room } from "@sharedTypes/types.ts";
+import { FactClient, RoomClient, VotingDataItem } from "@shared/types";
 
 type GetStepsOfVotingProps = {
-  room: Room;
+  room: Omit<RoomClient, "votingData"> & { votingData: VotingDataItem };
   token: GlobalToken;
 };
 
 export const getStepsOfVoting = ({ room, token }: GetStepsOfVotingProps) => {
-  const votedFacts = room.story[room.round]?.length || 0;
+  const votedFactsCount = room.votingData.prevSteps.length;
 
   const voteCount =
-    room.votingFact?.candidates.reduce(
-      (acc, item) => acc + item.voteCount,
+    room.votingData?.candidates.reduce(
+      (acc, item) => acc + item.votesCount,
       0,
     ) || 0;
 
-  const items: StepsProps["items"] = room.facts
-    .filter((f) => !f.isGuessed)
-    .map((_f, i) =>
-      votedFacts === i
+  const facts: (FactClient | null)[] = room.votingData.prevSteps
+    .map((val) => room.facts.find((v) => v.id === val.fact.id))
+    .filter((val) => !!val);
+
+  const stepCount = room.players.filter(
+    (player) => player.factStatus === "NOT_GUESSED",
+  ).length;
+
+  facts.splice(
+    facts.length,
+    0,
+    ...new Array(stepCount - facts.length).fill(null),
+  );
+
+  const items: StepsProps["items"] = facts.map((_f, i) => {
+    const supposedPlayer = room.votingData?.prevSteps.find(
+      (val) => val.fact.id === _f?.id,
+    )?.selectedPlayer;
+
+    return votedFactsCount === i
+      ? {
+          status: "process",
+          description: `${voteCount} / ${room.players.length - 1}`,
+          icon: (
+            <LoadingOutlined
+              style={{
+                color: token.colorPrimaryText,
+              }}
+            />
+          ),
+        }
+      : i > votedFactsCount - 1
         ? {
-            status: "process",
-            description: `${voteCount} / ${room.players.length - 1}`,
-            icon: (
-              <LoadingOutlined
+            status: "wait",
+            description: ``,
+
+            icon: <UserOutlined style={{}} />,
+          }
+        : {
+            description: !supposedPlayer ? "Никто" : supposedPlayer?.name,
+            status: !supposedPlayer ? "error" : "finish",
+            icon: !supposedPlayer ? (
+              <CloseOutlined style={{ color: token.colorError }} />
+            ) : (
+              <CheckCircleOutlined
                 style={{
-                  color: token.colorPrimaryText,
+                  color: token.colorSuccess,
                 }}
               />
             ),
-          }
-        : i > votedFacts - 1
-          ? {
-              status: "wait",
-              description: ``,
-
-              icon: <UserOutlined style={{}} />,
-            }
-          : {
-              description:
-                room.story[room.round][i] === "NOBODY"
-                  ? "Никто"
-                  : room.players.find((p) => p.id === room.story[room.round][i])
-                      ?.name,
-              status:
-                room.story[room.round][i] === "NOBODY" ? "error" : "finish",
-              icon:
-                room.story[room.round][i] === "NOBODY" ? (
-                  <CloseOutlined style={{ color: token.colorError }} />
-                ) : (
-                  <CheckCircleOutlined
-                    style={{
-                      color: token.colorSuccess,
-                    }}
-                  />
-                ),
-            },
-    );
+          };
+  });
 
   return items;
 };

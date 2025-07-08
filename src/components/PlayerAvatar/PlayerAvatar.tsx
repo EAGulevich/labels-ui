@@ -2,13 +2,14 @@ import { QuestionOutlined } from "@ant-design/icons";
 import { AvatarProps } from "antd";
 import { useTheme } from "styled-components";
 
+import { AvatarToken, BotAvatarToken } from "@shared/types";
+
 import { StyledAvatar } from "@components/PlayerAvatar/styles.ts";
-import { AvatarToken, AvatarTokenBot } from "@sharedTypes/avatarTokens.ts";
 
 import { AVATARS } from "./constants.tsx";
 
 type PlayerAvatarProps = {
-  token?: AvatarToken | AvatarTokenBot;
+  token?: AvatarToken | BotAvatarToken;
   size?: AvatarProps["size"];
   onClick?: () => void;
 };

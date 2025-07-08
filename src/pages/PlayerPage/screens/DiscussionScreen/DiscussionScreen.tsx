@@ -16,7 +16,7 @@ export const DiscussionScreen = () => {
         </Typography.Title>
       }
       bordered
-      dataSource={facts.filter((f) => !f.isGuessed).map((f) => f.text)}
+      dataSource={facts.filter((f) => !f.isCorrect).map((f) => f.text)}
       renderItem={(item) => (
         <List.Item>
           <Typography.Text>{item}</Typography.Text>

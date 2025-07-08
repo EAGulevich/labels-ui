@@ -1,10 +1,9 @@
 import { Card, Skeleton, Statistic } from "antd";
 import styled from "styled-components";
 
-import {
-  ANIMATION_DURATION_COUNT_DOWN_BEFORE_START_S,
-  MAX_PLAYERS,
-} from "@constants";
+import { MAX_PLAYERS } from "@shared/constants/validations.ts";
+
+import { ANIMATION_DURATION_COUNT_DOWN_BEFORE_START_S } from "@constants";
 
 export const PLAYERS_COUNTER_TITLE_CLASS = "counter-title";
 export const DECORATIVE_PLACE_CLASS = "decorative";

@@ -23,13 +23,20 @@ export const PlayersList = styled(Flex).attrs({
   }
 `;
 
-export const PlayerItem = styled(Flex).attrs({ align: "center" })<{
-  isGuessed: boolean;
+export const PlayerItem = styled(Flex).attrs({
+  align: "center",
+  vertical: true,
+})<{
+  $isGuessed: boolean;
 }>`
-  ${({ isGuessed }) =>
-    isGuessed
+  transition:
+    opacity 0.5s,
+    scale 0.5s;
+  ${({ $isGuessed }) =>
+    $isGuessed
       ? css`
-          opacity: 0.5;
+          scale: 0.8;
+          opacity: 0.8;
         `
       : ""};
 `;

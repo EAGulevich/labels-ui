@@ -4,19 +4,22 @@ import { useNavigate } from "react-router";
 import { TranslatedError } from "@utils/TranslatedError.tsx";
 import { message } from "antd";
 
+import { PlayerClient, RoomClient } from "@shared/types";
+
 import { QUERY_PARAM_ROOM_CODE } from "@constants";
 import { useAppStorage } from "@providers/AppStorageProvider.tsx";
-import { Player, Room } from "@sharedTypes/types.ts";
+import { useGameState } from "@providers/GameStateProvider.tsx";
 import { socket } from "@socket";
 
 type UseActionsProps = {
-  setRoom: (room: Room) => void;
   messageApi: ReturnType<typeof message.useMessage>[0];
 };
 
-export const useActions = ({ setRoom, messageApi }: UseActionsProps) => {
+export const useActions = ({ messageApi }: UseActionsProps) => {
   const { t } = useTranslation();
-  const { playerId, changePlayerId } = useAppStorage();
+  const { setRoom } = useGameState();
+  const { setUserId } = useAppStorage();
+
   const navigate = useNavigate();
 
   const onJoin = useCallback(
@@ -24,23 +27,22 @@ export const useActions = ({ setRoom, messageApi }: UseActionsProps) => {
       roomCode,
       player,
     }: {
-      roomCode: Room["code"];
-      player: Pick<Player, "name">;
+      roomCode: RoomClient["code"];
+      player: Pick<PlayerClient, "name">;
     }) => {
       socket.emit(
         "joinRoom",
         {
           roomCode,
           player,
-          prevPlayerId: playerId || "",
         },
-        ({ data, error }) => {
-          if (data?.room) {
-            changePlayerId(data.eventData.joinedPlayer.id);
-            setRoom(data.room);
+        (res) => {
+          if (res.success) {
+            setUserId(res.extra.userId);
+            setRoom(res.room);
 
             navigate({
-              search: `?${QUERY_PARAM_ROOM_CODE}=${data.room.code}`,
+              search: `?${QUERY_PARAM_ROOM_CODE}=${res.room.code}`,
             });
 
             messageApi.open({
@@ -48,35 +50,37 @@ export const useActions = ({ setRoom, messageApi }: UseActionsProps) => {
               content: t("messages.youEnteredInRoom"),
             });
 
-            if (data.eventData.joinedPlayer.isVip) {
+            if (
+              res.room.players.find((p) => p.id === res.extra.userId)?.isVip
+            ) {
               messageApi.open({
                 type: "info",
                 content: t("messages.youHaveBecomeVIP"),
               });
             }
-          } else if (error) {
+          } else if (!res.success) {
             messageApi.open({
               type: "error",
-              content: <TranslatedError errorCode={error.code} />,
+              content: <TranslatedError errorCode={res.error.enumCode} />,
             });
           }
         },
       );
     },
-    [playerId, changePlayerId, setRoom, navigate, messageApi, t],
+    [setUserId, setRoom, navigate, messageApi, t],
   );
 
   const onChangePlayerAvatar = useCallback(
-    (avatarToken: Player["avatarToken"]) => {
-      socket.emit("changeAvatar", { avatarToken }, ({ data, error }) => {
-        if (data?.room) {
-          setRoom(data.room);
+    (avatarToken: PlayerClient["avatar"]["token"]) => {
+      socket.emit("changeAvatar", { avatarToken }, (res) => {
+        if (res.success) {
+          setRoom(res.room);
         }
 
-        if (error) {
+        if (res.error) {
           messageApi.open({
             type: "error",
-            content: <TranslatedError errorCode={error.code} />,
+            content: <TranslatedError errorCode={res.error.enumCode} />,
           });
         }
       });
@@ -85,22 +89,33 @@ export const useActions = ({ setRoom, messageApi }: UseActionsProps) => {
   );
 
   const onStart = useCallback(() => {
-    socket.emit("startGame");
-  }, []);
-
-  const addVote = useCallback((candidateId: string) => {
-    socket.emit("addVote", { candidateId }, ({ voted }) => {
-      if (voted) {
-        //  TODO: вибрация на телефон
-      }
+    socket.emit("startGame", null, () => {
+      // todo resonse обработать
     });
   }, []);
 
+  const onShowResult = useCallback(() => {
+    socket.emit("showResult", null, () => {
+      //   todo
+    });
+  }, []);
+
+  const addVote = useCallback(
+    ({ factId, candidateId }: { candidateId: string; factId: number }) => {
+      socket.emit("addVote", { candidateId, factId }, ({ extra }) => {
+        if (extra?.voted) {
+          //  TODO: вибрация на телефон
+        }
+      });
+    },
+    [],
+  );
+
   const onSendFact = useCallback(
     ({ factText }: { factText: string }) => {
-      socket.emit("addFact", { text: factText }, ({ data, error }) => {
-        if (data) {
-          setRoom(data.room);
+      socket.emit("addFact", { text: factText }, ({ room, error }) => {
+        if (room) {
+          setRoom(room);
         } else if (error) {
           console.error(error);
         }
@@ -115,5 +130,6 @@ export const useActions = ({ setRoom, messageApi }: UseActionsProps) => {
     onSendFact,
     addVote,
     onChangePlayerAvatar,
+    onShowResult,
   };
 };

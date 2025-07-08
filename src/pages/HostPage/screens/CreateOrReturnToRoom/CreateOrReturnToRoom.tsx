@@ -21,7 +21,7 @@ export const CreateOrReturnToRoom: FC<CreateOrReturnToRoomProps> = ({
         title={t("createOrReturnToRoom.returnResult.title")}
         subTitle={t("createOrReturnToRoom.returnResult.subTitle")}
         extra={[
-          <Button key={"create"} onClick={onReenterRoom}>
+          <Button key={"create"} onClick={onReenterRoom} type={"primary"}>
             {t("createOrReturnToRoom.returnResult.buttons.return")}
           </Button>,
           <Button key={"return"} onClick={onCreateRoom}>

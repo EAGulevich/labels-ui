@@ -2,13 +2,7 @@ import { version } from "../package.json";
 
 export const VERSION = "v" + version;
 
-// settings
-export const ROOM_CODE_LENGTH = 4;
-export const NAME_MAX_LENGTH = 12;
-export const FACT_MAX_LENGTH = 100;
-
-export const MIN_PLAYERS = 4;
-export const MAX_PLAYERS = 9;
+export const SESSION_KEY_USER_ID = "userId";
 
 export const ANIMATION_DURATION_COUNT_DOWN_BEFORE_START_S = 1;
 

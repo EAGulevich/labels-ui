@@ -1,10 +1,11 @@
 import { useTranslation } from "react-i18next";
 import { motion } from "motion/react";
 
+import { FACT_STATUSES } from "@shared/types";
+
 import { ErrorFallback } from "@components/Error/ErrorFallback.tsx";
 import { PlayerCard } from "@components/PlayerCard/PlayerCard.tsx";
 import { useGameState } from "@providers/GameStateProvider.tsx";
-import { FACT_STATUS } from "@sharedTypes/factStatuses.ts";
 
 import { Players, StyledTitle } from "./styles.ts";
 
@@ -22,7 +23,7 @@ export const InputFactScreen = () => {
       <StyledTitle level={1}>{t("inputFactScreen.inputFact")}</StyledTitle>
       <Players>
         {room.players.map((player) => {
-          const isDone = player.factStatus === FACT_STATUS.NOT_GUESSED;
+          const isDone = player.factStatus === FACT_STATUSES.NOT_GUESSED;
           return (
             <motion.div
               key={player.id}
@@ -33,7 +34,7 @@ export const InputFactScreen = () => {
                 key={player.id}
                 player={player}
                 status={
-                  player.factStatus === FACT_STATUS.NOT_RECEIVED
+                  player.factStatus === FACT_STATUSES.NOT_RECEIVED
                     ? "waiting"
                     : "success"
                 }

@@ -2,51 +2,43 @@ import { useCallback, useLayoutEffect, useState } from "react";
 import { AutoTextSize } from "auto-text-size";
 import { motion } from "motion/react";
 
+import { MAX_PLAYERS } from "@shared/constants/validations.ts";
+import { FACT_STATUSES, FactClient } from "@shared/types";
+
 import { PlayerCard } from "@components/PlayerCard/PlayerCard.tsx";
-import { FACT_STATUS } from "@sharedTypes/factStatuses.ts";
-import { Fact } from "@sharedTypes/types.ts";
 
 import { FactBlock, GridFacts, PlayerWithFact } from "./styles.ts";
 
 type FactsGridProps = {
-  facts: Fact[];
+  facts: FactClient[];
+  isVoting?: boolean;
 };
 
-const MAX_HEIGHT = 110;
+const MAX_HEIGHT = 330;
+const MIN_HEIGHT = 110;
 
-const getRowHeight = (rowCount: number) => {
-  const gridContainer = document.querySelector("main")?.firstElementChild;
-  if (gridContainer) {
-    const gridStyles = window.getComputedStyle(gridContainer);
-
-    const newRowHeight = Number.parseInt(
-      (
-        (Number.parseInt(gridStyles.height) -
-          Number.parseInt(gridStyles.padding) * 2 -
-          Number.parseInt(gridStyles.gap) * 4) /
-          Math.ceil(rowCount / 2) -
-        1
-      ).toString(),
-    );
-
-    return +newRowHeight < MAX_HEIGHT ? +newRowHeight : MAX_HEIGHT;
-  } else {
-    return MAX_HEIGHT;
-  }
+const getRowHeight = (rowCount: number, element: HTMLElement) => {
+  return (element.clientHeight - 20 * 2 - 20 * 4) / Math.ceil(rowCount / 2) - 1;
 };
 
-export const FactsGrid = ({ facts }: FactsGridProps) => {
+export const FactsGrid = ({ facts, isVoting }: FactsGridProps) => {
   const [rowHeight, setRowHeight] = useState(1);
 
   const setupRowHeight = useCallback(() => {
-    const newRowHeight = getRowHeight(facts.length);
+    const gridContainer = document.querySelector("main");
 
-    if (+newRowHeight < MAX_HEIGHT) {
-      setRowHeight(+newRowHeight);
-    } else {
-      setRowHeight(MAX_HEIGHT);
+    if (gridContainer) {
+      const newRowHeight = getRowHeight(MAX_PLAYERS, gridContainer);
+
+      if (+newRowHeight > MAX_HEIGHT) {
+        setRowHeight(MAX_HEIGHT);
+      } else if (+newRowHeight < MIN_HEIGHT) {
+        setRowHeight(MIN_HEIGHT);
+      } else {
+        setRowHeight(+newRowHeight);
+      }
     }
-  }, [facts.length]);
+  }, []);
 
   useLayoutEffect(() => {
     setupRowHeight();
@@ -56,7 +48,7 @@ export const FactsGrid = ({ facts }: FactsGridProps) => {
     return () => {
       window.removeEventListener("resize", setupRowHeight);
     };
-  }, [setupRowHeight]);
+  }, [facts.length, setupRowHeight]);
 
   return (
     <GridFacts>
@@ -77,23 +69,43 @@ export const FactsGrid = ({ facts }: FactsGridProps) => {
           }}
         >
           <PlayerWithFact
+            $index={index}
             $height={rowHeight + "px"}
-            isGuessed={!item.supposedPlayer ? undefined : item.isGuessed}
+            $guessStatus={
+              isVoting
+                ? undefined
+                : !item.selectedPlayer?.id
+                  ? "nobody"
+                  : item.isCorrect
+                    ? "guessed"
+                    : "not_guessed"
+            }
           >
             <PlayerCard
               height={rowHeight + "px"}
               player={
-                item.supposedPlayer || {
-                  name: "- - -",
-                  isVip: false,
-                  isActive: true,
-                  factStatus: FACT_STATUS.NOT_RECEIVED,
-                }
+                item.selectedPlayer?.id
+                  ? {
+                      ...item.selectedPlayer,
+                      // TODO: приходится доп. передавать
+                      isVip: false,
+                      isActive: true,
+                      factStatus: FACT_STATUSES.NOT_GUESSED,
+                    }
+                  : {
+                      name: "- - -",
+                      isVip: false,
+                      isActive: true,
+                      factStatus: FACT_STATUSES.NOT_RECEIVED,
+                      avatar: { token: undefined },
+                    }
               }
             />
 
             <FactBlock>
-              <AutoTextSize mode={"box"}>{item.text}</AutoTextSize>
+              <AutoTextSize mode={"box"} maxFontSizePx={60}>
+                {item.text}
+              </AutoTextSize>
             </FactBlock>
           </PlayerWithFact>
         </motion.div>

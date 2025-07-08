@@ -2,20 +2,20 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { message } from "antd";
 
-import { ServerToClientEvents } from "@sharedTypes/events.ts";
-import { Room } from "@sharedTypes/types.ts";
+import { ServerToClientEvents } from "@shared/types";
+
+import { useGameState } from "@providers/GameStateProvider.tsx";
 import { socket } from "@socket";
 
 type UseHostConnectDisconnectProps = {
-  setRoom: (room: Room) => void;
   messageApi: ReturnType<typeof message.useMessage>[0];
 };
 
 export const useHostConnectDisconnect = ({
-  setRoom,
   messageApi,
 }: UseHostConnectDisconnectProps) => {
   const { t } = useTranslation();
+  const { setRoom } = useGameState();
 
   useEffect(() => {
     const hostLeftRoom: ServerToClientEvents["hostLeftRoom"] = (data) => {

@@ -4,10 +4,11 @@ import { Drawer, Flex, Typography } from "antd";
 import maxBy from "lodash.maxby";
 import { useTheme } from "styled-components";
 
+import { FACT_STATUSES } from "@shared/types";
+
 import { ErrorFallback } from "@components/Error/ErrorFallback.tsx";
 import { PlayerCard } from "@components/PlayerCard/PlayerCard.tsx";
 import { useGameState } from "@providers/GameStateProvider.tsx";
-import { Candidate } from "@sharedTypes/types.ts";
 
 import { getStepsOfVoting } from "./parts/getStepsOfVoting.tsx";
 import { FactTitle, StyledSteps, VoteBlock, VotePoint } from "./styles.ts";
@@ -19,30 +20,28 @@ export const VotingModalContent = () => {
   const { room } = useGameState();
 
   useLayoutEffect(() => {
-    const drawerTopMargin =
-      document.getElementsByTagName("footer")[0].clientHeight +
-      document.getElementsByTagName("header")[0].clientHeight +
-      10 +
-      "px";
-
-    setDrawerHeight(`calc(100vh - ${drawerTopMargin})`);
+    setDrawerHeight(
+      document.getElementsByTagName("main")[0].clientHeight + "px",
+    );
   }, []);
 
   if (!room) {
     return <ErrorFallback />;
   }
 
-  const voteKey: keyof Candidate = "voteCount";
-  const playerIdWithMaxVotes = maxBy(room.votingFact?.candidates, voteKey);
+  const playerIdWithMaxVotes = maxBy(
+    room.votingData?.candidates || [],
+    (c) => c.votesCount,
+  );
 
   const isOnlyMax =
-    room.votingFact?.candidates.filter(
-      (c) => c.voteCount === playerIdWithMaxVotes?.voteCount,
+    room.votingData?.candidates.filter(
+      (c) => c.votesCount === playerIdWithMaxVotes?.votesCount,
     ).length === 1;
 
   const isAllPlayersVotedForFact =
-    room.votingFact?.candidates.reduce((prev, cur) => {
-      return prev + cur.voteCount;
+    room.votingData?.candidates.reduce((prev, cur) => {
+      return prev + cur.votesCount;
     }, 0) ===
     room.players.length - 1;
 
@@ -66,49 +65,69 @@ export const VotingModalContent = () => {
           <Typography.Title level={3} type={"secondary"}>
             {t("roundScreen.modalVote").toUpperCase()}
           </Typography.Title>
-          <StyledSteps
-            size={"small"}
-            labelPlacement={"vertical"}
-            direction={"horizontal"}
-            items={getStepsOfVoting({ room, token })}
-          />
+          {room.votingData && (
+            <StyledSteps
+              size={"small"}
+              labelPlacement={"vertical"}
+              direction={"horizontal"}
+              items={getStepsOfVoting({
+                room: { ...room, votingData: room.votingData },
+                token,
+              })}
+            />
+          )}
         </Flex>
       }
       placement="bottom"
       size={"large"}
       closable={false}
-      open={true}
+      open={!!room.votingData}
     >
-      <FactTitle>
-        <Typography.Title level={1}>{room.votingFact?.text}</Typography.Title>
-      </FactTitle>
-      <Flex justify={"center"} gap={"small"} wrap>
-        {room.votingFact?.candidates.map((c) => (
-          <Flex
-            vertical
-            key={c.id}
-            style={{
-              transition: "opacity 1s",
-              opacity:
-                isAllPlayersVotedForFact &&
-                isOnlyMax &&
-                c.id !== playerIdWithMaxVotes?.id
-                  ? "0"
-                  : "1",
-            }}
-          >
-            <PlayerCard
-              player={{ ...c, isVip: false, isActive: true }}
-              mark={isOnlyMax && c.id === playerIdWithMaxVotes?.id}
-            />
-            <VoteBlock>
-              {Array(c.voteCount || 0)
-                .fill(<VotePoint />)
-                .map((i) => i)}
-            </VoteBlock>
+      {room.votingData && (
+        <>
+          <FactTitle>
+            <Typography.Title level={1}>
+              {room.votingData.currentVotingFact.text}
+            </Typography.Title>
+          </FactTitle>
+          <Flex justify={"center"} gap={"small"} wrap>
+            {room.votingData.candidates.map((c) => (
+              <Flex
+                vertical
+                key={c.candidate.id}
+                style={{
+                  transition: "opacity 1s",
+                  opacity:
+                    isAllPlayersVotedForFact &&
+                    isOnlyMax &&
+                    c.candidate.id !== playerIdWithMaxVotes?.candidate.id
+                      ? "0"
+                      : "1",
+                }}
+              >
+                <PlayerCard
+                  player={{
+                    ...c.candidate,
+                    // TODO: передача
+                    isVip: false,
+                    isActive: true,
+                    factStatus: FACT_STATUSES.NOT_GUESSED,
+                  }}
+                  mark={
+                    isOnlyMax &&
+                    c.candidate.id === playerIdWithMaxVotes?.candidate.id
+                  }
+                />
+                <VoteBlock>
+                  {Array(c.votesCount || 0)
+                    .fill(<VotePoint />)
+                    .map((i) => i)}
+                </VoteBlock>
+              </Flex>
+            ))}
           </Flex>
-        ))}
-      </Flex>
+        </>
+      )}
     </Drawer>
   );
 };
