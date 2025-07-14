@@ -20,16 +20,24 @@ export const useActions = ({ messageApi }: UseActionsProps) => {
         setUserId(res.extra.userId);
         setRoom(res.room);
       } else {
-        //   TODO
+        messageApi.open({
+          type: "error",
+          content: <TranslatedError errorCode={res.error.enumCode} />,
+        });
       }
     });
-  }, [setRoom, setUserId]);
+  }, [messageApi, setRoom, setUserId]);
 
   const startVoting = useCallback(() => {
-    socket.emit("startVoting", null, () => {
-      //   todo
+    socket.emit("startVoting", null, (res) => {
+      if (!res.success) {
+        messageApi.open({
+          type: "error",
+          content: <TranslatedError errorCode={res.error.enumCode} />,
+        });
+      }
     });
-  }, []);
+  }, [messageApi]);
 
   const onReenterRoom = useCallback(() => {
     socket.emit("reenterRoom", null, (res) => {
