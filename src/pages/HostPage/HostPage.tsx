@@ -9,8 +9,8 @@ import { ROOM_STATUSES } from "@shared/types";
 import { HEADER_INFO_CONTAINER, ROUTE_PATHS } from "@constants";
 import { useGameState } from "@providers/GameStateProvider.tsx";
 
-import { GameResultScreen } from "../PlayerPage/screens/GameResultScreen/GameResultScreen.tsx";
 import { CreateOrReturnToRoom } from "./screens/CreateOrReturnToRoom/CreateOrReturnToRoom.tsx";
+import { GameResultScreen } from "./screens/GameResultScreen/GameResultScreen.tsx";
 import { InputFactScreen } from "./screens/InputFactScreen/InputFactScreen.tsx";
 import { RoundScreen } from "./screens/RoundScreen/RoundScreen.tsx";
 import { WaitingPlayersScreen } from "./screens/WaitingPlayersScreen/WaitingPlayersScreen.tsx";

@@ -19,6 +19,7 @@ import { FACT_STATUSES } from "@shared/types";
 import { useAppStorage } from "@providers/AppStorageProvider.tsx";
 import { useGameState } from "@providers/GameStateProvider.tsx";
 
+import { FactHint } from "./parts/FactHint.tsx";
 import { FormFieldType } from "./types.ts";
 
 type InputFactScreenProps = {
@@ -52,25 +53,30 @@ export const InputFactScreen = ({ onSendFact }: InputFactScreenProps) => {
         autoComplete="off"
       >
         <Flex vertical gap={"small"}>
+          <FactHint />
           <Form.Item<FormFieldType>
             label={t("inputFactScreen.form.fields.fact.label")}
             name="fact"
             rules={[
               {
                 required: true,
+                message: t("inputFactScreen.form.fields.fact.errors.required"),
+              },
+              {
                 max: FACT_TEXT_MAX_LENGTH,
                 min: FACT_TEXT_MIN_LENGTH,
-                message: t("inputFactScreen.form.fields.fact.errors.required"),
+                message: t("inputFactScreen.form.fields.fact.errors.length", {
+                  min: FACT_TEXT_MIN_LENGTH,
+                  max: FACT_TEXT_MAX_LENGTH,
+                }),
               },
             ]}
           >
-            {/*TODO: подсказка про формат*/}
-            {/*TODO: textarea*/}
-            {/* todo: MIN MAX ОБРАБОТАТЬ*/}
-            <Input
+            <Input.TextArea
               showCount
               maxLength={FACT_TEXT_MAX_LENGTH}
-              min={FACT_TEXT_MIN_LENGTH}
+              minLength={FACT_TEXT_MIN_LENGTH}
+              autoSize={{ minRows: 3 }}
             />
           </Form.Item>
           <Form.Item label={null}>

@@ -34,9 +34,6 @@ export const useActions = ({ messageApi }: UseActionsProps) => {
   const onReenterRoom = useCallback(() => {
     socket.emit("reenterRoom", null, (res) => {
       if (res.success) {
-        // todo здесь ведь не надо пересохранение делать?
-        // setUserId(res.extra.userId);
-
         setRoom(res.room);
       } else {
         messageApi.open({

@@ -8,7 +8,6 @@ import { getTableCols } from "./parts/getTableCols.tsx";
 import { TableSummary } from "./parts/TableSummary.tsx";
 import { DataType } from "./types.ts";
 
-// TODO: почему это в player папке
 export const GameResultScreen = () => {
   const { room } = useGameState();
   const { token } = useTheme();

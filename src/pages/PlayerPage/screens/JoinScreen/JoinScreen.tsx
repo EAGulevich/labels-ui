@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router";
+import { UserOutlined } from "@ant-design/icons";
 import { Button, Flex, Form, FormProps, Input } from "antd";
 
 import {
@@ -69,16 +70,21 @@ export const JoinScreen = ({ onJoin }: JoinScreenProps) => {
           </Form.Item>
         </StyledInputOptWrapper>
 
-        {/*TODO min max сообщение красивое*/}
         <Form.Item<FormFieldType>
           label={t("joinScreen.form.fields.name.label")}
           name="name"
           rules={[
             {
               required: true,
+              message: t("joinScreen.form.fields.name.errors.required"),
+            },
+            {
               max: PLAYER_NAME_MAX_LENGTH,
               min: PLAYER_NAME_MIN_LENGTH,
-              message: t("joinScreen.form.fields.name.errors.required"),
+              message: t("joinScreen.form.fields.name.errors.length", {
+                max: PLAYER_NAME_MAX_LENGTH,
+                min: PLAYER_NAME_MIN_LENGTH,
+              }),
             },
           ]}
         >
@@ -86,6 +92,7 @@ export const JoinScreen = ({ onJoin }: JoinScreenProps) => {
             showCount
             maxLength={PLAYER_NAME_MAX_LENGTH}
             minLength={PLAYER_NAME_MIN_LENGTH}
+            prefix={<UserOutlined />}
           />
         </Form.Item>
         <Form.Item label={null}>

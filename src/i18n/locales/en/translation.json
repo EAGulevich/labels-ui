@@ -57,7 +57,8 @@
         "name": {
           "label": "Name",
           "errors": {
-            "required": "Please input your name"
+            "required": "Please input your name",
+            "length": "Please enter text between {{min}} and {{max}} characters long"
           }
         },
         "roomCode": {
@@ -79,8 +80,20 @@
       "fields": {
         "fact": {
           "label": "Fact",
+          "message": {
+            "title": "Third-person fact about you!",
+            "description": {
+              "listTitle": "Examples:",
+              "examples": {
+                "breakfast": "never skips breakfast",
+                "songs": "knows every Queen song by heart",
+                "dream": "dreams of visiting Japan"
+              }
+            }
+          },
           "errors": {
-            "required": "Please input fact"
+            "required": "Please input fact",
+            "length": "Please enter text between {{min}} and {{max}} characters long"
           }
         }
       }
