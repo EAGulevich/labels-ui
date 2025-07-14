@@ -1,5 +1,7 @@
 import { message } from "antd";
 
+import { MESSAGE_TOP } from "@constants";
+
 import { useActions } from "./useActions.tsx";
 import { useConnectDisconnect } from "./useConnectDisconnect.tsx";
 import { useGameStarted } from "./useGameStarted.tsx";
@@ -10,14 +12,13 @@ import { usePlayerChangedAvatar } from "./usePlayerChangedAvatar.tsx";
 import { usePlayerConnectDisconnect } from "./usePlayerConnectDisconnect.tsx";
 import { useReceiveFact } from "./useReceiveFact.tsx";
 import { useVoting } from "./useVoting.tsx";
-import { MESSAGE_TOP } from "@constants";
 
 export const useSocketEvents = () => {
   const [messageApi, contextHolder] = message.useMessage({
     top: MESSAGE_TOP,
   });
 
-  const { isServerError } = useConnectDisconnect();
+  const { isServerError } = useConnectDisconnect({ messageApi });
 
   useHostConnectDisconnect({ messageApi });
   usePlayerConnectDisconnect({ messageApi });

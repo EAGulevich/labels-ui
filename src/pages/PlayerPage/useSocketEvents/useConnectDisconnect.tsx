@@ -1,15 +1,45 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useSearchParams } from "react-router";
+import { message } from "antd";
 
+import { ROOM_CODE_LENGTH } from "@shared/constants/validations.ts";
+
+import { QUERY_PARAM_ROOM_CODE } from "@constants";
+import { useAppStorage } from "@providers/AppStorageProvider.tsx";
 import { socket } from "@socket";
 
-export const useConnectDisconnect = () => {
+import { useActions } from "./useActions.tsx";
+
+type UseConnectDisconnectProps = {
+  messageApi: ReturnType<typeof message.useMessage>[0];
+};
+
+export const useConnectDisconnect = ({
+  messageApi,
+}: UseConnectDisconnectProps) => {
   const [isServerError, setIsServerError] = useState(false);
+  const { userId, userName } = useAppStorage();
+  const { onJoin } = useActions({ messageApi });
+
+  const [searchParams] = useSearchParams();
+  const roomCode =
+    searchParams
+      .get(QUERY_PARAM_ROOM_CODE)
+      ?.toUpperCase()
+      .slice(0, ROOM_CODE_LENGTH) || "";
+
+  const onConnect = useCallback(() => {
+    if (roomCode && userId) {
+      onJoin({
+        roomCode,
+        player: {
+          name: userName,
+        },
+      });
+    }
+  }, [onJoin, roomCode, userId, userName]);
 
   useEffect(() => {
-    const onConnect = () => {
-      // todo later: Попробовать перезайти в ранее созданную комнату, в которой игра уже началась
-    };
-
     const onConnectError = () => {
       setIsServerError(true);
     };
@@ -23,7 +53,7 @@ export const useConnectDisconnect = () => {
       socket.off("connect_error", onConnectError);
       // socket.disconnect();
     };
-  }, []);
+  }, [onConnect]);
 
   return { isServerError };
 };

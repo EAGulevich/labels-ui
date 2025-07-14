@@ -68,7 +68,7 @@ export const useActions = ({ messageApi }: UseActionsProps) => {
         },
       );
     },
-    [setUserId, setRoom, navigate, messageApi, t],
+    [setUserId, setUserName, setRoom, navigate, messageApi, t],
   );
 
   const onChangePlayerAvatar = useCallback(
