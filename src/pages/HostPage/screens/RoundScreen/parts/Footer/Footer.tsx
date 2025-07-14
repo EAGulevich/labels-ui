@@ -67,14 +67,12 @@ export const Footer = ({ startTimer, onTimerFinish }: FooterProps) => {
               onChange={(value) => setTimeLeft(+(value || 0))}
             />
           ) : (
-            // TODO: перевести Раунд
             <Typography.Text type={"secondary"}>
-              Раунд {room?.currentRound}
+              {t("roundScreen.round")} {room?.currentRound}
             </Typography.Text>
           )
         }
       />
-
       <PlayersList>
         {room?.players.map((p) => {
           const isGuessed = p.factStatus === FACT_STATUSES.GUESSED;

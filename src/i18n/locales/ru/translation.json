@@ -103,6 +103,7 @@
     }
   },
   "roundScreen": {
+    "round": "Раунд",
     "time": "Время",
     "modalVote": "Голосование"
   },

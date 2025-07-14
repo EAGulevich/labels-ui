@@ -103,6 +103,7 @@
     }
   },
   "roundScreen": {
+    "round": "Round",
     "time": "Time",
     "modalVote": "Voting"
   },
