@@ -8,6 +8,14 @@
     },
     "loadingSounds": "Loading sounds..."
   },
+  "menu": {
+    "theme": "Change theme",
+    "lang": "Switch language",
+    "sound": "Sound",
+    "volume": "Volume",
+    "timer": "Round timer",
+    "timerHint": "Time (seconds) allocated for discussion each round"
+  },
   "home": {
     "menu": {
       "newGame": "New game",

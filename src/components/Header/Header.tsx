@@ -9,6 +9,8 @@ import { LngSwitcher } from "@components/LngSwitcher/LngSwitcher.tsx";
 import { MuteSwitcher } from "@components/MuteSwitcher/MuteSwitcher.tsx";
 import { ThemeSwitcher } from "@components/ThemeSwither/ThemeSwitcher.tsx";
 import { HEADER_INFO_CONTAINER, ROUTE_PATHS, VERSION } from "@constants";
+import { useAppStorage } from "@providers/AppStorageProvider.tsx";
+import { useGameState } from "@providers/GameStateProvider.tsx";
 
 import {
   StyledDivider,
@@ -26,6 +28,9 @@ export const Header = ({ onlyMenuButton }: HeaderProps) => {
   const navigate = useNavigate();
 
   const [isDividerVisible, setIsDividerVisible] = useState(false);
+  const { room } = useGameState();
+  const { userId } = useAppStorage();
+  const isHost = room?.hostId === userId;
 
   useEffect(() => {
     if (!onlyMenuButton) {
@@ -34,6 +39,12 @@ export const Header = ({ onlyMenuButton }: HeaderProps) => {
       setIsDividerVisible(false);
     }
   }, [onlyMenuButton]);
+
+  const listDataSource = [<ThemeSwitcher />, <LngSwitcher />, <MuteSwitcher />];
+
+  if (isHost) {
+    listDataSource.push(<DiscussionTimeSlider />);
+  }
 
   return (
     <StyledHeader>
@@ -50,26 +61,17 @@ export const Header = ({ onlyMenuButton }: HeaderProps) => {
           trigger={"click"}
           content={
             <List
-              dataSource={[
-                <Flex vertical>
-                  Тема <ThemeSwitcher />
-                </Flex>,
-                <Flex vertical>
-                  Язык <LngSwitcher />
-                </Flex>,
-                <Flex vertical>
-                  Звук <MuteSwitcher />
-                </Flex>,
-                // TODO: только для хоста
-                <Flex vertical>
-                  <div>Таймер на обсуждение сек</div>
-                  <DiscussionTimeSlider />
-                </Flex>,
-                <Typography.Text type={"secondary"}>
-                  Версия: {VERSION}
-                </Typography.Text>,
-              ]}
-              renderItem={(item) => <List.Item>{item}</List.Item>}
+              dataSource={listDataSource}
+              footer={
+                <Flex justify={"end"}>
+                  <Typography.Text type={"secondary"}>
+                    {VERSION}
+                  </Typography.Text>
+                </Flex>
+              }
+              renderItem={(item) => (
+                <List.Item style={{ display: "block" }}>{item}</List.Item>
+              )}
             />
           }
           arrow={false}

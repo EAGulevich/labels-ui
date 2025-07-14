@@ -27,8 +27,6 @@ export const useNewRound = ({ messageApi }: UseGameStartedProps) => {
       room,
     }) => {
       setRoom(room);
-
-      //   TODO: вибрация
     };
 
     socket.on("newRoundStarted", newRoundStarted);
