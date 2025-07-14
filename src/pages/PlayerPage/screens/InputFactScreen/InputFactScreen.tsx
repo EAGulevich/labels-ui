@@ -75,7 +75,6 @@ export const InputFactScreen = ({ onSendFact }: InputFactScreenProps) => {
             <Input.TextArea
               showCount
               maxLength={FACT_TEXT_MAX_LENGTH}
-              minLength={FACT_TEXT_MIN_LENGTH}
               autoSize={{ minRows: 3 }}
             />
           </Form.Item>

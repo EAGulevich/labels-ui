@@ -96,7 +96,6 @@ export const JoinScreen = ({ onJoin }: JoinScreenProps) => {
           <Input
             showCount
             maxLength={PLAYER_NAME_MAX_LENGTH}
-            minLength={PLAYER_NAME_MIN_LENGTH}
             prefix={<UserOutlined />}
           />
         </Form.Item>
