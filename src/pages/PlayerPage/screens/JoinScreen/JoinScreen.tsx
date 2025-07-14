@@ -12,6 +12,7 @@ import {
 import { PlayerClient, RoomClient } from "@shared/types";
 
 import { QUERY_PARAM_ROOM_CODE } from "@constants";
+import { useAppStorage } from "@providers/AppStorageProvider.tsx";
 
 import { FormFieldType } from "./types.ts";
 import { StyledInputOptWrapper } from "./styles.ts";
@@ -26,8 +27,12 @@ type JoinScreenProps = {
 export const JoinScreen = ({ onJoin }: JoinScreenProps) => {
   const [searchParams] = useSearchParams();
   const [roomCode] = useState<string>(
-    searchParams.get(QUERY_PARAM_ROOM_CODE)?.toUpperCase() || "",
+    searchParams
+      .get(QUERY_PARAM_ROOM_CODE)
+      ?.toUpperCase()
+      .slice(0, ROOM_CODE_LENGTH) || "",
   );
+  const { userName } = useAppStorage();
 
   const { t } = useTranslation();
 
@@ -46,7 +51,7 @@ export const JoinScreen = ({ onJoin }: JoinScreenProps) => {
       name="playerInfo"
       layout={"vertical"}
       variant={"outlined"}
-      initialValues={{ roomCode: roomCode }}
+      initialValues={{ roomCode: roomCode, name: userName }}
       onFinish={onFinish}
       autoComplete="off"
       size={"large"}

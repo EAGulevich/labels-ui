@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 
-import { SESSION_KEY_USER_ID } from "@constants";
+import { LOCAL_KEY_USER_NAME, SESSION_KEY_USER_ID } from "@constants";
 
 const LOCAL_KEY_VOLUME = "volume";
 
@@ -16,6 +16,9 @@ type AppStorageContextType = {
 
   userId: string;
   setUserId: (userId: string) => void;
+
+  userName: string;
+  setUserName: (userName: string) => void;
 };
 
 const defaultValue: AppStorageContextType = {
@@ -24,6 +27,9 @@ const defaultValue: AppStorageContextType = {
 
   userId: sessionStorage.getItem(SESSION_KEY_USER_ID) || "",
   setUserId: () => null,
+
+  userName: "",
+  setUserName: () => null,
 };
 
 const AppStorageContext = createContext(defaultValue);
@@ -50,6 +56,15 @@ export const AppStorageProvider: FC<PropsWithChildren> = ({ children }) => {
     setUserId(userId);
   };
 
+  const [userName, setUserName] = useState<string>(
+    localStorage.getItem(LOCAL_KEY_USER_NAME) || "",
+  );
+
+  const changeUserName = (userName: string) => {
+    localStorage.setItem(LOCAL_KEY_USER_NAME, userName);
+    setUserName(userName);
+  };
+
   return (
     <AppStorageContext.Provider
       value={{
@@ -58,6 +73,9 @@ export const AppStorageProvider: FC<PropsWithChildren> = ({ children }) => {
 
         userId,
         setUserId: changeUserId,
+
+        userName,
+        setUserName: changeUserName,
       }}
     >
       {children}

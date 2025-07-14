@@ -18,7 +18,7 @@ type UseActionsProps = {
 export const useActions = ({ messageApi }: UseActionsProps) => {
   const { t } = useTranslation();
   const { setRoom } = useGameState();
-  const { setUserId } = useAppStorage();
+  const { setUserId, setUserName } = useAppStorage();
 
   const navigate = useNavigate();
 
@@ -39,6 +39,7 @@ export const useActions = ({ messageApi }: UseActionsProps) => {
         (res) => {
           if (res.success) {
             setUserId(res.extra.userId);
+            setUserName(res.extra.userName);
             setRoom(res.room);
 
             navigate({

@@ -3,6 +3,7 @@ import { version } from "../package.json";
 export const VERSION = "v" + version;
 
 export const SESSION_KEY_USER_ID = "userId";
+export const LOCAL_KEY_USER_NAME = "userName";
 
 // TODO: что это не здесь должно быть
 export const ANIMATION_DURATION_COUNT_DOWN_BEFORE_START_S = 1;
