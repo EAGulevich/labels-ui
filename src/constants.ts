@@ -4,7 +4,12 @@ export const VERSION = "v" + version;
 
 export const SESSION_KEY_USER_ID = "userId";
 
+// TODO: что это не здесь должно быть
 export const ANIMATION_DURATION_COUNT_DOWN_BEFORE_START_S = 1;
+
+export const MESSAGE_SHOW_DURATION_S = 2;
+export const MESSAGE_SHOW_RECONNECTING_DURATION_S = 5 * 60;
+export const MESSAGE_TOP = "50px";
 
 // query params fields
 export const QUERY_PARAM_ROOM_CODE = "roomCode";

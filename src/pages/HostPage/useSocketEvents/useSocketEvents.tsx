@@ -3,6 +3,7 @@ import { message } from "antd";
 
 import { ServerToClientEvents } from "@shared/types";
 
+import { MESSAGE_TOP } from "@constants";
 import { useGameState } from "@providers/GameStateProvider.tsx";
 import { socket } from "@socket";
 
@@ -16,7 +17,9 @@ import { useReceiveFact } from "./useReceiveFact.tsx";
 import { useVoting } from "./useVoting.tsx";
 
 export const useSocketEvents = () => {
-  const [messageApi, contextHolder] = message.useMessage();
+  const [messageApi, contextHolder] = message.useMessage({
+    top: MESSAGE_TOP,
+  });
   const { setRoom } = useGameState();
 
   const { isServerError } = useConnectDisconnect();

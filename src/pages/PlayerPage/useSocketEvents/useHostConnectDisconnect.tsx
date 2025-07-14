@@ -4,6 +4,10 @@ import { message } from "antd";
 
 import { ServerToClientEvents } from "@shared/types";
 
+import {
+  MESSAGE_SHOW_DURATION_S,
+  MESSAGE_SHOW_RECONNECTING_DURATION_S,
+} from "@constants";
 import { useGameState } from "@providers/GameStateProvider.tsx";
 import { socket } from "@socket";
 
@@ -25,8 +29,7 @@ export const useHostConnectDisconnect = ({
         key: data.room.code,
         type: "loading",
         content: t("messages.hostLeftRoom"),
-        // todo later: подумать сколько нужно
-        duration: 60 * 3,
+        duration: MESSAGE_SHOW_RECONNECTING_DURATION_S,
       });
     };
 
@@ -38,7 +41,7 @@ export const useHostConnectDisconnect = ({
         key: data.room.code,
         type: "success",
         content: t("messages.hostReturnedToRoom"),
-        duration: 2,
+        duration: MESSAGE_SHOW_DURATION_S,
       });
     };
 
