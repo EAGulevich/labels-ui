@@ -87,17 +87,12 @@ export const FactsGrid = ({ facts, isVoting }: FactsGridProps) => {
                 item.selectedPlayer?.id
                   ? {
                       ...item.selectedPlayer,
-                      // TODO: приходится доп. передавать
-                      isVip: false,
-                      isActive: true,
                       factStatus: FACT_STATUSES.NOT_GUESSED,
                     }
                   : {
                       name: "- - -",
-                      isVip: false,
-                      isActive: true,
                       factStatus: FACT_STATUSES.NOT_RECEIVED,
-                      avatar: { token: undefined },
+                      avatar: null,
                     }
               }
             />

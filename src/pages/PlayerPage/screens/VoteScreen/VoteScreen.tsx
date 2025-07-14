@@ -40,9 +40,6 @@ export const VoteScreen = ({ addVote }: VoteScreenProps) => {
           <PlayerCard
             player={{
               ...voteCandidate,
-              // TODO: передача лишнего
-              isVip: false,
-              isActive: true,
               factStatus: FACT_STATUSES.NOT_GUESSED,
             }}
           />
@@ -71,10 +68,7 @@ export const VoteScreen = ({ addVote }: VoteScreenProps) => {
           <PlayerCard
             key={c.candidate.id}
             player={{
-              // TODO: передача лишнего
               ...c.candidate,
-              isVip: false,
-              isActive: true,
               factStatus: FACT_STATUSES.NOT_GUESSED,
             }}
             onClick={() => {

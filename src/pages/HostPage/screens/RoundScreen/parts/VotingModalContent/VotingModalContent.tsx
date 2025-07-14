@@ -108,9 +108,6 @@ export const VotingModalContent = () => {
                 <PlayerCard
                   player={{
                     ...c.candidate,
-                    // TODO: передача
-                    isVip: false,
-                    isActive: true,
                     factStatus: FACT_STATUSES.NOT_GUESSED,
                   }}
                   mark={

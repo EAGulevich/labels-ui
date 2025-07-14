@@ -16,9 +16,10 @@ import {
 
 type PlayerProps = {
   status?: "success" | "waiting";
-  player: Pick<PlayerClient, "name" | "isVip" | "isActive" | "factStatus"> & {
-    avatar: { token: PlayerClient["avatar"]["token"] | undefined };
-  };
+  player: Partial<Pick<PlayerClient, "isVip" | "isActive" | "factStatus">> &
+    Pick<PlayerClient, "name"> & {
+      avatar: { token: PlayerClient["avatar"]["token"] } | null;
+    };
   height?: string;
   onClick?: () => void;
   mark?: boolean;
@@ -34,7 +35,7 @@ export const PlayerCard = ({
 
   return (
     <Wrapper {...props}>
-      <StyledBadge isVip={player.isVip}>
+      <StyledBadge isVip={!!player.isVip}>
         <Badge
           count={
             status === "waiting" ? (
@@ -58,8 +59,8 @@ export const PlayerCard = ({
           >
             <StyledPlayer>
               <Flex align={"end"} justify={"center"} flex={1}>
-                <Spin spinning={!player.isActive}>
-                  <PlayerAvatar token={player.avatar.token} />
+                <Spin spinning={player.isActive === false}>
+                  <PlayerAvatar token={player.avatar?.token} />
                 </Spin>
               </Flex>
               <Flex align={"center"} justify={"center"} flex={1}>
