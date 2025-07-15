@@ -90,26 +90,39 @@ export const useActions = ({ messageApi }: UseActionsProps) => {
   );
 
   const onStart = useCallback(() => {
-    socket.emit("startGame", null, () => {
-      // todo resonse обработать
+    socket.emit("startGame", null, (res) => {
+      if (!res.success) {
+        messageApi.open({
+          type: "error",
+          content: <TranslatedError errorCode={res.error.enumCode} />,
+        });
+      }
     });
-  }, []);
+  }, [messageApi]);
 
   const onShowResult = useCallback(() => {
-    socket.emit("showResult", null, () => {
-      //   todo
+    socket.emit("showResult", null, (res) => {
+      if (!res.success) {
+        messageApi.open({
+          type: "error",
+          content: <TranslatedError errorCode={res.error.enumCode} />,
+        });
+      }
     });
-  }, []);
+  }, [messageApi]);
 
   const addVote = useCallback(
     ({ factId, candidateId }: { candidateId: string; factId: number }) => {
-      socket.emit("addVote", { candidateId, factId }, ({ extra }) => {
-        if (extra?.voted) {
-          //  TODO: вибрация на телефон
+      socket.emit("addVote", { candidateId, factId }, (res) => {
+        if (!res.success) {
+          messageApi.open({
+            type: "error",
+            content: <TranslatedError errorCode={res.error.enumCode} />,
+          });
         }
       });
     },
-    [],
+    [messageApi],
   );
 
   const onSendFact = useCallback(
