@@ -4,6 +4,7 @@ import { Flex, Typography } from "antd";
 
 import { FACT_STATUSES, PlayerClient } from "@shared/types";
 
+import { ErrorFallback } from "@components/Error/ErrorFallback.tsx";
 import { PlayerCard } from "@components/PlayerCard/PlayerCard.tsx";
 import { useAppStorage } from "@providers/AppStorageProvider.tsx";
 import { useGameState } from "@providers/GameStateProvider.tsx";
@@ -24,8 +25,7 @@ export const VoteScreen = ({ addVote }: VoteScreenProps) => {
   > | null>(null);
 
   if (!room?.votingData) {
-    // todo
-    return "Error";
+    return <ErrorFallback />;
   }
 
   if (room.votingData.playersWhoVotedIds.includes(userId)) {

@@ -12,7 +12,6 @@ export const GameResultScreen = () => {
   const { room } = useGameState();
   const { token } = useTheme();
 
-  // TODO: такие ошибки
   if (!room || !room.results) {
     return <ErrorFallback />;
   }
