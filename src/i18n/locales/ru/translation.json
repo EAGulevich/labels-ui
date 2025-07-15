@@ -131,7 +131,7 @@
   },
   "playerVoteScreen": {
     "title": "Проголосуйте, принадлежит факт?",
-    "youVoted": "Вы проголосовали за"
+    "youVoted": "Вы проголосовали"
   },
   "gameOverScreen": {
     "title": "Игра завершена"

@@ -120,7 +120,7 @@
   },
   "playerVoteScreen": {
     "title": "Who owns the fact?",
-    "youVoted": "You voted for"
+    "youVoted": "You voted"
   },
   "gameOverScreen": {
     "title": "Game over"
