@@ -21,12 +21,10 @@ type GetTableColsProps = {
   players: RoomClient["players"];
 };
 
-// TODO: для 9 игроков
-// const MIN_COL_WIDTH = "280px";
-// TODO: для 7-8 игроков
-// const MIN_COL_WIDTH = "240px";
-// TODO: для 6 или менее игроков
-const MIN_COL_WIDTH = "200px";
+const getMinFactColWidth = (playersLength: number) =>
+  playersLength <= 6 ? "200px" : playersLength <= 8 ? "240px" : "280px";
+
+const ROUND_COL_WIDTH = "200px";
 
 export const getTableCols = ({
   token,
@@ -37,8 +35,7 @@ export const getTableCols = ({
     key: "round",
     dataIndex: "round",
     fixed: "left",
-    // TODO: не 100vw
-    width: `max(${MIN_COL_WIDTH}, 100vw / ${players.length + 1} - 60px)`,
+    width: ROUND_COL_WIDTH,
     title: (
       <Flex align={"center"} vertical gap={"middle"}>
         <Typography.Text type={"secondary"}>
@@ -83,7 +80,7 @@ export const getTableCols = ({
 
     key: fact.id,
     dataIndex: "roundHistory",
-    width: `max(${MIN_COL_WIDTH}, 100vw / ${players.length + 1} - 60px)`,
+    width: `max(${getMinFactColWidth(players.length)}, 100vw / ${players.length} - ${ROUND_COL_WIDTH} - 40px)`,
     render: (roundHistory: DataType["roundHistory"], data: DataType) => {
       const sp = roundHistory.find((s) => s.fact.id === fact.id);
       return (
