@@ -1,3 +1,4 @@
+import { Trans } from "react-i18next";
 import {
   Badge,
   Divider,
@@ -12,6 +13,7 @@ import { RoomClient } from "@shared/types";
 import { PlayerAvatar } from "@components/PlayerAvatar/PlayerAvatar.tsx";
 
 import { DataType } from "../types.ts";
+import { getPlayerPoints, getPointsByRound } from "./pointsHelper.ts";
 
 type GetTableColsProps = {
   token: GlobalToken;
@@ -40,11 +42,13 @@ export const getTableCols = ({
     title: (
       <Flex align={"center"} vertical gap={"middle"}>
         <Typography.Text type={"secondary"}>
-          {/*TODO: перевод*/}В каждом раунде игрок получает{" "}
-          <Badge color={"gold"} count={`баллы`} /> за каждый факт, в котором он
-          верно проголосовал, а так же{" "}
-          <Badge color={"purple"} count={"баллы"} /> за свой факт в зависимости
-          от раунда, в котором его факт отгадали
+          <Trans
+            i18nKey="resultsScreen.pointsDescription"
+            components={{
+              BadgeVote: <Badge color={"gold"} />,
+              BadgeRound: <Badge color={"purple"} />,
+            }}
+          />
         </Typography.Text>
       </Flex>
     ),
@@ -52,11 +56,9 @@ export const getTableCols = ({
       return (
         <Flex gap={"small"} vertical align={"center"}>
           <Typography.Text type={"secondary"}>
-            {/*TODO: перевод*/}
-            Раунд {round}
+            <Trans i18nKey="resultsScreen.round" /> {round}
           </Typography.Text>
-          {/*TODO: формулу  вынести val * 3*/}
-          <Badge color={"purple"} count={round * 3} />
+          <Badge color={"purple"} count={getPointsByRound({ round })} />
         </Flex>
       );
     },
@@ -87,14 +89,17 @@ export const getTableCols = ({
       return (
         <Flex align={"center"} gap={"normal"} vertical>
           <Flex gap={"large"} wrap align={"center"} justify={"center"}>
-            {!!sp && !sp?.playersWhoGuessedCorrectly.length && <div>Никто</div>}
+            {!!sp && !sp?.playersWhoGuessedCorrectly.length && "-"}
             {sp?.playersWhoGuessedCorrectly?.map((player, index) => {
               return player ? (
                 <Flex vertical>
                   <Badge
                     color={"gold"}
                     offset={[-4, 4]}
-                    count={((players.length || 0) - 1 - index) * 2}
+                    count={getPlayerPoints({
+                      players,
+                      index,
+                    })}
                   >
                     <PlayerAvatar
                       size={"default"}
@@ -111,7 +116,10 @@ export const getTableCols = ({
             {sp?.isGuessed && (
               <>
                 <Divider />
-                <Badge color={"purple"} count={+data.round * 3}>
+                <Badge
+                  color={"purple"}
+                  count={getPointsByRound({ round: data.round })}
+                >
                   <PlayerAvatar
                     size={"default"}
                     token={sp.fact.author.avatar.token}

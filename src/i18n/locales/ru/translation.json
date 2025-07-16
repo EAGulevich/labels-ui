@@ -110,10 +110,17 @@
       "send": "Отправить"
     }
   },
+  "resultsScreen": {
+    "round": "Раунд",
+    "points": "баллы",
+    "pointsDescription": "В каждом раунде игрок получает <BadgeVote count=баллы /> за каждый факт, в котором он верно проголосовал, а так же <BadgeRound count=баллы /> за свой факт в зависимости от раунда, в котором его факт отгадали",
+    "total": "Всего"
+  },
   "roundScreen": {
     "round": "Раунд",
     "time": "Время",
-    "modalVote": "Голосование"
+    "modalVote": "Голосование",
+    "nobody": "Никто"
   },
   "messages": {
     "youEnteredInRoom": "Вы вошли в комнату",

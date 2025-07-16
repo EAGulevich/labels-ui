@@ -1,3 +1,4 @@
+import { Trans } from "react-i18next";
 import {
   CheckCircleOutlined,
   CloseOutlined,
@@ -61,7 +62,11 @@ export const getStepsOfVoting = ({ room, token }: GetStepsOfVotingProps) => {
             icon: <UserOutlined style={{}} />,
           }
         : {
-            description: !supposedPlayer ? "Никто" : supposedPlayer?.name,
+            description: !supposedPlayer ? (
+              <Trans i18nKey={"roundScreen.nobody"} />
+            ) : (
+              supposedPlayer?.name
+            ),
             status: !supposedPlayer ? "error" : "finish",
             icon: !supposedPlayer ? (
               <CloseOutlined style={{ color: token.colorError }} />

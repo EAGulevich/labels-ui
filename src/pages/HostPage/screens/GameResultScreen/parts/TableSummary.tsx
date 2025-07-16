@@ -1,6 +1,9 @@
+import { Trans } from "react-i18next";
 import { Flex, Table, Typography } from "antd";
 
 import { Results, RoomClient } from "@shared/types";
+
+import { getPlayerPoints, getPointsByRound } from "./pointsHelper.ts";
 
 export const TableSummary = ({
   roundsStepsHistory,
@@ -13,8 +16,9 @@ export const TableSummary = ({
     <Table.Summary.Row>
       <Table.Summary.Cell index={0}>
         <Flex justify={"center"}>
-          {/*TODO перевод*/}
-          <Typography.Title>Результат</Typography.Title>
+          <Typography.Title>
+            <Trans i18nKey="resultsScreen.total" />
+          </Typography.Title>
         </Flex>
       </Table.Summary.Cell>
       {room.facts.map((f) => {
@@ -24,12 +28,15 @@ export const TableSummary = ({
         Object.entries(roundsStepsHistory).forEach(([r, info]) => {
           info.forEach((i) => {
             if (i.isGuessed && pId === i.fact.author.id) {
-              points += +r * 3;
+              points += getPointsByRound({ round: +r });
             }
 
             i.playersWhoGuessedCorrectly.forEach((gp, index) => {
               if (gp.id === pId) {
-                points += (room?.players.length - 1 - index) * 2;
+                points += getPlayerPoints({
+                  players: room.players,
+                  index: index,
+                });
               }
             });
           });

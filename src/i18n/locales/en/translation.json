@@ -110,10 +110,17 @@
       "send": "Send"
     }
   },
+  "resultsScreen": {
+    "round": "Round",
+    "points": "points",
+    "pointsDescription": "In each round, the player earns <BadgeVote count=points /> for every fact they voted correctly, as well as <BadgeRound count=points/> for their own fact depending on the round in which their fact was guessed",
+    "total": "Total"
+  },
   "roundScreen": {
     "round": "Round",
     "time": "Time",
-    "modalVote": "Voting"
+    "modalVote": "Voting",
+    "nobody": "Nobody"
   },
   "discussionScreen": {
     "title": "Discuss who owns the facts"
