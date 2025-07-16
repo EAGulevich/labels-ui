@@ -2,26 +2,20 @@ import { Trans } from "react-i18next";
 import { Flex, Table, Typography } from "antd";
 import maxBy from "lodash.maxby";
 
-import { Results, RoomClient } from "@shared/types";
+import { RoomClient } from "@shared/types";
 
 import { PlayerAvatar } from "@components/PlayerAvatar/PlayerAvatar.tsx";
 
 import { CrownIcon, PlayerItem } from "../styles.ts";
 import { getPlayerPoints, getPointsByRound } from "./pointsHelper.ts";
 
-export const TableSummary = ({
-  roundsStepsHistory,
-  room,
-}: {
-  roundsStepsHistory: Results;
-  room: RoomClient;
-}) => {
+export const TableSummary = ({ room }: { room: RoomClient }) => {
   const total = room.facts.map((f) => {
     let points = 0;
     const pId = f.selectedPlayer?.id;
     const player = room.players.find((p) => p.id === pId);
 
-    Object.entries(roundsStepsHistory).forEach(([r, info]) => {
+    Object.entries(room.results || {}).forEach(([r, info]) => {
       info.forEach((i) => {
         if (i.isGuessed && pId === i.fact.author.id) {
           points += getPointsByRound({ round: +r });
@@ -30,7 +24,7 @@ export const TableSummary = ({
         i.playersWhoGuessedCorrectly.forEach((gp, index) => {
           if (gp.id === pId) {
             points += getPlayerPoints({
-              players: room.players,
+              playersLength: room.players.length,
               index: index,
             });
           }

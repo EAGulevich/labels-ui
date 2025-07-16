@@ -48,7 +48,7 @@ export const GameResultScreen = () => {
         summary={() => {
           return (
             <Table.Summary fixed={"bottom"}>
-              <TableSummary room={room} roundsStepsHistory={room.results} />
+              <TableSummary room={room} />
             </Table.Summary>
           );
         }}

@@ -1,4 +1,5 @@
 import { Trans } from "react-i18next";
+import { MinusCircleOutlined } from "@ant-design/icons";
 import {
   Badge,
   Divider,
@@ -86,7 +87,9 @@ export const getTableCols = ({
       return (
         <Flex align={"center"} gap={"normal"} vertical>
           <Flex gap={"large"} wrap align={"center"} justify={"center"}>
-            {!!sp && !sp?.playersWhoGuessedCorrectly.length && "-"}
+            {!!sp && !sp?.playersWhoGuessedCorrectly.length && (
+              <MinusCircleOutlined style={{ fontSize: 22 }} />
+            )}
             {sp?.playersWhoGuessedCorrectly?.map((player, index) => {
               return player ? (
                 <Flex vertical>
@@ -94,7 +97,7 @@ export const getTableCols = ({
                     color={"gold"}
                     offset={[-4, 4]}
                     count={getPlayerPoints({
-                      players,
+                      playersLength: players.length,
                       index,
                     })}
                   >

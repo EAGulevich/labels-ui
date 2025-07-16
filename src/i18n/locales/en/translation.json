@@ -83,7 +83,7 @@
   },
   "inputFactScreen": {
     "inputFact": "Enter the fact on your device",
-    "statisticsLabel": "We are waiting for facts from the players",
+    "statisticLabel": "We are waiting for facts from the players",
     "form": {
       "fields": {
         "fact": {
@@ -110,12 +110,6 @@
       "send": "Send"
     }
   },
-  "resultsScreen": {
-    "round": "Round",
-    "points": "points",
-    "pointsDescription": "In each round, the player earns <BadgeVote count=points /> for every fact they voted correctly, as well as <BadgeRound count=points/> for their own fact depending on the round in which their fact was guessed",
-    "total": "Total"
-  },
   "roundScreen": {
     "round": "Round",
     "time": "Time",
@@ -130,7 +124,32 @@
     "youVoted": "You voted"
   },
   "gameOverScreen": {
-    "title": "Game over"
+    "title": "Game over",
+    "showPoints": "Show points",
+    "vipCanShowPoints": "VIP player can show final scores"
+  },
+  "resultsScreen": {
+    "round": "Round",
+    "points_one": "point",
+    "points_few": "points",
+    "points_many": "points",
+    "points_other": "points",
+    "pointsDescription": "In each round, the player earns <BadgeVote count=points /> for every fact they voted correctly, as well as <BadgeRound count=points/> for their own fact depending on the round in which their fact was guessed",
+    "total": "Total",
+    "tabCommon": "Common",
+    "tabHistory": "History",
+    "statistic": {
+      "totalPoints": "Total points scored",
+      "rightVotesCount": "Correct votes",
+      "wrongVotesCount": "Incorrect votes",
+      "guessedRound": "Your fact was guessed in round",
+      "times_one": "time",
+      "times_few": "times",
+      "times_many": "times",
+      "times_other": "times"
+    },
+    "youGuessed": "You have been guessed",
+    "youVoted_interval": "(1)[You are {{count}}-st person to vote correctly];(2)[You are {{count}}-nd person to vote correctly];(3)[You are {{count}}-rd person to vote correctly];(4-inf)[You are {{count}}-th person to vote correctly]"
   },
   "messages": {
     "youEnteredInRoom": "You entered in room",

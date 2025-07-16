@@ -97,7 +97,7 @@ export const InputFactScreen = ({ onSendFact }: InputFactScreenProps) => {
   return (
     <Flex vertical align={"center"} gap="large">
       <Typography.Title level={3}>
-        {t("inputFactScreen.statisticsLabel")}
+        {t("inputFactScreen.statisticLabel")}
       </Typography.Title>
       <Progress
         type="circle"

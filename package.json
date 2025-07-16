@@ -20,6 +20,7 @@
     "auto-text-size": "^0.2.3",
     "dotenv": "^16.5.0",
     "i18next": "^25.0.1",
+    "i18next-intervalplural-postprocessor": "^3.0.0",
     "lodash.maxby": "^4.6.0",
     "motion": "^12.12.1",
     "react": "^19.0.0",

@@ -18,6 +18,10 @@ const commonConfig: ThemeConfig = {
     Modal: {
       headerBg: "transparent",
     },
+    Timeline: {
+      dotBg: "transparent",
+      itemPaddingBottom: 20,
+    },
   },
 };
 

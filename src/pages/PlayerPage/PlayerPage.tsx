@@ -13,6 +13,7 @@ import { useGameState } from "@providers/GameStateProvider.tsx";
 
 import { DiscussionScreen } from "./screens/DiscussionScreen/DiscussionScreen.tsx";
 import { GameOverScreen } from "./screens/GameOverScreen/GameOverScreen.tsx";
+import { GameResultScreen } from "./screens/GameResultScreen/GameResultScreen.tsx";
 import { InputFactScreen } from "./screens/InputFactScreen/InputFactScreen.tsx";
 import { JoinScreen } from "./screens/JoinScreen/JoinScreen.tsx";
 import { VoteScreen } from "./screens/VoteScreen/VoteScreen.tsx";
@@ -94,10 +95,7 @@ const PlayerPage = () => {
 
       {!!room?.votingData && <VoteScreen addVote={addVote} />}
 
-      {room?.status === ROOM_STATUSES.RESULTS && (
-        // TODO
-        <div> Полный список баллов по раундам</div>
-      )}
+      {room?.status === ROOM_STATUSES.RESULTS && <GameResultScreen />}
     </PlayerLayout>
   );
 };

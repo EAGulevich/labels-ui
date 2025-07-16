@@ -83,7 +83,7 @@
   },
   "inputFactScreen": {
     "inputFact": "Введите факт на своем устройстве",
-    "statisticsLabel": "Ждем факты от игроков",
+    "statisticLabel": "Ждем факты от игроков",
     "form": {
       "fields": {
         "fact": {
@@ -110,17 +110,46 @@
       "send": "Отправить"
     }
   },
-  "resultsScreen": {
-    "round": "Раунд",
-    "points": "баллы",
-    "pointsDescription": "В каждом раунде игрок получает <BadgeVote count=баллы /> за каждый факт, в котором он верно проголосовал, а так же <BadgeRound count=баллы /> за свой факт в зависимости от раунда, в котором его факт отгадали",
-    "total": "Всего"
-  },
   "roundScreen": {
     "round": "Раунд",
     "time": "Время",
     "modalVote": "Голосование",
     "nobody": "Никто"
+  },
+  "discussionScreen": {
+    "title": "Обсудите, кому принадлежат факты"
+  },
+  "playerVoteScreen": {
+    "title": "Проголосуйте, принадлежит факт?",
+    "youVoted": "Вы проголосовали"
+  },
+  "gameOverScreen": {
+    "title": "Игра завершена",
+    "showPoints": "Показать баллы",
+    "vipCanShowPoints": "VIP-игрок может показать итоговые баллы"
+  },
+  "resultsScreen": {
+    "round": "Раунд",
+    "points_one": "балл",
+    "points_few": "балла",
+    "points_many": "баллов",
+    "points_other": "баллов",
+    "pointsDescription": "В каждом раунде игрок получает <BadgeVote count=баллы /> за каждый факт, в котором он верно проголосовал, а так же <BadgeRound count=баллы /> за свой факт в зависимости от раунда, в котором его факт отгадали",
+    "total": "Всего",
+    "tabCommon": "Общее",
+    "tabHistory": "История",
+    "statistic": {
+      "totalPoints": "Всего получено баллов",
+      "rightVotesCount": "Верно проголосовали",
+      "wrongVotesCount": "Неверно проголосовали",
+      "guessedRound": "Ваш факт отгадан в раунде",
+      "times_one": "раз",
+      "times_few": "раза",
+      "times_many": "раз",
+      "times_other": "раз"
+    },
+    "youGuessed": "Вас отгадали",
+    "youVoted_interval": "(1)[Вы {{count}}-ый, кто верно проголосовал];(2)[Вы {{count}}-ой, кто верно проголосовал];(3)[Вы {{count}}-ий, кто верно проголосовал];(4-5)[Вы {{count}}-ый, кто верно проголосовал];(6-8)[Вы {{count}}-ой, кто верно проголосовал];(9-inf)[Вы {{count}}-ый, кто верно проголосовал]"
   },
   "messages": {
     "youEnteredInRoom": "Вы вошли в комнату",
@@ -132,16 +161,6 @@
     "playerLeft": "Игрок {{playerName}} вышел",
     "playerLostConnection": "Потеряно соединение с игроком {{playerName}}",
     "playerReconnected": "Игрок {{playerName}} снова в комнате"
-  },
-  "discussionScreen": {
-    "title": "Обсудите, кому принадлежат факты"
-  },
-  "playerVoteScreen": {
-    "title": "Проголосуйте, принадлежит факт?",
-    "youVoted": "Вы проголосовали"
-  },
-  "gameOverScreen": {
-    "title": "Игра завершена"
   },
   "errorMessages": {
     "SERVER_ERROR": "Произошла внутренняя ошибка сервера",
