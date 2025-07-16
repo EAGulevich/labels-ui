@@ -11,6 +11,7 @@ import { useNewVip } from "./useNewVip.tsx";
 import { usePlayerChangedAvatar } from "./usePlayerChangedAvatar.tsx";
 import { usePlayerConnectDisconnect } from "./usePlayerConnectDisconnect.tsx";
 import { useReceiveFact } from "./useReceiveFact.tsx";
+import { useResults } from "./useResults.tsx";
 import { useVoting } from "./useVoting.tsx";
 
 export const useSocketEvents = () => {
@@ -28,6 +29,7 @@ export const useSocketEvents = () => {
   useVoting({ messageApi });
   useNewRound({ messageApi });
   usePlayerChangedAvatar({ messageApi });
+  useResults({ messageApi });
 
   const {
     onJoin,
