@@ -25,10 +25,10 @@
   "createOrReturnToRoom": {
     "returnResult": {
       "title": "Хотите вернуться?",
-      "subTitle": "Найдена ранее созданная комната.",
+      "subTitle": "Найдена ранее созданная комната",
       "buttons": {
         "return": "Вернуться",
-        "createNew": "Создать новую"
+        "createNew": "Новая игра"
       }
     },
     "createResult": {
@@ -173,7 +173,7 @@
     "VOTING_PHASE_NOT_ACTIVE": "Фаза голосования не активна",
     "WRONG_FACT_VOTING": "Нельзя голосовать за этот факт",
     "PLAYER_NAME_ALREADY_EXISTS": "Имя уже занято другим игроком",
-    "PLAYER_NAME_TOO_LONG": "Имя игрока превышает допустимую длину",
+    "PLAYER_NAME_TOO_LONG": "Имя игрока слишком длинное",
     "PLAYER_NAME_TOO_SHORT": "Имя игрока слишком короткое",
     "AVATAR_ALREADY_TAKEN": "Выбранный аватар уже используется",
     "PLAYER_ALREADY_SUBMITTED_FACT": "Игрок уже отправил факт",
