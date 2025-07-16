@@ -88,7 +88,9 @@ export const getTableCols = ({
         <Flex align={"center"} gap={"normal"} vertical>
           <Flex gap={"large"} wrap align={"center"} justify={"center"}>
             {!!sp && !sp?.playersWhoGuessedCorrectly.length && (
-              <MinusCircleOutlined style={{ fontSize: 22 }} />
+              <MinusCircleOutlined
+                style={{ fontSize: 22, color: token["colorBorderSecondary"] }}
+              />
             )}
             {sp?.playersWhoGuessedCorrectly?.map((player, index) => {
               return player ? (
