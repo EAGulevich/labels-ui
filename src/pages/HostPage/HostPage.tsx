@@ -2,7 +2,7 @@ import { createPortal } from "react-dom";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { FrownOutlined } from "@ant-design/icons";
-import { Button, Result } from "antd";
+import { Button, Flex, Result } from "antd";
 
 import { ROOM_STATUSES } from "@shared/types";
 
@@ -32,16 +32,18 @@ const HostPage = () => {
 
   if (isServerError) {
     return (
-      <Result
-        icon={<FrownOutlined />}
-        title={t("errors.500.title")}
-        subTitle={t("errors.500.subTitle")}
-        extra={
-          <Button type="primary" onClick={() => navigate(ROUTE_PATHS.home)}>
-            {t("errors.500.btnTitle")}
-          </Button>
-        }
-      />
+      <Flex align={"center"} justify={"center"} flex={1}>
+        <Result
+          icon={<FrownOutlined />}
+          title={t("errors.500.title")}
+          subTitle={t("errors.500.subTitle")}
+          extra={
+            <Button type="primary" onClick={() => navigate(ROUTE_PATHS.home)}>
+              {t("errors.500.btnTitle")}
+            </Button>
+          }
+        />
+      </Flex>
     );
   }
 
@@ -52,7 +54,7 @@ const HostPage = () => {
     room?.status !== ROOM_STATUSES.LOBBY && roomCode && headerMenuElement;
 
   return (
-    <>
+    <Flex vertical flex={1}>
       {contextHolder}
       {showCodeInHeader &&
         createPortal(<RoomCodeTag>{roomCode}</RoomCodeTag>, headerMenuElement)}
@@ -74,7 +76,7 @@ const HostPage = () => {
       )}
 
       {room?.status == ROOM_STATUSES.RESULTS && <GameResultScreen />}
-    </>
+    </Flex>
   );
 };
 
