@@ -38,7 +38,6 @@ export const AnimatedMenuList = () => {
       <Button
         key={"newGameButton"}
         onMouseEnter={playAudio}
-        size={"large"}
         type={"link"}
         onClick={() => navigate(ROUTE_PATHS.host)}
       >
@@ -49,7 +48,6 @@ export const AnimatedMenuList = () => {
         key={"joinButton"}
         onMouseEnter={playAudio}
         type={"link"}
-        size={"large"}
         onClick={() => navigate(ROUTE_PATHS.player)}
       >
         {t("home.menu.join")}
