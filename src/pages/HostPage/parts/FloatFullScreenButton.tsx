@@ -13,11 +13,9 @@ export const FullScreenButton = () => {
     };
 
     document.addEventListener("fullscreenchange", fullscreenchange);
-    document.addEventListener("keydown", fullscreenchange);
 
     return () => {
       document.removeEventListener("fullscreenchange", fullscreenchange);
-      document.removeEventListener("keydown", fullscreenchange);
     };
   }, []);
 
