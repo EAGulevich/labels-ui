@@ -1,4 +1,4 @@
-import { Divider, Layout } from "antd";
+import { Divider } from "antd";
 import styled from "styled-components";
 
 const HEADER_HEIGHT = 48;
@@ -7,16 +7,11 @@ const ANIMATION_SPEED = "1.2s";
 
 const COMPUTED_LOGO_HEIGHT = HEADER_HEIGHT * 1.75;
 const COMPUTED_LOGO_WIDTH = COMPUTED_LOGO_HEIGHT * 2.15;
-const COMPUTED_DIVIDER_LEFT_SPACE = COMPUTED_LOGO_WIDTH + 10;
+const COMPUTED_DIVIDER_LEFT_SPACE = COMPUTED_LOGO_WIDTH + 8;
 
 const COMPUTED_LOGO_HEIGHT_PX = COMPUTED_LOGO_HEIGHT + "px";
 const COMPUTED_LOGO_WIDTH_PX = COMPUTED_LOGO_WIDTH + "px";
 const COMPUTED_DIVIDER_LEFT_SPACE_PX = COMPUTED_DIVIDER_LEFT_SPACE + "px";
-
-export const StyledHeader = styled(Layout.Header)`
-  background-color: ${({ theme }) => theme.token.colorBgLayout};
-  padding: 0;
-`;
 
 export const StyledHeaderContent = styled.div`
   display: flex;
