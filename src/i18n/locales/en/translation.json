@@ -223,5 +223,9 @@
       "postTitle": "(not recommended)",
       "description": "If nothing helped, use the buttons below to force-reduce the application scale and then close this window"
     }
+  },
+  "fullScreenButton": {
+    "tooltipFull": "Full screen",
+    "tooltipFullExit": "Exit full screen mode"
   }
 }
