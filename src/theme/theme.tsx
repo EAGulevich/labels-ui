@@ -22,6 +22,13 @@ const commonConfig: ThemeConfig = {
       dotBg: "transparent",
       itemPaddingBottom: 20,
     },
+    Layout: {
+      footerBg: "transparent",
+      footerPadding: 0,
+      headerBg: "transparent",
+      headerPadding: 0,
+      headerHeight: 48,
+    },
   },
 };
 
