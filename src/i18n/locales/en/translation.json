@@ -200,5 +200,28 @@
       "subTitle": "You can start a new game",
       "btnTitle": "Back Home"
     }
+  },
+  "resolutionWarning": {
+    "alertTitle": "Suboptimal screen resolution",
+    "minRequiredScreen": "Minimum required — from {{size}} px",
+    "currentScreen": "Current: {{width}} × {{height}} px",
+    "howToFix": "How to fix this?",
+    "bigScreenDevice": {
+      "title": "Use a device with larger screen",
+      "description": "Rotate your device to landscape orientation or use a laptop / TV"
+    },
+    "changeZoom": {
+      "title": "Reset browser zoom",
+      "description": "Press <KeyboardText>Ctrl+0</KeyboardText> (Windows/Linux) or <KeyboardText>Cmd+0</KeyboardText> (Mac) to reset zoom to 100%"
+    },
+    "systemSettings": {
+      "title": "Check system settings",
+      "description": "Go to your device's display settings and set scaling to 100%"
+    },
+    "other": {
+      "title": "Reduce application scale",
+      "postTitle": "(not recommended)",
+      "description": "If nothing helped, use the buttons below to force-reduce the application scale and then close this window"
+    }
   }
 }
