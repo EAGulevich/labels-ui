@@ -42,7 +42,7 @@ export const InviteBlock: FC<InviteBlockProps> = ({ roomCode }) => {
         </Typography.Title>
       </StyledBlock>
       <Flex align={"center"} vertical style={{ margin: "50px" }}>
-        <QRCode value={qrValue} />
+        <QRCode value={qrValue} bgColor={"white"} color={"black"} />
         <Typography.Text type={"secondary"}>
           {t("waitingPlayersScreen.scan")}
         </Typography.Text>
