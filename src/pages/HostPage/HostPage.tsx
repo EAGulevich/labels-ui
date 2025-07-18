@@ -10,7 +10,6 @@ import { HEADER_INFO_CONTAINER, ROUTE_PATHS } from "@constants";
 import { useGameState } from "@providers/GameStateProvider.tsx";
 
 import { FullScreenButton } from "./parts/FloatFullScreenButton.tsx";
-import { ResolutionWarning } from "./parts/ResolutionWarning.tsx";
 import { CreateOrReturnToRoom } from "./screens/CreateOrReturnToRoom/CreateOrReturnToRoom.tsx";
 import { GameResultScreen } from "./screens/GameResultScreen/GameResultScreen.tsx";
 import { InputFactScreen } from "./screens/InputFactScreen/InputFactScreen.tsx";
@@ -60,8 +59,6 @@ const HostPage = () => {
 
   return (
     <Flex vertical flex={1}>
-      <ResolutionWarning />
-
       {contextHolder}
       {showCodeInHeader &&
         createPortal(<RoomCodeTag>{roomCode}</RoomCodeTag>, headerMenuElement)}

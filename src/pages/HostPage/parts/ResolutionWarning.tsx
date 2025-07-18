@@ -17,17 +17,24 @@ import {
   Typography,
 } from "antd";
 
+import { useAppStorage } from "@providers/AppStorageProvider.tsx";
+import { useGameState } from "@providers/GameStateProvider.tsx";
+
 const { useBreakpoint } = Grid;
 const { useToken } = theme;
 
 export const ResolutionWarning = () => {
+  const { room } = useGameState();
+  const { userId } = useAppStorage();
+
   const zoomWasForceChangedRef = useRef(false);
   const [warningScreenWasClosed, setWarningScreenWasClosed] = useState(false);
   const { token } = useToken();
   const { t } = useTranslation();
   const breakpoint = useBreakpoint();
+  const isHost = room?.hostId === userId;
   const requiredScreenMinSize = token.screenLG;
-  const isScreenSizeAppropriate = !!breakpoint.lg;
+  const isScreenSizeAppropriate = !isHost || !!breakpoint.lg;
 
   const [resolution, setResolution] = useState({
     width: window.innerWidth,
@@ -41,11 +48,13 @@ export const ResolutionWarning = () => {
       setResolution({ width: newWidth, height: newHeight });
     };
 
-    checkResolution();
-    window.addEventListener("resize", checkResolution);
+    if (isHost) {
+      checkResolution();
+      window.addEventListener("resize", checkResolution);
+    }
 
     return () => window.removeEventListener("resize", checkResolution);
-  }, []);
+  }, [isHost]);
 
   if (isScreenSizeAppropriate || warningScreenWasClosed) {
     return null;

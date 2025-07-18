@@ -46,6 +46,9 @@ export const PlayerWithFact = styled(Flex)<{
     0px 0px 10px 4px;
 
   > :first-child {
+    height: ${({ $height }) => $height};
+    width: ${({ $height }) => $height};
+
     clip-path: polygon(-20% -4%, 109% 6%, 96% 96%, 4% 104%);
 
     box-shadow: ${({ theme, $guessStatus }) =>
