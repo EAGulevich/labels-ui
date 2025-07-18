@@ -18,7 +18,7 @@ export const WaitingPlayersScreen = ({
   }
 
   return (
-    <Row justify={"center"}>
+    <Row justify={"center"} align={"middle"}>
       <Col span={10}>
         <InviteBlock roomCode={room.code} />
       </Col>

@@ -5,7 +5,6 @@ import { MAX_PLAYERS } from "@shared/constants/validations.ts";
 
 import { ANIMATION_DURATION_COUNT_DOWN_BEFORE_START_S } from "@constants";
 
-export const PLAYERS_COUNTER_TITLE_CLASS = "counter-title";
 export const DECORATIVE_PLACE_CLASS = "decorative";
 export const EMPTY_PLACE_CLASS = "empty";
 
@@ -17,10 +16,6 @@ export const PlayersCounter = styled(Statistic)`
   align-items: baseline;
   justify-content: center;
   gap: 20px;
-
-  .${PLAYERS_COUNTER_TITLE_CLASS} {
-    margin: 10px 0;
-  }
 `;
 
 export const StyledSkeleton = styled(Skeleton.Node)``;
@@ -36,7 +31,8 @@ export const StyledCard = styled(Card)`
 `;
 
 export const PlayersGrid = styled.div`
-  max-width: 60vh;
+  max-width: 100%;
+  min-width: 100%;
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
