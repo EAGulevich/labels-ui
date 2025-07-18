@@ -17,7 +17,7 @@ export const CreateOrReturnToRoom: FC<CreateOrReturnToRoomProps> = ({
   if (typeof onReenterRoom === "function") {
     return (
       <Row justify={"center"}>
-        <Col span={12}>
+        <Col span={20}>
           <Result
             icon={<ReloadOutlined />}
             title={t("createOrReturnToRoom.returnResult.title")}
@@ -38,7 +38,7 @@ export const CreateOrReturnToRoom: FC<CreateOrReturnToRoomProps> = ({
 
   return (
     <Row justify={"center"}>
-      <Col span={12}>
+      <Col span={20}>
         <Result
           icon={<UsergroupAddOutlined />}
           title={t("createOrReturnToRoom.createResult.title")}
