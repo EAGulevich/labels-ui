@@ -36,6 +36,7 @@ export const AnimatedMenuList = () => {
   const allItems = useMemo(
     () => [
       <Button
+        size={"large"}
         key={"newGameButton"}
         onMouseEnter={playAudio}
         type={"link"}
@@ -45,6 +46,7 @@ export const AnimatedMenuList = () => {
       </Button>,
 
       <Button
+        size={"large"}
         key={"joinButton"}
         onMouseEnter={playAudio}
         type={"link"}
