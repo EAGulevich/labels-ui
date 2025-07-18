@@ -2,13 +2,15 @@ import { createPortal } from "react-dom";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { FrownOutlined } from "@ant-design/icons";
-import { Button, Flex, Result } from "antd";
+import { Button, Flex, Grid, Result } from "antd";
 
 import { ROOM_STATUSES } from "@shared/types";
 
 import { HEADER_INFO_CONTAINER, ROUTE_PATHS } from "@constants";
 import { useGameState } from "@providers/GameStateProvider.tsx";
 
+import { FullScreenButton } from "./parts/FloatFullScreenButton.tsx";
+import { ResolutionWarning } from "./parts/ResolutionWarning.tsx";
 import { CreateOrReturnToRoom } from "./screens/CreateOrReturnToRoom/CreateOrReturnToRoom.tsx";
 import { GameResultScreen } from "./screens/GameResultScreen/GameResultScreen.tsx";
 import { InputFactScreen } from "./screens/InputFactScreen/InputFactScreen.tsx";
@@ -17,10 +19,13 @@ import { WaitingPlayersScreen } from "./screens/WaitingPlayersScreen/WaitingPlay
 import { useSocketEvents } from "./useSocketEvents/useSocketEvents.tsx";
 import { RoomCodeTag } from "./styles.ts";
 
+const { useBreakpoint } = Grid;
+
 const HostPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { room, showCountDownBeforeStart } = useGameState();
+  const breakpoint = useBreakpoint();
 
   const {
     isServerError,
@@ -55,6 +60,8 @@ const HostPage = () => {
 
   return (
     <Flex vertical flex={1}>
+      <ResolutionWarning />
+
       {contextHolder}
       {showCodeInHeader &&
         createPortal(<RoomCodeTag>{roomCode}</RoomCodeTag>, headerMenuElement)}
@@ -76,6 +83,7 @@ const HostPage = () => {
       )}
 
       {room?.status == ROOM_STATUSES.RESULTS && <GameResultScreen />}
+      {breakpoint.lg && <FullScreenButton />}
     </Flex>
   );
 };
