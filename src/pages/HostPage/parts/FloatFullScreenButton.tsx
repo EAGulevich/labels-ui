@@ -11,22 +11,31 @@ export const FullScreenButton = () => {
     const fullscreenchange = () => {
       setIsFullscreen((prev) => !prev);
     };
+    const preventEventF11 = (e: KeyboardEvent) => {
+      if (e.key === "F11") e.preventDefault();
+    };
 
     document.addEventListener("fullscreenchange", fullscreenchange);
+    document.addEventListener("keydown", preventEventF11);
 
     return () => {
       document.removeEventListener("fullscreenchange", fullscreenchange);
+      document.removeEventListener("keydown", preventEventF11);
     };
   }, []);
 
   const toggleFullscreen = () => {
-    if (!isFullscreen) {
+    if (!document.fullscreenElement) {
       if (document.documentElement.requestFullscreen) {
-        document.documentElement.requestFullscreen();
+        document.documentElement.requestFullscreen().catch((err) => {
+          console.error(err);
+        });
       }
     } else {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
+      if (document.fullscreenElement && document.exitFullscreen) {
+        document.exitFullscreen().catch((err) => {
+          console.error(err);
+        });
       }
     }
   };
