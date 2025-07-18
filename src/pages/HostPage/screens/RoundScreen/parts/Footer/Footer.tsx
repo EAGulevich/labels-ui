@@ -18,8 +18,6 @@ type FooterProps = {
   onTimerFinish: () => void;
 };
 
-const { Countdown } = Statistic;
-
 export const Footer = ({ startTimer, onTimerFinish }: FooterProps) => {
   const { room } = useGameState();
 
@@ -56,7 +54,8 @@ export const Footer = ({ startTimer, onTimerFinish }: FooterProps) => {
         percent={percent}
         format={() =>
           timeLeft > 0 ? (
-            <Countdown
+            <Statistic.Timer
+              type={"countdown"}
               title={t("roundScreen.time")}
               value={deadline}
               format="s"

@@ -92,89 +92,93 @@ export const ResolutionWarning = () => {
           <Typography.Title level={5}>
             {t("resolutionWarning.howToFix")}
           </Typography.Title>
-          <Collapse bordered={false} expandIconPosition={"right"}>
-            <Collapse.Panel
-              header={
-                <Flex gap={"small"}>
-                  <DesktopOutlined />
-                  {t("resolutionWarning.bigScreenDevice.title")}
-                </Flex>
-              }
-              key="bigScreenDevice"
-              style={{ borderBottomColor: token.colorTextBase }}
-            >
-              <Typography.Text type="secondary">
-                {t("resolutionWarning.bigScreenDevice.description")}
-              </Typography.Text>
-            </Collapse.Panel>
-            <Collapse.Panel
-              header={
-                <Flex gap={"small"}>
-                  <ArrowsAltOutlined />
-                  {t("resolutionWarning.changeZoom.title")}
-                </Flex>
-              }
-              key="changeZoom"
-              style={{ borderBottomColor: token.colorTextBase }}
-            >
-              <Typography.Text type="secondary">
-                <Trans
-                  i18nKey="resolutionWarning.changeZoom.description"
-                  components={{
-                    KeyboardText: <Typography.Text keyboard />,
-                  }}
-                />
-              </Typography.Text>
-            </Collapse.Panel>
-            <Collapse.Panel
-              header={
-                <Flex gap={"small"}>
-                  <SettingOutlined />
-                  {t("resolutionWarning.systemSettings.title")}
-                </Flex>
-              }
-              key="systemSettings"
-              style={{ borderBottomColor: token.colorTextBase }}
-            >
-              <Typography.Text type="secondary">
-                {t("resolutionWarning.systemSettings.description")}
-              </Typography.Text>
-            </Collapse.Panel>
-            <Collapse.Panel
-              header={
-                <Flex gap={"small"}>
-                  <AlertOutlined />
-                  <Typography.Text>
-                    {t("resolutionWarning.other.title")}{" "}
-                    <Typography.Text type="secondary">
-                      {t("resolutionWarning.other.postTitle")}{" "}
-                    </Typography.Text>
+          <Collapse
+            bordered={false}
+            expandIconPosition={"end"}
+            items={[
+              {
+                key: "bigScreenDevice",
+                label: (
+                  <Flex gap={"small"}>
+                    <DesktopOutlined />
+                    {t("resolutionWarning.bigScreenDevice.title")}
+                  </Flex>
+                ),
+                children: (
+                  <Typography.Text type="secondary">
+                    {t("resolutionWarning.bigScreenDevice.description")}
                   </Typography.Text>
-                </Flex>
-              }
-              key="other"
-              style={{ borderBottomColor: token.colorTextBase }}
-            >
-              <Flex vertical gap={"small"}>
-                <Typography.Text type="secondary">
-                  {t("resolutionWarning.other.description")}{" "}
-                </Typography.Text>
-                <Segmented
-                  block
-                  defaultValue={null}
-                  options={[
-                    { label: "50%", value: "0.5" },
-                    { label: "75%", value: "0.75" },
-                    { label: "90%", value: "0.9" },
-                  ]}
-                  onChange={(value) => {
-                    document.body.style.zoom = value || "1";
-                    zoomWasForceChangedRef.current = false;
-                  }}
-                />
-              </Flex>
-            </Collapse.Panel>
-          </Collapse>
+                ),
+              },
+              {
+                key: "changeZoom",
+                label: (
+                  <Flex gap={"small"}>
+                    <ArrowsAltOutlined />
+                    {t("resolutionWarning.changeZoom.title")}
+                  </Flex>
+                ),
+                children: (
+                  <Typography.Text type="secondary">
+                    <Trans
+                      i18nKey="resolutionWarning.changeZoom.description"
+                      components={{
+                        KeyboardText: <Typography.Text keyboard />,
+                      }}
+                    />
+                  </Typography.Text>
+                ),
+              },
+              {
+                key: "systemSettings",
+                label: (
+                  <Flex gap={"small"}>
+                    <SettingOutlined />
+                    {t("resolutionWarning.systemSettings.title")}
+                  </Flex>
+                ),
+                children: (
+                  <Typography.Text type="secondary">
+                    {t("resolutionWarning.systemSettings.description")}
+                  </Typography.Text>
+                ),
+              },
+              {
+                key: "other",
+                label: (
+                  <Flex gap={"small"}>
+                    <AlertOutlined />
+                    <Typography.Text>
+                      {t("resolutionWarning.other.title")}{" "}
+                      <Typography.Text type="secondary">
+                        {t("resolutionWarning.other.postTitle")}{" "}
+                      </Typography.Text>
+                    </Typography.Text>
+                  </Flex>
+                ),
+                children: (
+                  <Flex vertical gap={"small"}>
+                    <Typography.Text type="secondary">
+                      {t("resolutionWarning.other.description")}{" "}
+                    </Typography.Text>
+                    <Segmented
+                      block
+                      defaultValue={null}
+                      options={[
+                        { label: "50%", value: "0.5" },
+                        { label: "75%", value: "0.75" },
+                        { label: "90%", value: "0.9" },
+                      ]}
+                      onChange={(value) => {
+                        document.body.style.zoom = value || "1";
+                        zoomWasForceChangedRef.current = false;
+                      }}
+                    />
+                  </Flex>
+                ),
+              },
+            ]}
+          />
         </Flex>
       }
     />

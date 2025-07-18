@@ -12,15 +12,10 @@ export const Wrapper = styled(Flex).attrs({
 export const PlayersList = styled(Flex).attrs({
   justify: "center",
   wrap: true,
+  gap: "small",
 })`
   margin: 0;
   width: 100%;
-  gap: 8px;
-
-  > * {
-    width: calc((100% - 8px * 4) / 5);
-    gap: 4px;
-  }
 `;
 
 export const PlayerItem = styled(Flex).attrs({
@@ -29,6 +24,7 @@ export const PlayerItem = styled(Flex).attrs({
 })<{
   $isGuessed: boolean;
 }>`
+  width: 150px;
   transition:
     opacity 0.5s,
     scale 0.5s;

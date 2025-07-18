@@ -1,19 +1,21 @@
 import { Layout } from "antd";
-import styled from "styled-components";
+import styled, { CSSProperties } from "styled-components";
 
-export const StyledPageLayout = styled(Layout)<{ height: string }>`
+export const SLayout = styled(Layout)<{ height: CSSProperties["height"] }>`
   min-height: ${({ height }) => height};
   max-height: ${({ height }) => height};
+  height: ${({ height }) => height};
 `;
 
-export const StyledContent = styled(Layout.Content)`
-  padding: 20px;
-  overflow: auto;
+export const SContent = styled(Layout.Content)`
   display: flex;
   flex-direction: column;
+  padding: 20px;
 `;
 
-export const StyledFooter = styled(Layout.Footer)`
-  padding: 0 20px;
-  background: transparent;
+export const StickyHeader = styled.div`
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
 `;
