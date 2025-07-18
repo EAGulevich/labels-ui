@@ -5,7 +5,6 @@ import { useGameState } from "@providers/GameStateProvider.tsx";
 
 import { InviteBlock } from "./parts/InviteBlock/InviteBlock.tsx";
 import { PlayersBlock } from "./parts/PlayersBlock/PlayersBlock.tsx";
-import { WrapperInviteBlock, WrapperPlayersBlock } from "./styles.ts";
 
 export const WaitingPlayersScreen = ({
   showCountDown,
@@ -21,17 +20,13 @@ export const WaitingPlayersScreen = ({
   return (
     <Row justify={"center"}>
       <Col span={10}>
-        <WrapperInviteBlock>
-          <InviteBlock roomCode={room.code} />
-        </WrapperInviteBlock>
+        <InviteBlock roomCode={room.code} />
       </Col>
       <Col span={10}>
-        <WrapperPlayersBlock>
-          <PlayersBlock
-            players={room.players.filter((p) => !p.isFake)}
-            showCountDown={showCountDown}
-          />
-        </WrapperPlayersBlock>
+        <PlayersBlock
+          players={room.players.filter((p) => !p.isFake)}
+          showCountDown={showCountDown}
+        />
       </Col>
     </Row>
   );

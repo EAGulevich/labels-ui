@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Flex, Typography } from "antd";
+import { Col, Row, Typography } from "antd";
 import { useTheme } from "styled-components";
 
 import { MAX_PLAYERS, MIN_PLAYERS } from "@shared/constants/validations.ts";
@@ -65,8 +65,8 @@ export const PlayersBlock: FC<PlayersBlockProps> = ({
   }, [getAudio, showCountDown, volume]);
 
   return (
-    <>
-      <Flex>
+    <Row justify={"center"}>
+      <Col span={20}>
         <PlayersCounter
           valueStyle={{
             color: players.length >= MIN_PLAYERS ? "inherit" : token.colorError,
@@ -83,35 +83,35 @@ export const PlayersBlock: FC<PlayersBlockProps> = ({
           value={players.length}
           suffix={`/ ${MAX_PLAYERS}`}
         />
-      </Flex>
-      <PlayersGrid>
-        {players.map((player) => (
-          <StyledCard key={player.id}>
-            <PlayerCard player={player} />
-          </StyledCard>
-        ))}
-        {Array(MAX_PLAYERS - players.length)
-          .fill(EMPTY_PLACE_CLASS)
-          .map((cn, index) => (
-            <StyledSkeleton
-              key={"skeleton" + index}
-              className={cn}
-              active={true}
-            />
-          ))}
-        {Array(DECORATIVE_PLACES_COUNT)
-          .fill(DECORATIVE_PLACE_CLASS)
-          .map((cn, index) => (
-            <StyledCard
-              key={"decorate" + index}
-              className={`${cn} ${cn + "_" + (index + 1)}`}
-            >
-              <CountDownItem visible={countDownVal[0] === index}>
-                {countDownVal[1] || ""}
-              </CountDownItem>
+        <PlayersGrid>
+          {players.map((player) => (
+            <StyledCard key={player.id}>
+              <PlayerCard player={player} />
             </StyledCard>
           ))}
-      </PlayersGrid>
-    </>
+          {Array(MAX_PLAYERS - players.length)
+            .fill(EMPTY_PLACE_CLASS)
+            .map((cn, index) => (
+              <StyledSkeleton
+                key={"skeleton" + index}
+                className={cn}
+                active={true}
+              />
+            ))}
+          {Array(DECORATIVE_PLACES_COUNT)
+            .fill(DECORATIVE_PLACE_CLASS)
+            .map((cn, index) => (
+              <StyledCard
+                key={"decorate" + index}
+                className={`${cn} ${cn + "_" + (index + 1)}`}
+              >
+                <CountDownItem visible={countDownVal[0] === index}>
+                  {countDownVal[1] || ""}
+                </CountDownItem>
+              </StyledCard>
+            ))}
+        </PlayersGrid>
+      </Col>
+    </Row>
   );
 };
