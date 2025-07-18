@@ -1,12 +1,12 @@
 import { FC, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Col, Flex, Row } from "antd";
+import { Badge, Col, Flex, Row, Typography } from "antd";
 import { useTheme } from "styled-components";
 
 import { MAX_PLAYERS, MIN_PLAYERS } from "@shared/constants/validations.ts";
 import { RoomClient } from "@shared/types";
 
-import { PlayerCard } from "@components/PlayerCard/PlayerCard.tsx";
+import { AVATARS } from "@components/PlayerAvatar/constants.tsx";
 import { ANIMATION_DURATION_COUNT_DOWN_BEFORE_START_S } from "@constants";
 import { useAppSettings } from "@providers/AppSettingsProvider/AppSettingsProvider.tsx";
 import { useAppStorage } from "@providers/AppStorageProvider.tsx";
@@ -17,6 +17,8 @@ import {
   DECORATIVE_PLACE_CLASS,
   DECORATIVE_PLACES_COUNT,
   EMPTY_PLACE_CLASS,
+  PlayerCard,
+  PlayerName,
   PlayersCounter,
   PlayersGrid,
   StyledCard,
@@ -85,9 +87,26 @@ export const PlayersBlock: FC<PlayersBlockProps> = ({
 
           <PlayersGrid>
             {players.map((player) => (
-              <StyledCard key={player.id}>
-                <PlayerCard player={player} />
-              </StyledCard>
+              <Badge.Ribbon
+                key={player.id}
+                text={player.isVip && "VIP"}
+                placement={"start"}
+                color={"gold"}
+                style={!player.isVip ? { overflow: "hidden" } : undefined}
+              >
+                <StyledCard>
+                  <PlayerCard
+                    background={AVATARS[player.avatar.token].background}
+                  >
+                    {AVATARS[player.avatar.token].icon}
+                    <PlayerName>
+                      <Typography.Paragraph ellipsis={{ rows: 2 }}>
+                        {player.name}
+                      </Typography.Paragraph>
+                    </PlayerName>
+                  </PlayerCard>
+                </StyledCard>
+              </Badge.Ribbon>
             ))}
             {Array(MAX_PLAYERS - players.length)
               .fill(EMPTY_PLACE_CLASS)
