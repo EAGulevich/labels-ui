@@ -43,7 +43,7 @@ export const PlayerWithFact = styled(Flex)<{
           : $guessStatus === "nobody"
             ? theme.token.colorWarningActive
             : theme.token.colorTextBase}
-    0px 0px 10px 4px;
+    0px 0px 10px 6px;
 
   > :first-child {
     height: ${({ $height }) => $height};

@@ -13,6 +13,7 @@ import {
   Flex,
   Grid,
   Segmented,
+  Space,
   theme,
   Typography,
 } from "antd";
@@ -95,6 +96,7 @@ export const ResolutionWarning = () => {
           <Collapse
             bordered={false}
             expandIconPosition={"end"}
+            ghost
             items={[
               {
                 key: "bigScreenDevice",
@@ -151,7 +153,7 @@ export const ResolutionWarning = () => {
                     <Typography.Text>
                       {t("resolutionWarning.other.title")}{" "}
                       <Typography.Text type="secondary">
-                        {t("resolutionWarning.other.postTitle")}{" "}
+                        {t("resolutionWarning.other.postTitle")}
                       </Typography.Text>
                     </Typography.Text>
                   </Flex>
@@ -159,21 +161,22 @@ export const ResolutionWarning = () => {
                 children: (
                   <Flex vertical gap={"small"}>
                     <Typography.Text type="secondary">
-                      {t("resolutionWarning.other.description")}{" "}
+                      {t("resolutionWarning.other.description")}
                     </Typography.Text>
-                    <Segmented
-                      block
-                      defaultValue={null}
-                      options={[
-                        { label: "50%", value: "0.5" },
-                        { label: "75%", value: "0.75" },
-                        { label: "90%", value: "0.9" },
-                      ]}
-                      onChange={(value) => {
-                        document.body.style.zoom = value || "1";
-                        zoomWasForceChangedRef.current = false;
-                      }}
-                    />
+                    <Space align={"center"} direction={"vertical"}>
+                      <Segmented
+                        defaultValue={null}
+                        options={[
+                          { label: "50%", value: "0.5" },
+                          { label: "75%", value: "0.75" },
+                          { label: "90%", value: "0.9" },
+                        ]}
+                        onChange={(value) => {
+                          document.body.style.zoom = value || "1";
+                          zoomWasForceChangedRef.current = false;
+                        }}
+                      />
+                    </Space>
                   </Flex>
                 ),
               },

@@ -89,6 +89,7 @@ export const Footer = ({ startTimer, onTimerFinish }: FooterProps) => {
 
               <Typography.Text
                 type={!p.isActive ? "secondary" : undefined}
+                delete={p.factStatus === "GUESSED"}
                 style={{
                   textAlign: "center",
                   textShadow:

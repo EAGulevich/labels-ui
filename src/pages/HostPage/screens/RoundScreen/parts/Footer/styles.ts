@@ -31,8 +31,8 @@ export const PlayerItem = styled(Flex).attrs({
   ${({ $isGuessed }) =>
     $isGuessed
       ? css`
-          scale: 0.8;
-          opacity: 0.8;
+          scale: 0.9;
+          opacity: 0.5;
         `
       : ""};
 `;
