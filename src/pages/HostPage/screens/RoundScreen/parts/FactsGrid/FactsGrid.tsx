@@ -10,10 +10,10 @@ import { useGameState } from "@providers/GameStateProvider.tsx";
 import { FactBlock, GridFacts, PlayerWithFact } from "./styles.ts";
 
 const MAX_HEIGHT = 330;
-const MIN_HEIGHT = 45;
+const MIN_HEIGHT = 30;
 
 const getRowHeight = (rowCount: number, element: HTMLElement) => {
-  return (element.clientHeight - 20 * 2 - 20 * 4) / Math.ceil(rowCount / 2) - 1;
+  return (element.clientHeight - 20 * 2 - 14 * 4) / Math.ceil(rowCount / 2) - 1;
 };
 
 export const FactsGrid = () => {
@@ -80,7 +80,7 @@ export const FactsGrid = () => {
           >
             <PlayerAvatar token={item.selectedPlayer?.avatar.token} />
             <FactBlock>
-              <AutoTextSize mode={"box"} maxFontSizePx={60}>
+              <AutoTextSize mode={"box"} maxFontSizePx={60} minFontSizePx={1}>
                 {item.text}
               </AutoTextSize>
             </FactBlock>

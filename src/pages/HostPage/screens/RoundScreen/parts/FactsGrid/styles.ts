@@ -4,16 +4,16 @@ import styled from "styled-components";
 export const GridFacts = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr); /* Две колонки одинаковой ширины */
-  gap: 20px;
-  margin: -20px -20px 0 -20px;
-  padding: 20px;
+  gap: 14px;
+  margin: 0 -20px;
+  padding: 0 20px;
   overflow: hidden;
 `;
 
 export const FactBlock = styled.div`
   max-width: 100%;
   margin: 0 auto;
-  padding: 10px 40px;
+  padding: 4px 40px;
   height: 100%;
   width: 100%;
   justify-content: center;

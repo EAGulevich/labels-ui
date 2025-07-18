@@ -2,6 +2,17 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FullscreenExitOutlined, FullscreenOutlined } from "@ant-design/icons";
 import { FloatButton } from "antd";
+import styled from "styled-components";
+
+const SFloatButton = styled(FloatButton)`
+  opacity: 0.5;
+  bottom: 10px;
+  right: 10px;
+
+  &:hover {
+    opacity: 1;
+  }
+`;
 
 export const FullScreenButton = () => {
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -45,7 +56,8 @@ export const FullScreenButton = () => {
   }
 
   return (
-    <FloatButton
+    <SFloatButton
+      type="default"
       tooltip={{
         placement: "left",
         title: isFullscreen
