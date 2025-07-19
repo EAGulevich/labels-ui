@@ -6,8 +6,8 @@ import styled from "styled-components";
 
 const SFloatButton = styled(FloatButton)`
   opacity: 0.5;
-  bottom: 10px;
-  right: 10px;
+  bottom: 12px;
+  right: 12px;
 
   &:hover {
     opacity: 1;
