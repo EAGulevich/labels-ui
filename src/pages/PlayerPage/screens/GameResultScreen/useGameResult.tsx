@@ -105,7 +105,9 @@ export const useGameResult = () => {
             <Typography.Text type={fact.isGuessed ? undefined : "secondary"}>
               {fact.fact.author.name}
             </Typography.Text>
-            <Typography.Text type={"secondary"} style={{ fontSize: 12 }}>
+            <Typography.Text
+              style={{ fontSize: 12, color: token.colorPrimary }}
+            >
               {fact.fact.author.id === player?.id && fact.isGuessed
                 ? t("resultsScreen.youGuessed")
                 : ""}
@@ -132,6 +134,7 @@ export const useGameResult = () => {
                   </Tag>
                 </Tooltip>
                 <Typography.Text type={"secondary"} style={{ fontSize: 12 }}>
+                  {" "}
                   {t("resultsScreen.points", {
                     count: getPlayerPoints({
                       playersLength: room?.players.length || 0,
