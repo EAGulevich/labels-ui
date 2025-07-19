@@ -106,7 +106,7 @@ export const useGameResult = () => {
               {fact.fact.author.name}
             </Typography.Text>
             <Typography.Text type={"secondary"} style={{ fontSize: 12 }}>
-              {fact.fact.author.id === player?.id
+              {fact.fact.author.id === player?.id && fact.isGuessed
                 ? t("resultsScreen.youGuessed")
                 : ""}
             </Typography.Text>

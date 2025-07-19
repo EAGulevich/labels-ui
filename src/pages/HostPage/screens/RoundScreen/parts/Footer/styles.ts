@@ -7,6 +7,7 @@ export const Wrapper = styled(Flex).attrs({
 })`
   margin-top: auto;
   align-items: center;
+  padding: 20px;
 `;
 
 export const PlayersList = styled(Flex).attrs({

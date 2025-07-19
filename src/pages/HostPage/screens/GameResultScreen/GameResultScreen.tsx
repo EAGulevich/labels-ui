@@ -1,4 +1,4 @@
-import { Flex, Table } from "antd";
+import { Flex, Segmented, Space, Table } from "antd";
 import { useTheme } from "styled-components";
 
 import { ErrorFallback } from "@components/Error/ErrorFallback.tsx";
@@ -23,7 +23,23 @@ export const GameResultScreen = () => {
   }));
 
   return (
-    <Flex>
+    <Flex vertical>
+      <Space align={"center"} direction={"vertical"}>
+        <Segmented
+          defaultValue={null}
+          options={[
+            { label: "25%", value: "0.25" },
+            { label: "50%", value: "0.5" },
+            { label: "75%", value: "0.75" },
+            { label: "80%", value: "0.8" },
+            { label: "90%", value: "0.9" },
+            { label: "100%", value: "1" },
+          ]}
+          onChange={(value) => {
+            document.body.style.zoom = value || "1";
+          }}
+        />
+      </Space>
       <Table<DataType>
         size={"small"}
         bordered
@@ -33,21 +49,13 @@ export const GameResultScreen = () => {
           facts: room?.facts || [],
         })}
         scroll={{
-          // TODO: высчитать
-          y: 520,
-          // document.getElementsByTagName("main")[0]?.clientHeight -
-          // document.getElementsByClassName("ant-table-header")[0]
-          //   ?.clientHeight -
-          // document.getElementsByClassName("ant-table-summary")[0]
-          //   ?.clientHeight -
-          // 40 -
-          // 1,
+          y: "auto",
         }}
         dataSource={data}
         pagination={false}
         summary={() => {
           return (
-            <Table.Summary fixed={"bottom"}>
+            <Table.Summary fixed={"top"}>
               <TableSummary room={room} />
             </Table.Summary>
           );

@@ -12,9 +12,6 @@ const commonConfig: ThemeConfig = {
     Spin: {
       dotSizeLG: 38,
     },
-    Card: {
-      bodyPadding: 0,
-    },
     Modal: {
       headerBg: "transparent",
     },
@@ -28,6 +25,9 @@ const commonConfig: ThemeConfig = {
       headerBg: "transparent",
       headerPadding: 0,
       headerHeight: 48,
+    },
+    Card: {
+      bodyPadding: 0,
     },
   },
 };

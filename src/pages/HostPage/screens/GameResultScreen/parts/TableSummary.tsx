@@ -52,7 +52,7 @@ export const TableSummary = ({ room }: { room: RoomClient }) => {
         const isWinner = maxPoints === points;
         return (
           <Table.Summary.Cell index={1}>
-            <Flex align={"center"} justify={"center"} gap={"middle"}>
+            <Flex vertical align={"center"} justify={"center"} gap={"small"}>
               {player && (
                 <PlayerItem>
                   {isWinner && <CrownIcon />}
@@ -62,7 +62,7 @@ export const TableSummary = ({ room }: { room: RoomClient }) => {
               )}
               <Typography.Title
                 level={2}
-                style={isWinner ? { color: "gold" } : undefined}
+                style={isWinner ? { color: "gold", margin: 0 } : { margin: 0 }}
               >
                 {points}
               </Typography.Title>

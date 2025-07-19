@@ -25,7 +25,7 @@ type GetTableColsProps = {
 const getMinFactColWidth = (playersLength: number) =>
   playersLength <= 6 ? "200px" : playersLength <= 8 ? "240px" : "280px";
 
-const ROUND_COL_WIDTH = "200px";
+const ROUND_COL_WIDTH = "300px";
 
 export const getTableCols = ({
   token,
@@ -65,17 +65,16 @@ export const getTableCols = ({
   ...facts.map((fact) => ({
     title: (
       <Flex vertical gap={"small"} align={"center"} justify={"space-between"}>
-        <Typography.Title
+        <Typography.Paragraph
           style={{
             maxWidth: `100%`,
             textAlign: "center",
             margin: 0,
           }}
-          level={3}
           ellipsis={{ rows: 5, expandable: false }}
         >
           {fact.text}
-        </Typography.Title>
+        </Typography.Paragraph>
       </Flex>
     ),
 
