@@ -36,31 +36,36 @@ export const GameResultScreen = () => {
             { label: "100%", value: "1" },
           ]}
           onChange={(value) => {
-            document.body.style.zoom = value || "1";
+            const elem = document.getElementById("zoomContainer");
+            if (elem) {
+              elem.style.zoom = value || "1";
+            }
           }}
         />
       </Space>
-      <Table<DataType>
-        size={"small"}
-        bordered
-        columns={getTableCols({
-          token,
-          players: room?.players || [],
-          facts: room?.facts || [],
-        })}
-        scroll={{
-          y: "auto",
-        }}
-        dataSource={data}
-        pagination={false}
-        summary={() => {
-          return (
-            <Table.Summary fixed={"top"}>
-              <TableSummary room={room} />
-            </Table.Summary>
-          );
-        }}
-      />
+      <div id={"zoomContainer"}>
+        <Table<DataType>
+          size={"small"}
+          bordered
+          columns={getTableCols({
+            token,
+            players: room?.players || [],
+            facts: room?.facts || [],
+          })}
+          scroll={{
+            y: "auto",
+          }}
+          dataSource={data}
+          pagination={false}
+          summary={() => {
+            return (
+              <Table.Summary fixed={"top"}>
+                <TableSummary room={room} />
+              </Table.Summary>
+            );
+          }}
+        />
+      </div>
     </Flex>
   );
 };
