@@ -49,7 +49,7 @@ export const getStepsOfVoting = ({ room, token }: GetStepsOfVotingProps) => {
           icon: (
             <LoadingOutlined
               style={{
-                color: token.colorPrimaryText,
+                color: token.colorLink,
               }}
             />
           ),
