@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useRef } from "react";
+import { RefObject, useEffect, useRef, useState } from "react";
 
 import { DEFAULT_SOUNDS } from "@providers/AppSettingsProvider/constants.ts";
 import { Sound, Sounds } from "@providers/AppSettingsProvider/types.ts";
@@ -85,6 +85,7 @@ export const useSoundPlayer = ({
   audios,
 }: UseSoundPlayerProps) => {
   const loadedAudiosRef = useRef<Sounds>(DEFAULT_SOUNDS);
+  const [loadedAudiosCount, setLoadedAudiosCount] = useState(0);
 
   useEffect(() => {
     const isNeedLoad =
@@ -94,7 +95,10 @@ export const useSoundPlayer = ({
       isAllAudioLoadingStarted.current = true;
 
       const audioPromises = Object.entries(audios).map(([name, sound]) => {
-        return createAudioPromise(name as keyof Sounds, sound);
+        return createAudioPromise(name as keyof Sounds, sound).then((data) => {
+          setLoadedAudiosCount((prev) => prev + 1);
+          return data;
+        });
       });
 
       Promise.all(audioPromises)
@@ -123,4 +127,7 @@ export const useSoundPlayer = ({
     setAudios,
     setIsAllAudioLoaded,
   ]);
+  return {
+    loadedAudiosCount,
+  };
 };

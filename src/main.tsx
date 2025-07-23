@@ -8,6 +8,7 @@ import { BrowserRouter } from "react-router";
 
 import { AppSettingsProvider } from "@providers/AppSettingsProvider/AppSettingsProvider.tsx";
 import { AppStorageProvider } from "@providers/AppStorageProvider.tsx";
+import { GameStateProvider } from "@providers/GameStateProvider.tsx";
 
 import i18n from "./i18n/config";
 import App from "./App.tsx";
@@ -17,9 +18,11 @@ createRoot(document.getElementById("root")!).render(
     <BrowserRouter>
       <AppStorageProvider>
         <AppSettingsProvider>
-          <I18nextProvider i18n={i18n} defaultNS={"translation"}>
-            <App />
-          </I18nextProvider>
+          <GameStateProvider>
+            <I18nextProvider i18n={i18n} defaultNS={"translation"}>
+              <App />
+            </I18nextProvider>
+          </GameStateProvider>
         </AppSettingsProvider>
       </AppStorageProvider>
     </BrowserRouter>

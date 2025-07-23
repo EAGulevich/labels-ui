@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
-import { InfoCircleOutlined } from "@ant-design/icons";
 import { Flex, Slider, Tooltip, Typography } from "antd";
 
+import { InfoIcon } from "@components/DiscussionTimeSlider/styles.ts";
 import { useAppSettings } from "@providers/AppSettingsProvider/AppSettingsProvider.tsx";
 
 export const DiscussionTimeSlider = () => {
@@ -15,7 +15,7 @@ export const DiscussionTimeSlider = () => {
       <Flex justify={"space-between"}>
         <Typography.Text>{t("menu.timer")}</Typography.Text>
         <Tooltip title={t("menu.timerHint")} placement="left">
-          <InfoCircleOutlined />
+          <InfoIcon />
         </Tooltip>
       </Flex>
       <Slider

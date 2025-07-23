@@ -43,7 +43,7 @@ export const StyledBadge = styled(Badge.Ribbon).attrs({
 `;
 
 export const StyledCard = styled(Card)<{
-  $isSuccess: boolean;
+  $isSuccess?: boolean;
   $height?: string;
 }>`
   width: ${({ $height }) => $height || "110px"};
@@ -51,16 +51,19 @@ export const StyledCard = styled(Card)<{
   padding: 4px;
   display: flex;
   justify-content: center;
-  border: none;
   border-radius: 4px;
-  background: transparent;
+  border-width: 4px;
 
   ${({ $isSuccess, theme }) =>
     $isSuccess
       ? css`
-          border: 1px solid ${theme.token.colorSuccessActive};
+          border: 4px solid ${theme.token.colorSuccessActive};
         `
-      : ""}
+      : $isSuccess === false
+        ? css`
+            border: 6px solid ${theme.token.colorErrorActive};
+          `
+        : ""}
 
   > * {
     padding: 0;
@@ -69,4 +72,5 @@ export const StyledCard = styled(Card)<{
 
 export const PlayerName = styled(Typography.Text)`
   text-align: center;
+  font-size: 16px;
 `;

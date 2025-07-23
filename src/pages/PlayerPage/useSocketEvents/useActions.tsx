@@ -131,11 +131,14 @@ export const useActions = ({ messageApi }: UseActionsProps) => {
         if (room) {
           setRoom(room);
         } else if (error) {
-          console.error(error);
+          messageApi.open({
+            type: "error",
+            content: <TranslatedError errorCode={error.enumCode} />,
+          });
         }
       });
     },
-    [setRoom],
+    [messageApi, setRoom],
   );
 
   return {

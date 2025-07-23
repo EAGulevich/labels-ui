@@ -8,10 +8,10 @@
 
   box-sizing: border-box;
   transition:
-    background 0.5s,
-    color 0.5s,
-    border-color 0.5s,
-    fill 0.5s;
+    background 0.3s,
+    color 0.3s,
+    border-color 0.3s,
+    fill 0.3s;
 }
 
 body {

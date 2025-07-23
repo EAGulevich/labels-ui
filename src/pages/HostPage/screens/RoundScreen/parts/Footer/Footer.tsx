@@ -11,14 +11,12 @@ import { FOOTER_CONTENT } from "@constants";
 import { useAppSettings } from "@providers/AppSettingsProvider/AppSettingsProvider.tsx";
 import { useGameState } from "@providers/GameStateProvider.tsx";
 
-import { PlayerItem, PlayersList, Wrapper } from "./styles.ts";
+import { PlayerItem, PlayersList, Slashed, Wrapper } from "./styles.ts";
 
 type FooterProps = {
   startTimer: boolean;
   onTimerFinish: () => void;
 };
-
-const { Countdown } = Statistic;
 
 export const Footer = ({ startTimer, onTimerFinish }: FooterProps) => {
   const { room } = useGameState();
@@ -56,13 +54,15 @@ export const Footer = ({ startTimer, onTimerFinish }: FooterProps) => {
         percent={percent}
         format={() =>
           timeLeft > 0 ? (
-            <Countdown
+            <Statistic.Timer
+              type={"countdown"}
               title={t("roundScreen.time")}
               value={deadline}
               format="s"
               onFinish={() => {
-                setTimeLeft(0);
+                console.log("TIMER FINISH");
                 onTimerFinish();
+                setTimeLeft(0);
               }}
               onChange={(value) => setTimeLeft(+(value || 0))}
             />
@@ -83,19 +83,17 @@ export const Footer = ({ startTimer, onTimerFinish }: FooterProps) => {
                 size={"small"}
                 color={"gold"}
               >
-                <Spin spinning={!p.isActive}>
-                  <PlayerAvatar token={p.avatar.token} />
-                </Spin>
+                <Slashed $isGuessed={isGuessed}>
+                  <Spin spinning={!p.isActive}>
+                    <PlayerAvatar token={p.avatar.token} />
+                  </Spin>
+                </Slashed>
               </Badge>
 
               <Typography.Text
                 type={!p.isActive ? "secondary" : undefined}
                 style={{
                   textAlign: "center",
-                  textShadow:
-                    p.factStatus === "GUESSED"
-                      ? "none"
-                      : `0 0 40px ${token.colorWhite}, 0 0 10px ${token.colorWhite}, 0 0 20px ${token.colorWhite}`,
                 }}
               >
                 {p.name}

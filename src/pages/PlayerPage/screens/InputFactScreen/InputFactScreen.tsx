@@ -52,7 +52,7 @@ export const InputFactScreen = ({ onSendFact }: InputFactScreenProps) => {
         onFinish={onFinishFact}
         autoComplete="off"
       >
-        <Flex vertical gap={"small"}>
+        <Flex vertical gap={"middle"}>
           <FactHint />
           <Form.Item<FormFieldType>
             label={t("inputFactScreen.form.fields.fact.label")}
@@ -65,10 +65,14 @@ export const InputFactScreen = ({ onSendFact }: InputFactScreenProps) => {
               {
                 max: FACT_TEXT_MAX_LENGTH,
                 min: FACT_TEXT_MIN_LENGTH,
-                message: t("inputFactScreen.form.fields.fact.errors.length", {
-                  min: FACT_TEXT_MIN_LENGTH,
-                  max: FACT_TEXT_MAX_LENGTH,
-                }),
+                message: (
+                  <div style={{ maxWidth: "calc(100% - 90px)" }}>
+                    {t("inputFactScreen.form.fields.fact.errors.length", {
+                      min: FACT_TEXT_MIN_LENGTH,
+                      max: FACT_TEXT_MAX_LENGTH,
+                    })}
+                  </div>
+                ),
               },
             ]}
           >
@@ -76,6 +80,7 @@ export const InputFactScreen = ({ onSendFact }: InputFactScreenProps) => {
               showCount
               maxLength={FACT_TEXT_MAX_LENGTH}
               autoSize={{ minRows: 3 }}
+              placeholder={t("inputFactScreen.form.fields.fact.placeholder")}
             />
           </Form.Item>
           <Form.Item label={null}>

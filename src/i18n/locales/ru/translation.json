@@ -1,4 +1,5 @@
 {
+  "loadingContent": "Загрузка контента...",
   "audioModal": {
     "title": "Включить звуковые эффекты?",
     "description": "Можно изменить в настройках в любое время",
@@ -25,10 +26,10 @@
   "createOrReturnToRoom": {
     "returnResult": {
       "title": "Хотите вернуться?",
-      "subTitle": "Найдена ранее созданная комната.",
+      "subTitle": "Найдена ранее созданная комната",
       "buttons": {
         "return": "Вернуться",
-        "createNew": "Создать новую"
+        "createNew": "Новая игра"
       }
     },
     "createResult": {
@@ -88,15 +89,13 @@
       "fields": {
         "fact": {
           "label": "Факт",
-          "message": {
-            "title": "Факт о себе в третьем лице!",
-            "description": {
-              "listTitle": "Например:",
-              "examples": {
-                "breakfast": "никогда не пропускает завтрак",
-                "songs": "знает все песни Queen",
-                "dream": "мечтает побывать в Японии"
-              }
+          "placeholder": "Факт о себе в третьем лице",
+          "hint": {
+            "title": "Примеры:",
+            "examples": {
+              "breakfast": "никогда не пропускает завтрак",
+              "songs": "знает все песни Queen",
+              "dream": "мечтает побывать в Японии"
             }
           },
           "errors": {
@@ -120,7 +119,7 @@
     "title": "Обсудите, кому принадлежат факты"
   },
   "playerVoteScreen": {
-    "title": "Проголосуйте, принадлежит факт?",
+    "title": "Проголосуйте, кому принадлежит этот факт?",
     "youVoted": "Вы проголосовали"
   },
   "gameOverScreen": {
@@ -173,11 +172,11 @@
     "VOTING_PHASE_NOT_ACTIVE": "Фаза голосования не активна",
     "WRONG_FACT_VOTING": "Нельзя голосовать за этот факт",
     "PLAYER_NAME_ALREADY_EXISTS": "Имя уже занято другим игроком",
-    "PLAYER_NAME_TOO_LONG": "Имя игрока превышает допустимую длину",
+    "PLAYER_NAME_TOO_LONG": "Имя игрока слишком длинное",
     "PLAYER_NAME_TOO_SHORT": "Имя игрока слишком короткое",
     "AVATAR_ALREADY_TAKEN": "Выбранный аватар уже используется",
     "PLAYER_ALREADY_SUBMITTED_FACT": "Игрок уже отправил факт",
-    "DUPLICATE_FACT": "Обнаружен повторяющийся факт",
+    "DUPLICATE_FACT": "Выявлено совпадение с другим фактом. Измените свой факт",
     "FACT_TEXT_TOO_LONG": "Текст факта слишком длинный",
     "FACT_TEXT_TOO_SHORT": "Текст факта слишком короткий",
     "VOTING_DATA_NOT_FOUND": "Не найдено данных для голосования",
@@ -200,5 +199,9 @@
       "subTitle": "Вы можете начать новую игру",
       "btnTitle": "На главную"
     }
+  },
+  "fullScreenButton": {
+    "tooltipFull": "На весь экран",
+    "tooltipFullExit": "Выйти из полноэкранного режима"
   }
 }

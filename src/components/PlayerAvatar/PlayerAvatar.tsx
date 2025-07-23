@@ -26,7 +26,14 @@ export const PlayerAvatar = ({ token, size, onClick }: PlayerAvatarProps) => {
         token ? (
           AVATARS[token].icon
         ) : (
-          <QuestionOutlined style={{ color: colorToken.colorTextBase }} />
+          <QuestionOutlined
+            style={{
+              color: colorToken.colorTextBase,
+              width: "100%",
+              height: "100%",
+              fontSize: 200,
+            }}
+          />
         )
       }
     />

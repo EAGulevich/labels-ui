@@ -1,11 +1,10 @@
-import { Row } from "antd";
+import { Col, Row } from "antd";
 
 import { ErrorFallback } from "@components/Error/ErrorFallback.tsx";
 import { useGameState } from "@providers/GameStateProvider.tsx";
 
 import { InviteBlock } from "./parts/InviteBlock/InviteBlock.tsx";
 import { PlayersBlock } from "./parts/PlayersBlock/PlayersBlock.tsx";
-import { WrapperInviteBlock, WrapperPlayersBlock } from "./styles.ts";
 
 export const WaitingPlayersScreen = ({
   showCountDown,
@@ -19,18 +18,20 @@ export const WaitingPlayersScreen = ({
   }
 
   return (
-    <>
-      <Row justify={"center"}>
-        <WrapperInviteBlock>
-          <InviteBlock roomCode={room.code} />
-        </WrapperInviteBlock>
-        <WrapperPlayersBlock>
-          <PlayersBlock
-            players={room.players.filter((p) => !p.isFake)}
-            showCountDown={showCountDown}
-          />
-        </WrapperPlayersBlock>
-      </Row>
-    </>
+    <Row
+      justify={"center"}
+      align={"top"}
+      style={{ width: "100%", height: "100%" }}
+    >
+      <Col span={10}>
+        <InviteBlock roomCode={room.code} />
+      </Col>
+      <Col span={10} offset={1}>
+        <PlayersBlock
+          players={room.players.filter((p) => !p.isFake)}
+          showCountDown={showCountDown}
+        />
+      </Col>
+    </Row>
   );
 };

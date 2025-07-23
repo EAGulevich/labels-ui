@@ -2,7 +2,7 @@ import { createPortal } from "react-dom";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { FrownOutlined } from "@ant-design/icons";
-import { Button, Flex, Result, Typography } from "antd";
+import { Button, Flex, Result } from "antd";
 
 import { FACT_STATUSES, ROOM_STATUSES } from "@shared/types";
 
@@ -67,7 +67,6 @@ const PlayerPage = () => {
         createPortal(
           <Flex gap={"small"} justify={"center"} align={"center"}>
             <PlayerAvatar token={player.avatar.token} size={"small"} />
-            <Typography.Text>{player.name}</Typography.Text>
           </Flex>,
           headerMenuElement,
         )}

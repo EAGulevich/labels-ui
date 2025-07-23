@@ -40,13 +40,13 @@ export const PlayerCard = ({
           count={
             status === "waiting" ? (
               <ClockCircleTwoTone
-                style={{ fontSize: 22 }}
+                style={{ fontSize: 40 }}
                 spin
                 twoToneColor={token.colorErrorActive}
               />
             ) : status === "success" ? (
               <CheckCircleTwoTone
-                style={{ fontSize: 22 }}
+                style={{ fontSize: 40 }}
                 twoToneColor={token.colorSuccessActive}
               />
             ) : undefined
@@ -54,7 +54,7 @@ export const PlayerCard = ({
         >
           <StyledCard
             variant={"outlined"}
-            $isSuccess={status === "success"}
+            $isSuccess={status && status === "success"}
             $height={height}
           >
             <StyledPlayer>

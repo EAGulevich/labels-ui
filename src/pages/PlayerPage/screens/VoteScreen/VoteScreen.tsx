@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { Flex, Typography } from "antd";
 
 import { FACT_STATUSES, PlayerClient } from "@shared/types";
@@ -31,8 +32,10 @@ export const VoteScreen = ({ addVote }: VoteScreenProps) => {
   if (room.votingData.playersWhoVotedIds.includes(userId)) {
     return (
       <Flex vertical justify={"center"} align={"center"}>
-        <FactTitle>{room.votingData.currentVotingFact.text}</FactTitle>
-        <Typography.Title level={4} type={"secondary"}>
+        <Typography.Text type={"secondary"} style={{ textAlign: "center" }}>
+          {room.votingData.currentVotingFact.text}
+        </Typography.Text>
+        <Typography.Title level={4}>
           {t("playerVoteScreen.youVoted")}
         </Typography.Title>
         <Flex>
@@ -51,10 +54,19 @@ export const VoteScreen = ({ addVote }: VoteScreenProps) => {
 
   const currentVotingFactId = room.votingData.currentVotingFact.id;
   return (
-    <Flex align={"center"} vertical>
-      <Typography.Title level={4} type={"danger"}>
-        {t("playerVoteScreen.title")}
-      </Typography.Title>
+    <Flex
+      align={"center"}
+      vertical
+      style={{
+        paddingBottom: 20,
+      }}
+    >
+      <Typography.Text
+        type={"danger"}
+        style={{ textAlign: "center", marginBottom: 0 }}
+      >
+        <ExclamationCircleOutlined /> {t("playerVoteScreen.title")}
+      </Typography.Text>
       <FactTitle>{room.votingData.currentVotingFact.text}</FactTitle>
       <Flex wrap align={"center"} justify={"center"} gap={"large"}>
         {room.votingData.candidates.map((c) => (

@@ -4,16 +4,14 @@ import { ThemeName } from "@providers/AppSettingsProvider/AppSettingsProvider.ts
 
 const commonConfig: ThemeConfig = {
   token: {
-    fontSize: 14,
+    fontSize: 20,
     sizeStep: 4,
     borderRadius: 4,
+    controlHeight: 40,
   },
   components: {
     Spin: {
       dotSizeLG: 38,
-    },
-    Card: {
-      bodyPadding: 0,
     },
     Modal: {
       headerBg: "transparent",
@@ -21,6 +19,16 @@ const commonConfig: ThemeConfig = {
     Timeline: {
       dotBg: "transparent",
       itemPaddingBottom: 20,
+    },
+    Layout: {
+      footerBg: "transparent",
+      footerPadding: 20,
+      headerBg: "transparent",
+      headerPadding: 0,
+      headerHeight: 68,
+    },
+    Card: {
+      bodyPadding: 0,
     },
   },
 };

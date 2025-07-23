@@ -36,9 +36,9 @@ export const AnimatedMenuList = () => {
   const allItems = useMemo(
     () => [
       <Button
+        size={"large"}
         key={"newGameButton"}
         onMouseEnter={playAudio}
-        size={"large"}
         type={"link"}
         onClick={() => navigate(ROUTE_PATHS.host)}
       >
@@ -46,10 +46,10 @@ export const AnimatedMenuList = () => {
       </Button>,
 
       <Button
+        size={"large"}
         key={"joinButton"}
         onMouseEnter={playAudio}
         type={"link"}
-        size={"large"}
         onClick={() => navigate(ROUTE_PATHS.player)}
       >
         {t("home.menu.join")}

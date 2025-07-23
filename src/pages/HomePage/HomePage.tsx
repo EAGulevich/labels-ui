@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Col, Row } from "antd";
 
 import { MainAnimatedLogo } from "@components/MainAnimatedLogo/MainAnimatedLogo.tsx";
 import { useGameState } from "@providers/GameStateProvider.tsx";
@@ -15,10 +16,18 @@ const HomePage = () => {
   }, [setRoom]);
 
   return (
-    <>
-      <MainAnimatedLogo />
-      <AnimatedMenuList />
-    </>
+    <Row justify={"center"}>
+      <Col span={10} xs={18} md={10} lg={10}>
+        <Row gutter={[0, { xs: 0, sm: 16, md: 24 }]}>
+          <Col span={24}>
+            <MainAnimatedLogo />
+          </Col>
+          <Col span={24}>
+            <AnimatedMenuList />
+          </Col>
+        </Row>
+      </Col>
+    </Row>
   );
 };
 

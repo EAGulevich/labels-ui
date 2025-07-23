@@ -28,7 +28,7 @@ export const RoundScreen = ({ onTimerFinish }: RoundScreenProps) => {
         startTimer={!room.votingData && !isAllGuessed}
         onTimerFinish={onTimerFinish}
       />
-      <FactsGrid facts={room.facts} isVoting={!!room.votingData} />
+      <FactsGrid />
       <VotingModalContent />
     </>
   );

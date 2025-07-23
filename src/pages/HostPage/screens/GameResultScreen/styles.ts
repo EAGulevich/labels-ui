@@ -8,6 +8,15 @@ export const PlayerItem = styled(Flex).attrs({
   align: "center",
 })`
   position: relative;
+
+  &:before {
+    position: absolute;
+    top: 60px;
+    content: " ";
+    height: 2000px;
+    background: ${({ theme }) => theme.token.colorTextDisabled};
+    width: 3px;
+  }
 `;
 
 export const CrownIcon = styled(CrownTwoTone).attrs({

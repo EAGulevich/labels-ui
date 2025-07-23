@@ -42,11 +42,8 @@ const backlightAnimation = (
 export const LogoWrapper = styled.div`
   overflow: hidden;
 
-  height: calc(60vw * 0.36 + 10vw);
-  width: 60vw;
-
-  margin: -5vw auto 0;
-  padding: 5vw 0;
+  width: 100%;
+  aspect-ratio: 960 / 440;
 
   filter: drop-shadow(0 0 0 ${({ theme }) => theme.token.colorPrimary});
 

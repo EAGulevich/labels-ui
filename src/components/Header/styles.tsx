@@ -1,29 +1,35 @@
-import { Divider, Layout } from "antd";
+import { Divider } from "antd";
 import styled from "styled-components";
 
-const HEADER_HEIGHT = 48;
-const HEADER_HEIGHT_PX = HEADER_HEIGHT + "px";
-const ANIMATION_SPEED = "1.2s";
+const ANIMATION_SPEED = "1.8s";
+const MOBILE_SCREEN_WIDTH_PX = "375px";
 
-const COMPUTED_LOGO_HEIGHT = HEADER_HEIGHT * 1.75;
-const COMPUTED_LOGO_WIDTH = COMPUTED_LOGO_HEIGHT * 2.15;
-const COMPUTED_DIVIDER_LEFT_SPACE = COMPUTED_LOGO_WIDTH + 10;
+const getSize = (device: "mobile" | "tv") => {
+  const HEADER_HEIGHT = 68;
+  const MOBILE_HEADER_HEIGHT = 48;
 
-const COMPUTED_LOGO_HEIGHT_PX = COMPUTED_LOGO_HEIGHT + "px";
-const COMPUTED_LOGO_WIDTH_PX = COMPUTED_LOGO_WIDTH + "px";
-const COMPUTED_DIVIDER_LEFT_SPACE_PX = COMPUTED_DIVIDER_LEFT_SPACE + "px";
-
-export const StyledHeader = styled(Layout.Header)`
-  background-color: ${({ theme }) => theme.token.colorBgLayout};
-  padding: 0;
-`;
+  const headerHeight =
+    device === "mobile" ? MOBILE_HEADER_HEIGHT : HEADER_HEIGHT;
+  const COMPUTED_LOGO_HEIGHT = headerHeight * 1.75;
+  const COMPUTED_LOGO_WIDTH = COMPUTED_LOGO_HEIGHT * 2.15;
+  const COMPUTED_DIVIDER_LEFT_SPACE = COMPUTED_LOGO_WIDTH + 8;
+  return {
+    HEADER_HEIGHT_PX: headerHeight + "px",
+    COMPUTED_LOGO_HEIGHT_PX: COMPUTED_LOGO_HEIGHT + "px",
+    COMPUTED_LOGO_WIDTH_PX: COMPUTED_LOGO_WIDTH + "px",
+    COMPUTED_DIVIDER_LEFT_SPACE_PX: COMPUTED_DIVIDER_LEFT_SPACE + "px",
+  };
+};
 
 export const StyledHeaderContent = styled.div`
   display: flex;
   vertical-align: middle;
   justify-content: space-between;
-  height: ${HEADER_HEIGHT_PX};
   padding: 0 10px;
+  height: ${getSize("tv").HEADER_HEIGHT_PX};
+  @media (max-width: ${MOBILE_SCREEN_WIDTH_PX}) {
+    height: ${getSize("mobile").HEADER_HEIGHT_PX};
+  }
 `;
 
 export const SvgContainer = styled.div<{ $hideLogo: boolean }>`
@@ -34,8 +40,13 @@ export const SvgContainer = styled.div<{ $hideLogo: boolean }>`
     !$hideLogo ? `opacity ${ANIMATION_SPEED}` : "opacity 0s"};
 
   svg {
-    width: ${COMPUTED_LOGO_WIDTH_PX};
-    height: ${COMPUTED_LOGO_HEIGHT_PX};
+    width: ${getSize("tv").COMPUTED_LOGO_WIDTH_PX};
+    height: ${getSize("tv").COMPUTED_LOGO_HEIGHT_PX};
+
+    @media (max-width: ${MOBILE_SCREEN_WIDTH_PX}) {
+      width: ${getSize("mobile").COMPUTED_LOGO_WIDTH_PX};
+      height: ${getSize("mobile").COMPUTED_LOGO_HEIGHT_PX};
+    }
   }
 
   svg > path {
@@ -49,16 +60,27 @@ export const SvgContainer = styled.div<{ $hideLogo: boolean }>`
 
 export const StyledDivider = styled(Divider)<{ $isDividerVisible: boolean }>`
   position: absolute;
-  top: ${HEADER_HEIGHT_PX};
-  left: ${COMPUTED_DIVIDER_LEFT_SPACE_PX};
-  max-width: calc(100% - ${COMPUTED_DIVIDER_LEFT_SPACE_PX});
   min-width: 0;
   border-color: ${({ theme }) => theme.token.colorTextBase};
   margin: 0;
-
-  width: ${({ $isDividerVisible }) =>
-    $isDividerVisible ? `calc(100% - ${COMPUTED_DIVIDER_LEFT_SPACE_PX})` : "0"};
   opacity: ${({ $isDividerVisible }) => ($isDividerVisible ? "1" : "0")};
+  top: ${getSize("tv").HEADER_HEIGHT_PX};
+  left: ${getSize("tv").COMPUTED_DIVIDER_LEFT_SPACE_PX};
+  max-width: calc(100% - ${getSize("tv").COMPUTED_DIVIDER_LEFT_SPACE_PX});
+  width: ${({ $isDividerVisible }) =>
+    $isDividerVisible
+      ? `calc(100% - ${getSize("tv").COMPUTED_DIVIDER_LEFT_SPACE_PX})`
+      : "0"};
+
+  @media (max-width: ${MOBILE_SCREEN_WIDTH_PX}) {
+    top: ${getSize("mobile").HEADER_HEIGHT_PX};
+    left: ${getSize("mobile").COMPUTED_DIVIDER_LEFT_SPACE_PX};
+    max-width: calc(100% - ${getSize("mobile").COMPUTED_DIVIDER_LEFT_SPACE_PX});
+    width: ${({ $isDividerVisible }) =>
+      $isDividerVisible
+        ? `calc(100% - ${getSize("mobile").COMPUTED_DIVIDER_LEFT_SPACE_PX})`
+        : "0"};
+  }
 
   transition:
     width ${ANIMATION_SPEED},

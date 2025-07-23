@@ -10,7 +10,9 @@ export const GameOverScreen = ({
 
   return (
     <Flex vertical justify="center" align="center">
-      <Typography.Title level={2}>{t("gameOverScreen.title")}</Typography.Title>
+      <Typography.Title level={2} style={{ textAlign: "center" }}>
+        {t("gameOverScreen.title")}
+      </Typography.Title>
 
       {onShowResult && (
         <Flex>
@@ -20,7 +22,7 @@ export const GameOverScreen = ({
         </Flex>
       )}
       {!onShowResult && (
-        <Typography.Text type={"secondary"}>
+        <Typography.Text type={"secondary"} style={{ textAlign: "center" }}>
           {t("gameOverScreen.vipCanShowPoints")}
         </Typography.Text>
       )}

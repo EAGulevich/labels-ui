@@ -3,25 +3,22 @@ import { AutoTextSize } from "auto-text-size";
 import { motion } from "motion/react";
 
 import { MAX_PLAYERS } from "@shared/constants/validations.ts";
-import { FACT_STATUSES, FactClient } from "@shared/types";
 
-import { PlayerCard } from "@components/PlayerCard/PlayerCard.tsx";
+import { PlayerAvatar } from "@components/PlayerAvatar/PlayerAvatar.tsx";
+import { useGameState } from "@providers/GameStateProvider.tsx";
 
 import { FactBlock, GridFacts, PlayerWithFact } from "./styles.ts";
 
-type FactsGridProps = {
-  facts: FactClient[];
-  isVoting?: boolean;
-};
-
 const MAX_HEIGHT = 330;
-const MIN_HEIGHT = 110;
+const MIN_HEIGHT = 30;
 
 const getRowHeight = (rowCount: number, element: HTMLElement) => {
-  return (element.clientHeight - 20 * 2 - 20 * 4) / Math.ceil(rowCount / 2) - 1;
+  return (element.clientHeight - 20 * 2 - 24 * 4) / Math.ceil(rowCount / 2) - 1;
 };
 
-export const FactsGrid = ({ facts, isVoting }: FactsGridProps) => {
+export const FactsGrid = () => {
+  const { room } = useGameState();
+
   const [rowHeight, setRowHeight] = useState(1);
 
   const setupRowHeight = useCallback(() => {
@@ -48,11 +45,11 @@ export const FactsGrid = ({ facts, isVoting }: FactsGridProps) => {
     return () => {
       window.removeEventListener("resize", setupRowHeight);
     };
-  }, [facts.length, setupRowHeight]);
+  }, [setupRowHeight]);
 
   return (
     <GridFacts>
-      {facts.map((item, index) => (
+      {room?.facts.map((item, index) => (
         <motion.div
           key={index}
           initial={{
@@ -72,7 +69,7 @@ export const FactsGrid = ({ facts, isVoting }: FactsGridProps) => {
             $index={index}
             $height={rowHeight + "px"}
             $guessStatus={
-              isVoting
+              room.currentRound === 1
                 ? undefined
                 : !item.selectedPlayer?.id
                   ? "nobody"
@@ -81,24 +78,9 @@ export const FactsGrid = ({ facts, isVoting }: FactsGridProps) => {
                     : "not_guessed"
             }
           >
-            <PlayerCard
-              height={rowHeight + "px"}
-              player={
-                item.selectedPlayer?.id
-                  ? {
-                      ...item.selectedPlayer,
-                      factStatus: FACT_STATUSES.NOT_GUESSED,
-                    }
-                  : {
-                      name: "- - -",
-                      factStatus: FACT_STATUSES.NOT_RECEIVED,
-                      avatar: null,
-                    }
-              }
-            />
-
+            <PlayerAvatar token={item.selectedPlayer?.avatar.token} />
             <FactBlock>
-              <AutoTextSize mode={"box"} maxFontSizePx={60}>
+              <AutoTextSize mode={"box"} maxFontSizePx={60} minFontSizePx={1}>
                 {item.text}
               </AutoTextSize>
             </FactBlock>

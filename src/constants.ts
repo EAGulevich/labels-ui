@@ -25,3 +25,7 @@ export const ROUTE_PATHS = {
 // elems
 export const FOOTER_CONTENT = "FOOTER_CONTENT";
 export const HEADER_INFO_CONTAINER = "HEADER_INFO_CONTAINER";
+
+export const LAYOUT_ID = "LAYOUT_ID";
+export const TV_WIDTH = 1920;
+export const TV_HEIGHT = 1080;

@@ -1,36 +1,35 @@
 import { useTranslation } from "react-i18next";
-import { Alert, Flex } from "antd";
+import { Collapse, Flex } from "antd";
 
 export const FactHint = () => {
   const { t } = useTranslation();
   return (
-    <Alert
-      showIcon
-      closable
-      message={t("inputFactScreen.form.fields.fact.message.title")}
-      type="warning"
-      description={
-        <Flex vertical>
-          {t("inputFactScreen.form.fields.fact.message.description.listTitle")}
-          <ul>
-            <li>
-              {t(
-                "inputFactScreen.form.fields.fact.message.description.examples.breakfast",
-              )}
-            </li>
-            <li>
-              {t(
-                "inputFactScreen.form.fields.fact.message.description.examples.songs",
-              )}
-            </li>
-            <li>
-              {t(
-                "inputFactScreen.form.fields.fact.message.description.examples.dream",
-              )}
-            </li>
-          </ul>
-        </Flex>
-      }
+    <Collapse
+      bordered={false}
+      expandIconPosition={"end"}
+      items={[
+        {
+          key: "examples",
+          label: t("inputFactScreen.form.fields.fact.hint.title"),
+          children: (
+            <Flex vertical>
+              <ul>
+                <li>
+                  {t(
+                    "inputFactScreen.form.fields.fact.hint.examples.breakfast",
+                  )}
+                </li>
+                <li>
+                  {t("inputFactScreen.form.fields.fact.hint.examples.songs")}
+                </li>
+                <li>
+                  {t("inputFactScreen.form.fields.fact.hint.examples.dream")}
+                </li>
+              </ul>
+            </Flex>
+          ),
+        },
+      ]}
     />
   );
 };

@@ -1,9 +1,9 @@
-import { lazy, useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Route, Routes } from "react-router";
-import { Button, Flex, Modal, Spin } from "antd";
+import { Button, Col, Flex, Modal, Progress, Row, Spin } from "antd";
 
-import { ROUTE_PATHS } from "@constants";
+import { LAYOUT_ID, ROUTE_PATHS } from "@constants";
 import { useAppSettings } from "@providers/AppSettingsProvider/AppSettingsProvider.tsx";
 
 const HomePageRouteComponent = lazy(() => import("./HomePage/HomePage.tsx"));
@@ -20,7 +20,12 @@ export const Pages = () => {
   const { t } = useTranslation();
 
   const {
-    audio: { allowAudio, setAllowAudio, isAllAudioLoaded },
+    audio: {
+      allowAudio,
+      setAllowAudio,
+      isAllAudioLoaded,
+      loadedAudiosProgress,
+    },
   } = useAppSettings();
   const [isAudioModalOpen, setIsAudioModalOpen] = useState(
     allowAudio === undefined,
@@ -45,6 +50,7 @@ export const Pages = () => {
   if (isAudioModalOpen) {
     return (
       <Modal
+        getContainer={() => document.getElementById(LAYOUT_ID) || document.body}
         open={isAudioModalOpen}
         title={t("audioModal.title")}
         onCancel={onRefuse}
@@ -65,15 +71,71 @@ export const Pages = () => {
   }
 
   if (allowAudio && !isAllAudioLoaded) {
-    return <Spin tip={t("audioModal.loadingSounds")} size="large" fullscreen />;
+    return (
+      <Spin tip={t("audioModal.loadingSounds")} size={"large"}>
+        <Row
+          align={"bottom"}
+          justify={"center"}
+          gutter={[20, 20]}
+          style={{ height: "300px", padding: "20px" }}
+        >
+          <Col span={22}>
+            <Progress
+              percent={loadedAudiosProgress}
+              percentPosition={{ align: "center" }}
+            />
+          </Col>
+        </Row>
+      </Spin>
+    );
   }
+
+  const fallback = (
+    <Spin size={"large"}>
+      <Flex
+        align={"end"}
+        justify={"center"}
+        style={{ height: "300px", textAlign: "center", padding: "20px" }}
+      >
+        {t("loadingContent")}
+      </Flex>
+    </Spin>
+  );
 
   return (
     <Routes>
-      <Route path={ROUTE_PATHS.home} element={<HomePageRouteComponent />} />
-      <Route path={ROUTE_PATHS.host} element={<HostPageRouteComponent />} />
-      <Route path={ROUTE_PATHS.player} element={<PlayerPageRouteComponent />} />
-      <Route path="*" element={<NotFoundPageRouteComponent />} />
+      <Route
+        path={ROUTE_PATHS.home}
+        element={
+          <Suspense fallback={fallback}>
+            <HomePageRouteComponent />
+          </Suspense>
+        }
+      />
+      <Route
+        path={ROUTE_PATHS.host}
+        element={
+          <Suspense fallback={fallback}>
+            <HostPageRouteComponent />
+          </Suspense>
+        }
+      />
+      <Route
+        path={ROUTE_PATHS.player}
+        element={
+          <Suspense fallback={fallback}>
+            <PlayerPageRouteComponent />
+          </Suspense>
+        }
+      />
+      <Route
+        path="*"
+        element={
+          <Suspense fallback={fallback}>
+            <NotFoundPageRouteComponent />
+          </Suspense>
+        }
+      />
     </Routes>
   );
 };

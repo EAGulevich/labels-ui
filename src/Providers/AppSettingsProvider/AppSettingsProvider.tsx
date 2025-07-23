@@ -37,6 +37,7 @@ type AppSettingsContextType = {
     allowAudio?: boolean;
     setAllowAudio: (allow: boolean) => void;
     isAllAudioLoaded: boolean;
+    loadedAudiosProgress: number;
     getAudio: (name: keyof Sounds) => Sound;
   };
   discussion: {
@@ -58,6 +59,7 @@ const defaultValue: AppSettingsContextType = {
   audio: {
     allowAudio: undefined,
     setAllowAudio: () => null,
+    loadedAudiosProgress: 0,
     isAllAudioLoaded: false,
     getAudio: (name: keyof Sounds) => DEFAULT_SOUNDS[name],
   },
@@ -113,7 +115,7 @@ export const AppSettingsProvider: FC<PropsWithChildren> = ({ children }) => {
     }
   }, [allowAudio]);
 
-  useSoundPlayer({
+  const { loadedAudiosCount } = useSoundPlayer({
     allowAudio,
     setIsAllAudioLoaded,
     isAllAudioLoadingStarted,
@@ -143,6 +145,9 @@ export const AppSettingsProvider: FC<PropsWithChildren> = ({ children }) => {
           allowAudio,
           setAllowAudio,
           isAllAudioLoaded,
+          loadedAudiosProgress: Math.floor(
+            (loadedAudiosCount / Object.keys(DEFAULT_SOUNDS).length) * 100,
+          ),
           getAudio,
         },
         discussion: {

@@ -5,4 +5,5 @@ export const PlayerLayout = styled.div`
   width: 425px;
   max-width: 100%;
   margin: 0 auto;
+  max-height: 100%;
 `;

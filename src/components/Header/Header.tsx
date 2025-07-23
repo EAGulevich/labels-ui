@@ -1,30 +1,34 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { MenuOutlined } from "@ant-design/icons";
-import { Button, Flex, List, Popover, Typography } from "antd";
+import { Button, Flex, Layout, List, Popover, Typography } from "antd";
 
 import HeaderLogo from "@assets/headerLogo.svg?react";
 import { DiscussionTimeSlider } from "@components/DiscussionTimeSlider/DiscussionTimeSlider.tsx";
 import { LngSwitcher } from "@components/LngSwitcher/LngSwitcher.tsx";
 import { MuteSwitcher } from "@components/MuteSwitcher/MuteSwitcher.tsx";
 import { ThemeSwitcher } from "@components/ThemeSwither/ThemeSwitcher.tsx";
-import { HEADER_INFO_CONTAINER, ROUTE_PATHS, VERSION } from "@constants";
+import {
+  HEADER_INFO_CONTAINER,
+  LAYOUT_ID,
+  ROUTE_PATHS,
+  VERSION,
+} from "@constants";
 import { useAppStorage } from "@providers/AppStorageProvider.tsx";
 import { useGameState } from "@providers/GameStateProvider.tsx";
 
 import {
   StyledDivider,
-  StyledHeader,
   StyledHeaderContent,
   StyledInfoHeader,
   SvgContainer,
 } from "./styles.tsx";
 
 type HeaderProps = {
-  onlyMenuButton: boolean;
+  hasOnlyMenu: boolean;
 };
 
-export const Header = ({ onlyMenuButton }: HeaderProps) => {
+export const Header = ({ hasOnlyMenu }: HeaderProps) => {
   const navigate = useNavigate();
 
   const [isDividerVisible, setIsDividerVisible] = useState(false);
@@ -33,12 +37,12 @@ export const Header = ({ onlyMenuButton }: HeaderProps) => {
   const isHost = room?.hostId === userId;
 
   useEffect(() => {
-    if (!onlyMenuButton) {
+    if (!hasOnlyMenu) {
       setIsDividerVisible(true);
     } else {
       setIsDividerVisible(false);
     }
-  }, [onlyMenuButton]);
+  }, [hasOnlyMenu]);
 
   const listDataSource = [<ThemeSwitcher />, <LngSwitcher />, <MuteSwitcher />];
 
@@ -47,16 +51,19 @@ export const Header = ({ onlyMenuButton }: HeaderProps) => {
   }
 
   return (
-    <StyledHeader>
+    <Layout.Header>
       <StyledHeaderContent>
         <SvgContainer
-          $hideLogo={onlyMenuButton}
+          $hideLogo={hasOnlyMenu}
           onClick={() => navigate(ROUTE_PATHS.home)}
         >
           <HeaderLogo />
         </SvgContainer>
         <StyledInfoHeader id={HEADER_INFO_CONTAINER} />
         <Popover
+          getPopupContainer={() =>
+            document.getElementById(LAYOUT_ID) || document.body
+          }
           placement="bottomRight"
           trigger={"click"}
           content={
@@ -77,14 +84,12 @@ export const Header = ({ onlyMenuButton }: HeaderProps) => {
           arrow={false}
         >
           <Flex align="center">
-            <Button size={"middle"} type={"text"} icon={<MenuOutlined />} />
+            <Button size={"large"} type={"text"} icon={<MenuOutlined />} />
           </Flex>
         </Popover>
       </StyledHeaderContent>
 
-      {!onlyMenuButton && (
-        <StyledDivider $isDividerVisible={isDividerVisible} />
-      )}
-    </StyledHeader>
+      {!hasOnlyMenu && <StyledDivider $isDividerVisible={isDividerVisible} />}
+    </Layout.Header>
   );
 };

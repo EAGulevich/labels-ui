@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Segmented, Timeline } from "antd";
+import { ConfigProvider, Segmented, Timeline } from "antd";
 
 import { PlayerStatistic } from "./parts/PlayerStatistic/PlayerStatistic.tsx";
 import { useGameResult } from "./useGameResult.tsx";
@@ -20,7 +20,13 @@ export const GameResultScreen = () => {
     { value: TABS.HISTORY, label: t("resultsScreen.tabHistory") },
   ];
   return (
-    <>
+    <ConfigProvider
+      theme={{
+        token: {
+          fontSize: 16,
+        },
+      }}
+    >
       <Segmented
         options={options}
         block
@@ -40,6 +46,6 @@ export const GameResultScreen = () => {
       {option === TABS.HISTORY && (
         <Timeline mode={"right"} items={timeLineItems} />
       )}
-    </>
+    </ConfigProvider>
   );
 };

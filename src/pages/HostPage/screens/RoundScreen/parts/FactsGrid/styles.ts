@@ -4,16 +4,16 @@ import styled from "styled-components";
 export const GridFacts = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr); /* Две колонки одинаковой ширины */
-  gap: 20px;
-  margin: -20px -20px 0 -20px;
-  padding: 20px;
+  gap: 24px;
+  margin: 0 -20px;
+  padding: 0 20px;
   overflow: hidden;
 `;
 
 export const FactBlock = styled.div`
   max-width: 100%;
   margin: 0 auto;
-  padding: 10px 40px;
+  padding: 4px 40px;
   height: 100%;
   width: 100%;
   justify-content: center;
@@ -34,6 +34,15 @@ export const PlayerWithFact = styled(Flex)<{
   transform: skew(-4deg);
   clip-path: polygon(-20% -4%, 109% 6%, 96% 96%, 4% 104%);
 
+  background: ${({ theme, $guessStatus }) =>
+    $guessStatus === "guessed"
+      ? theme.token.colorSuccessActive + "30"
+      : $guessStatus === "not_guessed"
+        ? theme.token.colorErrorActive + "30"
+        : $guessStatus === "nobody"
+          ? theme.token.colorWarningActive + "30"
+          : "transparent"};
+
   box-shadow: inset
     ${({ theme, $guessStatus }) =>
       $guessStatus === "guessed"
@@ -43,9 +52,12 @@ export const PlayerWithFact = styled(Flex)<{
           : $guessStatus === "nobody"
             ? theme.token.colorWarningActive
             : theme.token.colorTextBase}
-    0px 0px 10px 4px;
+    0px 0px 15px 10px;
 
   > :first-child {
+    height: ${({ $height }) => $height};
+    width: ${({ $height }) => $height};
+
     clip-path: polygon(-20% -4%, 109% 6%, 96% 96%, 4% 104%);
 
     box-shadow: ${({ theme, $guessStatus }) =>
@@ -56,7 +68,7 @@ export const PlayerWithFact = styled(Flex)<{
             : $guessStatus === "nobody"
               ? theme.token.colorWarningActive
               : theme.token.colorTextBase}
-      0px 0px 10px 4px;
+      0px 0px 15px 10px;
     transform: skew(8deg);
     scale: 0.8;
     > * {
@@ -64,15 +76,12 @@ export const PlayerWithFact = styled(Flex)<{
     }
   }
 
-  transition-property: box-shadow;
+  transition-property: box-shadow, background;
   transition-duration: 0.5s;
-  transition-delay: ${({ $index, $guessStatus }) =>
-    $guessStatus === undefined ? 0 : $index + 1}s;
+
   > * {
     transition-property: box-shadow;
     transition-duration: 0.5s;
-    transition-delay: ${({ $index, $guessStatus }) =>
-      $guessStatus === undefined ? 0 : $index + 1}s;
 
     > * {
       transform: skew(4deg);

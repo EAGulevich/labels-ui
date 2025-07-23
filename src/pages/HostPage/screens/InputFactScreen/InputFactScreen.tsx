@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { Col, Row } from "antd";
 import { motion } from "motion/react";
 
 import { FACT_STATUSES } from "@shared/types";
@@ -19,30 +20,35 @@ export const InputFactScreen = () => {
   }
 
   return (
-    <>
-      <StyledTitle level={1}>{t("inputFactScreen.inputFact")}</StyledTitle>
-      <Players>
-        {room.players.map((player) => {
-          const isDone = player.factStatus === FACT_STATUSES.NOT_GUESSED;
-          return (
-            <motion.div
-              key={player.id}
-              animate={isDone ? { scale: 0.8 } : { scale: 1 }}
-              transition={{ duration: 1 }}
-            >
-              <PlayerCard
+    <Row justify={"center"} style={{ width: "100%" }}>
+      <Col span={20}>
+        <StyledTitle level={1}>{t("inputFactScreen.inputFact")}</StyledTitle>
+      </Col>
+      <Col span={14}>
+        <Players>
+          {room.players.map((player) => {
+            const isDone = player.factStatus === FACT_STATUSES.NOT_GUESSED;
+            return (
+              <motion.div
                 key={player.id}
-                player={player}
-                status={
-                  player.factStatus === FACT_STATUSES.NOT_RECEIVED
-                    ? "waiting"
-                    : "success"
-                }
-              />
-            </motion.div>
-          );
-        })}
-      </Players>
-    </>
+                animate={isDone ? { scale: 0.8 } : { scale: 1 }}
+                transition={{ duration: 1 }}
+              >
+                <PlayerCard
+                  height={"140px"}
+                  key={player.id}
+                  player={player}
+                  status={
+                    player.factStatus === FACT_STATUSES.NOT_RECEIVED
+                      ? "waiting"
+                      : "success"
+                  }
+                />
+              </motion.div>
+            );
+          })}
+        </Players>
+      </Col>
+    </Row>
   );
 };

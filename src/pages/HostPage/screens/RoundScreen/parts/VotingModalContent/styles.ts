@@ -1,7 +1,7 @@
 import { StepProps, Steps } from "antd";
 import styled from "styled-components";
 
-const PointHeight = "6px";
+const PointHeight = "10px";
 
 export const VotePoint = styled.div`
   width: ${PointHeight};
@@ -38,4 +38,6 @@ export const StyledSteps = styled(Steps)<StepProps>`
 
 export const FactTitle = styled.div`
   text-align: center;
+  min-height: 110px;
+  margin: 40px 0;
 `;

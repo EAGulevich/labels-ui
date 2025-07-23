@@ -25,7 +25,7 @@ type GetTableColsProps = {
 const getMinFactColWidth = (playersLength: number) =>
   playersLength <= 6 ? "200px" : playersLength <= 8 ? "240px" : "280px";
 
-const ROUND_COL_WIDTH = "200px";
+const ROUND_COL_WIDTH = "300px";
 
 export const getTableCols = ({
   token,
@@ -65,17 +65,16 @@ export const getTableCols = ({
   ...facts.map((fact) => ({
     title: (
       <Flex vertical gap={"small"} align={"center"} justify={"space-between"}>
-        <Typography.Title
+        <Typography.Paragraph
           style={{
             maxWidth: `100%`,
             textAlign: "center",
             margin: 0,
           }}
-          level={3}
           ellipsis={{ rows: 5, expandable: false }}
         >
           {fact.text}
-        </Typography.Title>
+        </Typography.Paragraph>
       </Flex>
     ),
 
@@ -88,11 +87,13 @@ export const getTableCols = ({
         <Flex align={"center"} gap={"normal"} vertical>
           <Flex gap={"large"} wrap align={"center"} justify={"center"}>
             {!!sp && !sp?.playersWhoGuessedCorrectly.length && (
-              <MinusCircleOutlined style={{ fontSize: 22 }} />
+              <MinusCircleOutlined
+                style={{ fontSize: 22, color: token["colorBorderSecondary"] }}
+              />
             )}
             {sp?.playersWhoGuessedCorrectly?.map((player, index) => {
               return player ? (
-                <Flex vertical>
+                <Flex key={player.id} vertical>
                   <Badge
                     color={"gold"}
                     offset={[-4, 4]}

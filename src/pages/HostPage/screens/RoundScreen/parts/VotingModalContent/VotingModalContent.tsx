@@ -1,29 +1,52 @@
-import { useLayoutEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Drawer, Flex, Typography } from "antd";
+import { Col, Drawer, Flex, Row, Typography } from "antd";
 import maxBy from "lodash.maxby";
-import { useTheme } from "styled-components";
-
-import { FACT_STATUSES } from "@shared/types";
+import styled, { useTheme } from "styled-components";
 
 import { ErrorFallback } from "@components/Error/ErrorFallback.tsx";
-import { PlayerCard } from "@components/PlayerCard/PlayerCard.tsx";
+import { AVATARS } from "@components/PlayerAvatar/constants.tsx";
+import { LAYOUT_ID, TV_WIDTH } from "@constants";
 import { useGameState } from "@providers/GameStateProvider.tsx";
 
 import { getStepsOfVoting } from "./parts/getStepsOfVoting.tsx";
 import { FactTitle, StyledSteps, VoteBlock, VotePoint } from "./styles.ts";
 
+export const PlayerCard = styled(Flex).attrs({
+  vertical: true,
+  justify: "space-between",
+  align: "center",
+  gap: "small",
+})<{ background: string }>`
+  background: ${({ background }) => background};
+  position: relative;
+  padding: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+`;
+
+export const PlayerName = styled(Flex).attrs({
+  justify: "center",
+  align: "center",
+})`
+  width: 100%;
+  max-width: 100%;
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  padding: 4px;
+  height: 40%;
+  background: ${({ theme }) => theme.token.colorBgContainer + "d9"};
+
+  > div {
+    margin: 0;
+    max-width: 100%;
+  }
+`;
+
 export const VotingModalContent = () => {
-  const [drawerHeight, setDrawerHeight] = useState<string>("0px");
   const { token } = useTheme();
   const { t } = useTranslation();
   const { room } = useGameState();
-
-  useLayoutEffect(() => {
-    setDrawerHeight(
-      document.getElementsByTagName("main")[0].clientHeight + "px",
-    );
-  }, []);
 
   if (!room) {
     return <ErrorFallback />;
@@ -47,17 +70,20 @@ export const VotingModalContent = () => {
 
   return (
     <Drawer
+      getContainer={() => document.getElementById(LAYOUT_ID) || document.body}
+      height={"848px"}
+      placement="bottom"
+      closable={false}
+      open={!!room.votingData}
+      mask={false}
       styles={{
         content: {
-          backgroundColor: token.colorBgContainer + "20",
+          width: `${TV_WIDTH}px`,
+          backgroundColor: token.colorBgContainer + "90",
           backdropFilter: "blur(12px)",
           borderTopLeftRadius: "10px",
           borderTopRightRadius: "10px",
-          boxShadow: `inset 0px 4px 20px 0px ${token.colorText}`,
-        },
-        wrapper: {
-          minHeight: drawerHeight,
-          maxHeight: drawerHeight,
+          boxShadow: `inset 0px 4px 20px 0px ${token.colorBorderSecondary}`,
         },
       }}
       title={
@@ -78,52 +104,63 @@ export const VotingModalContent = () => {
           )}
         </Flex>
       }
-      placement="bottom"
-      size={"large"}
-      closable={false}
-      open={!!room.votingData}
     >
       {room.votingData && (
-        <>
-          <FactTitle>
-            <Typography.Title level={1}>
-              {room.votingData.currentVotingFact.text}
-            </Typography.Title>
-          </FactTitle>
-          <Flex justify={"center"} gap={"small"} wrap>
-            {room.votingData.candidates.map((c) => (
-              <Flex
-                vertical
-                key={c.candidate.id}
-                style={{
-                  transition: "opacity 1s",
-                  opacity:
-                    isAllPlayersVotedForFact &&
-                    isOnlyMax &&
-                    c.candidate.id !== playerIdWithMaxVotes?.candidate.id
-                      ? "0"
-                      : "1",
-                }}
-              >
-                <PlayerCard
-                  player={{
-                    ...c.candidate,
-                    factStatus: FACT_STATUSES.NOT_GUESSED,
-                  }}
-                  mark={
-                    isOnlyMax &&
-                    c.candidate.id === playerIdWithMaxVotes?.candidate.id
-                  }
-                />
-                <VoteBlock>
-                  {Array(c.votesCount || 0)
-                    .fill(<VotePoint />)
-                    .map((i) => i)}
-                </VoteBlock>
-              </Flex>
-            ))}
-          </Flex>
-        </>
+        <Row gutter={[0, 60]}>
+          <Col span={24}>
+            <Row justify={"center"}>
+              <Col span={20}>
+                <FactTitle>
+                  <Typography.Title level={1} style={{ margin: 0 }}>
+                    {room.votingData.currentVotingFact.text}
+                  </Typography.Title>
+                </FactTitle>
+              </Col>
+            </Row>
+          </Col>
+          <Col span={24}>
+            <Row justify={"center"}>
+              {room.votingData.candidates.map((c) => (
+                <Col span={2}>
+                  <Flex
+                    vertical
+                    key={c.candidate.id}
+                    style={{
+                      transition: "opacity 1s, scale 0.5s",
+                      scale:
+                        isOnlyMax &&
+                        c.candidate.id === playerIdWithMaxVotes?.candidate.id
+                          ? 1.1
+                          : 0.9,
+                      opacity:
+                        isAllPlayersVotedForFact &&
+                        isOnlyMax &&
+                        c.candidate.id !== playerIdWithMaxVotes?.candidate.id
+                          ? "0"
+                          : "1",
+                    }}
+                  >
+                    <PlayerCard
+                      background={AVATARS[c.candidate.avatar.token].background}
+                    >
+                      {AVATARS[c.candidate.avatar.token].icon}
+                      <PlayerName>
+                        <Typography.Paragraph ellipsis={{ rows: 2 }}>
+                          {c.candidate.name}
+                        </Typography.Paragraph>
+                      </PlayerName>
+                    </PlayerCard>
+                    <VoteBlock>
+                      {Array(c.votesCount || 0)
+                        .fill(<VotePoint />)
+                        .map((i) => i)}
+                    </VoteBlock>
+                  </Flex>
+                </Col>
+              ))}
+            </Row>
+          </Col>
+        </Row>
       )}
     </Drawer>
   );

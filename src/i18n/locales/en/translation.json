@@ -1,4 +1,5 @@
 {
+  "loadingContent": "Loading content...",
   "audioModal": {
     "title": "Enable sound effects?",
     "description": "You can change this in the settings at any time",
@@ -25,7 +26,7 @@
   "createOrReturnToRoom": {
     "returnResult": {
       "title": "Want to return?",
-      "subTitle": "Found a previously created room.",
+      "subTitle": "Found a previously created room",
       "buttons": {
         "return": "Return",
         "createNew": "Create new"
@@ -44,7 +45,7 @@
     "enterCode": "Enter room code",
     "scan": "or scan this",
     "players": "Players",
-    "waitingAllPlayers": "We are waiting for players to connect",
+    "waitingAllPlayers": "Waiting for players to connect",
     "waitingVipStarts": "Waiting for the VIP player to start the game",
     "selectAvatar": {
       "title": "Choose avatar",
@@ -53,7 +54,7 @@
       }
     },
     "vipScreen": {
-      "title": "If all players are connected, press",
+      "title": "When all players are ready, press",
       "buttons": {
         "start": "Start"
       }
@@ -65,14 +66,14 @@
         "name": {
           "label": "Name",
           "errors": {
-            "required": "Please input your name",
+            "required": "Please enter your name",
             "length": "Please enter text between {{min}} and {{max}} characters long"
           }
         },
         "roomCode": {
           "label": "Room code",
           "errors": {
-            "required": "Please input room code"
+            "required": "Please enter room code"
           }
         }
       }
@@ -83,24 +84,22 @@
   },
   "inputFactScreen": {
     "inputFact": "Enter the fact on your device",
-    "statisticLabel": "We are waiting for facts from the players",
+    "statisticLabel": "Waiting for facts from the players",
     "form": {
       "fields": {
         "fact": {
           "label": "Fact",
-          "message": {
-            "title": "Third-person fact about you!",
-            "description": {
-              "listTitle": "Examples:",
-              "examples": {
-                "breakfast": "never skips breakfast",
-                "songs": "knows every Queen song by heart",
-                "dream": "dreams of visiting Japan"
-              }
+          "placeholder": "Third-person fact about you",
+          "hint": {
+            "title": "Examples:",
+            "examples": {
+              "breakfast": "never skips breakfast",
+              "songs": "knows every Queen song by heart",
+              "dream": "dreams of visiting Japan"
             }
           },
           "errors": {
-            "required": "Please input fact",
+            "required": "Please enter fact",
             "length": "Please enter text between {{min}} and {{max}} characters long"
           }
         }
@@ -120,11 +119,11 @@
     "title": "Discuss who owns the facts"
   },
   "playerVoteScreen": {
-    "title": "Who owns the fact?",
+    "title": "Who does own the fact?",
     "youVoted": "You voted"
   },
   "gameOverScreen": {
-    "title": "Game over",
+    "title": "Game has ended",
     "showPoints": "Show points",
     "vipCanShowPoints": "VIP player can show final scores"
   },
@@ -142,7 +141,7 @@
       "totalPoints": "Total points scored",
       "rightVotesCount": "Correct votes",
       "wrongVotesCount": "Incorrect votes",
-      "guessedRound": "Your fact was guessed in round",
+      "guessedRound": "Your fact was guessed in the round",
       "times_one": "time",
       "times_few": "times",
       "times_many": "times",
@@ -152,14 +151,14 @@
     "youVoted_interval": "(1)[You are {{count}}-st person to vote correctly];(2)[You are {{count}}-nd person to vote correctly];(3)[You are {{count}}-rd person to vote correctly];(4-inf)[You are {{count}}-th person to vote correctly]"
   },
   "messages": {
-    "youEnteredInRoom": "You entered in room",
+    "youEnteredInRoom": "You entered the room",
     "youHaveBecomeVIP": "You have become VIP",
     "playerHasBecomeVIP": "Player {{playerName}} has become VIP",
     "hostLeftRoom": "Reconnecting",
     "hostReturnedToRoom": "Reconnected",
     "joinedPlayer": "Player {{playerName}} has connected",
     "playerLeft": "Player {{playerName}} has connected",
-    "playerLostConnection": "Player {{playerName}} lost connection",
+    "playerLostConnection": "Player {{playerName}} has lost connection",
     "playerReconnected": "Player {{playerName}} has reconnected"
   },
   "errorMessages": {
@@ -175,9 +174,9 @@
     "PLAYER_NAME_ALREADY_EXISTS": "Player name is already taken",
     "PLAYER_NAME_TOO_LONG": "Player name exceeds maximum length",
     "PLAYER_NAME_TOO_SHORT": "Player name is too short",
-    "AVATAR_ALREADY_TAKEN": "Selected avatar is already in use",
+    "AVATAR_ALREADY_TAKEN": "Selected avatar is already taken",
     "PLAYER_ALREADY_SUBMITTED_FACT": "Player has already submitted a fact",
-    "DUPLICATE_FACT": "Duplicate fact content detected",
+    "DUPLICATE_FACT": "A match with another fact was found. Change your fact",
     "FACT_TEXT_TOO_LONG": "Fact text exceeds maximum length",
     "FACT_TEXT_TOO_SHORT": "Fact text is too short",
     "VOTING_DATA_NOT_FOUND": "No voting data found",
@@ -200,5 +199,9 @@
       "subTitle": "You can start a new game",
       "btnTitle": "Back Home"
     }
+  },
+  "fullScreenButton": {
+    "tooltipFull": "Full screen",
+    "tooltipFullExit": "Exit full screen mode"
   }
 }

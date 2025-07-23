@@ -1,10 +1,10 @@
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { Flex, QRCode, Typography } from "antd";
+import { Col, Flex, QRCode, Row, Typography } from "antd";
 
 import { QUERY_PARAM_ROOM_CODE, ROUTE_PATHS } from "@constants";
 
-import { StyledBlock, StyledTag, TITLE_CLASS_NAME } from "./styles.ts";
+import { StyledTag, StyledTitle } from "./styles.ts";
 
 type InviteBlockProps = {
   roomCode: string;
@@ -20,33 +20,45 @@ export const InviteBlock: FC<InviteBlockProps> = ({ roomCode }) => {
   const qrValue = `${qrLink}?${qrLinkParams}`;
 
   return (
-    <>
-      <StyledBlock>
-        <Typography.Title
-          className={TITLE_CLASS_NAME}
-          level={4}
-          type={"secondary"}
-        >
-          {t("waitingPlayersScreen.joinLinkText")}
-        </Typography.Title>
-        <Typography.Title className={TITLE_CLASS_NAME} level={2} code>
-          {host.toUpperCase()}
-        </Typography.Title>
-      </StyledBlock>
-      <StyledBlock>
-        <Typography.Title className={TITLE_CLASS_NAME} level={4}>
-          {t("waitingPlayersScreen.enterCode")}
-        </Typography.Title>
-        <Typography.Title className={TITLE_CLASS_NAME} level={2}>
-          <StyledTag color="gold">{roomCode}</StyledTag>
-        </Typography.Title>
-      </StyledBlock>
-      <Flex align={"center"} vertical style={{ margin: "50px" }}>
-        <QRCode value={qrValue} />
-        <Typography.Text type={"secondary"}>
-          {t("waitingPlayersScreen.scan")}
-        </Typography.Text>
-      </Flex>
-    </>
+    <Row
+      justify={"center"}
+      align={"top"}
+      gutter={[0, 40]}
+      style={{ height: "100%" }}
+    >
+      <Col span={24}>
+        <Flex vertical gap={"small"}>
+          <StyledTitle level={2} type={"secondary"}>
+            {t("waitingPlayersScreen.joinLinkText")}
+          </StyledTitle>
+          <StyledTitle level={1} code>
+            {host.toUpperCase()}
+          </StyledTitle>
+        </Flex>
+      </Col>
+      <Col span={24}>
+        <Flex vertical gap={"small"}>
+          <StyledTitle level={4}>
+            {t("waitingPlayersScreen.enterCode")}
+          </StyledTitle>
+          <StyledTitle level={2}>
+            <StyledTag color="gold">{roomCode}</StyledTag>
+          </StyledTitle>
+        </Flex>
+      </Col>
+      <Col span={24}>
+        <Flex vertical gap={"small"} align={"center"} justify={"center"}>
+          <QRCode
+            value={qrValue}
+            bgColor={"white"}
+            color={"black"}
+            size={300}
+          />
+          <Typography.Text type={"secondary"}>
+            {t("waitingPlayersScreen.scan")}
+          </Typography.Text>
+        </Flex>
+      </Col>
+    </Row>
   );
 };

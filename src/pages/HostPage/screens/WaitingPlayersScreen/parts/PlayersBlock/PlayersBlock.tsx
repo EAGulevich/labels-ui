@@ -1,22 +1,24 @@
 import { FC, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Flex, Typography } from "antd";
+import { Badge, Col, Flex, Row } from "antd";
 import { useTheme } from "styled-components";
 
 import { MAX_PLAYERS, MIN_PLAYERS } from "@shared/constants/validations.ts";
 import { RoomClient } from "@shared/types";
 
-import { PlayerCard } from "@components/PlayerCard/PlayerCard.tsx";
+import { AVATARS } from "@components/PlayerAvatar/constants.tsx";
 import { ANIMATION_DURATION_COUNT_DOWN_BEFORE_START_S } from "@constants";
 import { useAppSettings } from "@providers/AppSettingsProvider/AppSettingsProvider.tsx";
 import { useAppStorage } from "@providers/AppStorageProvider.tsx";
 
+import { StyledTitle } from "../InviteBlock/styles.ts";
 import {
   CountDownItem,
   DECORATIVE_PLACE_CLASS,
   DECORATIVE_PLACES_COUNT,
   EMPTY_PLACE_CLASS,
-  PLAYERS_COUNTER_TITLE_CLASS,
+  PlayerCard,
+  PlayerName,
   PlayersCounter,
   PlayersGrid,
   StyledCard,
@@ -65,53 +67,69 @@ export const PlayersBlock: FC<PlayersBlockProps> = ({
   }, [getAudio, showCountDown, volume]);
 
   return (
-    <>
-      <Flex>
-        <PlayersCounter
-          valueStyle={{
-            color: players.length >= MIN_PLAYERS ? "inherit" : token.colorError,
-          }}
-          title={
-            <Typography.Title
-              className={PLAYERS_COUNTER_TITLE_CLASS}
-              level={4}
-              type={"secondary"}
-            >
-              {t("waitingPlayersScreen.players")}
-            </Typography.Title>
-          }
-          value={players.length}
-          suffix={`/ ${MAX_PLAYERS}`}
-        />
-      </Flex>
-      <PlayersGrid>
-        {players.map((player) => (
-          <StyledCard key={player.id}>
-            <PlayerCard player={player} />
-          </StyledCard>
-        ))}
-        {Array(MAX_PLAYERS - players.length)
-          .fill(EMPTY_PLACE_CLASS)
-          .map((cn, index) => (
-            <StyledSkeleton
-              key={"skeleton" + index}
-              className={cn}
-              active={true}
-            />
-          ))}
-        {Array(DECORATIVE_PLACES_COUNT)
-          .fill(DECORATIVE_PLACE_CLASS)
-          .map((cn, index) => (
-            <StyledCard
-              key={"decorate" + index}
-              className={`${cn} ${cn + "_" + (index + 1)}`}
-            >
-              <CountDownItem visible={countDownVal[0] === index}>
-                {countDownVal[1] || ""}
-              </CountDownItem>
-            </StyledCard>
-          ))}
-      </PlayersGrid>
-    </>
+    <Row justify={"center"}>
+      <Col span={24}>
+        <Flex vertical gap={"small"} align={"center"} justify={"center"}>
+          <PlayersCounter
+            valueStyle={{
+              margin: 0,
+              color:
+                players.length >= MIN_PLAYERS ? "inherit" : token.colorError,
+            }}
+            title={
+              <StyledTitle level={2} type={"secondary"}>
+                {t("waitingPlayersScreen.players")}
+              </StyledTitle>
+            }
+            value={players.length}
+            suffix={`/ ${MAX_PLAYERS}`}
+          />
+
+          <PlayersGrid>
+            {players.map((player) => (
+              <Badge.Ribbon
+                key={player.id}
+                text={player.isVip && "VIP"}
+                placement={"start"}
+                color={"gold"}
+                style={!player.isVip ? { overflow: "hidden" } : undefined}
+              >
+                <StyledCard>
+                  <PlayerCard
+                    background={AVATARS[player.avatar.token].background}
+                  >
+                    {AVATARS[player.avatar.token].icon}
+                    <PlayerName>
+                      <StyledTitle level={5}>{player.name}</StyledTitle>
+                    </PlayerName>
+                  </PlayerCard>
+                </StyledCard>
+              </Badge.Ribbon>
+            ))}
+            {Array(MAX_PLAYERS - players.length)
+              .fill(EMPTY_PLACE_CLASS)
+              .map((cn, index) => (
+                <StyledSkeleton
+                  key={"skeleton" + index}
+                  className={cn}
+                  active={true}
+                />
+              ))}
+            {Array(DECORATIVE_PLACES_COUNT)
+              .fill(DECORATIVE_PLACE_CLASS)
+              .map((cn, index) => (
+                <StyledCard
+                  key={"decorate" + index}
+                  className={`${cn} ${cn + "_" + (index + 1)}`}
+                >
+                  <CountDownItem $visible={countDownVal[0] === index}>
+                    {countDownVal[1] || ""}
+                  </CountDownItem>
+                </StyledCard>
+              ))}
+          </PlayersGrid>
+        </Flex>
+      </Col>
+    </Row>
   );
 };

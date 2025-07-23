@@ -10,8 +10,6 @@ export const Players = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  max-width: 600px;
-  margin: 20px auto;
   gap: 20px;
   flex-wrap: wrap;
 `;

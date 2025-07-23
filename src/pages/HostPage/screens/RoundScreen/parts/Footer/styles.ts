@@ -12,15 +12,10 @@ export const Wrapper = styled(Flex).attrs({
 export const PlayersList = styled(Flex).attrs({
   justify: "center",
   wrap: true,
+  gap: "small",
 })`
   margin: 0;
   width: 100%;
-  gap: 8px;
-
-  > * {
-    width: calc((100% - 8px * 4) / 5);
-    gap: 4px;
-  }
 `;
 
 export const PlayerItem = styled(Flex).attrs({
@@ -29,14 +24,36 @@ export const PlayerItem = styled(Flex).attrs({
 })<{
   $isGuessed: boolean;
 }>`
+  width: 150px;
   transition:
     opacity 0.5s,
     scale 0.5s;
   ${({ $isGuessed }) =>
     $isGuessed
       ? css`
-          scale: 0.8;
-          opacity: 0.8;
+          scale: 0.9;
+          opacity: 0.7;
         `
       : ""};
+`;
+
+export const Slashed = styled.div<{ $isGuessed: boolean }>`
+  ${({ $isGuessed }) =>
+    $isGuessed
+      ? css`
+          position: relative;
+          display: inline-block;
+
+          &::after {
+            content: "";
+            position: absolute;
+            left: -12px;
+            top: 50%;
+            width: 150%;
+            height: 4px;
+            background: ${({ theme }) => theme.token.colorTextSecondary};
+            transform: rotate(-30deg);
+          }
+        `
+      : ""}
 `;

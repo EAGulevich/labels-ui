@@ -1,11 +1,10 @@
-import { Card, Skeleton, Statistic } from "antd";
+import { Card, Flex, Skeleton, Statistic } from "antd";
 import styled from "styled-components";
 
 import { MAX_PLAYERS } from "@shared/constants/validations.ts";
 
 import { ANIMATION_DURATION_COUNT_DOWN_BEFORE_START_S } from "@constants";
 
-export const PLAYERS_COUNTER_TITLE_CLASS = "counter-title";
 export const DECORATIVE_PLACE_CLASS = "decorative";
 export const EMPTY_PLACE_CLASS = "empty";
 
@@ -17,13 +16,39 @@ export const PlayersCounter = styled(Statistic)`
   align-items: baseline;
   justify-content: center;
   gap: 20px;
-
-  .${PLAYERS_COUNTER_TITLE_CLASS} {
-    margin: 10px 0;
-  }
 `;
 
 export const StyledSkeleton = styled(Skeleton.Node)``;
+
+export const PlayerCard = styled(Flex).attrs({
+  vertical: true,
+  justify: "space-between",
+  align: "center",
+  gap: "small",
+})<{ background: string }>`
+  background: ${({ background }) => background};
+  position: relative;
+  padding: 8px;
+`;
+
+export const PlayerName = styled(Flex).attrs({
+  justify: "center",
+  align: "center",
+})`
+  width: 100%;
+  max-width: 100%;
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  padding: 4px;
+  height: 40%;
+  background: ${({ theme }) => theme.token.colorBgContainer + "d9"};
+
+  > div {
+    margin: 0;
+    max-width: 100%;
+  }
+`;
 
 export const StyledCard = styled(Card)`
   display: flex;
@@ -33,10 +58,12 @@ export const StyledCard = styled(Card)`
   width: 100%;
   text-align: center;
   aspect-ratio: 1 / 1;
+  overflow: hidden;
 `;
 
 export const PlayersGrid = styled.div`
-  max-width: 60vh;
+  max-width: 100%;
+  min-width: 100%;
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -77,10 +104,11 @@ export const PlayersGrid = styled.div`
   }
 `;
 
-export const CountDownItem = styled.div<{ visible?: boolean }>`
-  font-size: 80px;
-  opacity: ${({ visible }) => (visible ? 1 : 0)};
+export const CountDownItem = styled.div<{ $visible?: boolean }>`
+  font-size: 110px;
+  opacity: ${({ $visible }) => ($visible ? 1 : 0)};
+  text-shadow: 4px 2px 4px ${({ theme }) => theme.token.colorBgBase};
   transition: opacity
-    ${({ visible }) =>
-      visible ? `${ANIMATION_DURATION_COUNT_DOWN_BEFORE_START_S}s` : "0s"};
+    ${({ $visible }) =>
+      $visible ? `${ANIMATION_DURATION_COUNT_DOWN_BEFORE_START_S}s` : "0s"};
 `;
