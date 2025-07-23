@@ -62,6 +62,7 @@ export const StyledDivider = styled(Divider)<{ $isDividerVisible: boolean }>`
   position: absolute;
   min-width: 0;
   border-color: ${({ theme }) => theme.token.colorTextBase};
+  border-block-start-width: 2px;
   margin: 0;
   opacity: ${({ $isDividerVisible }) => ($isDividerVisible ? "1" : "0")};
   top: ${getSize("tv").HEADER_HEIGHT_PX};
