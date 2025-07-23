@@ -41,8 +41,8 @@ function App() {
   useLayoutEffect(() => {
     const platformContainer = platformRef.current;
     function scaleApp() {
-      const windowWidth = window.innerWidth;
-      const windowHeight = window.innerHeight;
+      const windowWidth = document.documentElement.clientWidth;
+      const windowHeight = document.documentElement.clientHeight;
 
       const scaleX = windowWidth / TV_WIDTH;
       const scaleY = windowHeight / TV_HEIGHT;
