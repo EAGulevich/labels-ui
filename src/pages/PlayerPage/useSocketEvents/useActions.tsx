@@ -50,15 +50,6 @@ export const useActions = ({ messageApi }: UseActionsProps) => {
               type: "success",
               content: t("messages.youEnteredInRoom"),
             });
-
-            if (
-              res.room.players.find((p) => p.id === res.extra.userId)?.isVip
-            ) {
-              messageApi.open({
-                type: "info",
-                content: t("messages.youHaveBecomeVIP"),
-              });
-            }
           } else if (!res.success) {
             messageApi.open({
               type: "error",
