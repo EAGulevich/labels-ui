@@ -7,17 +7,25 @@ import { ServerToClientEvents } from "@shared/types";
 import { useGameState } from "@providers/GameStateProvider.tsx";
 import { socket } from "@socket";
 
+import { vibrate } from "../utils/vibrate.ts";
+
 type UseReceiveFact = {
   messageApi: ReturnType<typeof message.useMessage>[0];
 };
 
 export const useVoting = ({ messageApi }: UseReceiveFact) => {
   const { t } = useTranslation();
-  const { setRoom } = useGameState();
+  const { room, setRoom } = useGameState();
 
   useEffect(() => {
-    const voting: ServerToClientEvents["voting"] = ({ room }) => {
-      setRoom(room);
+    const voting: ServerToClientEvents["voting"] = ({ room: newRoom }) => {
+      setRoom(newRoom);
+      if (
+        room?.votingData?.currentVotingFact !==
+        newRoom.votingData?.currentVotingFact
+      ) {
+        vibrate("voteRequest");
+      }
     };
 
     socket.on("voting", voting);
@@ -25,5 +33,5 @@ export const useVoting = ({ messageApi }: UseReceiveFact) => {
     return () => {
       socket.off("voting", voting);
     };
-  }, [messageApi, setRoom, t]);
+  }, [messageApi, room?.votingData?.currentVotingFact, setRoom, t]);
 };
