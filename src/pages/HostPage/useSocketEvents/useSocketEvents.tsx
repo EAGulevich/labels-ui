@@ -18,7 +18,7 @@ export const useSocketEvents = () => {
     top: MESSAGE_TOP,
   });
 
-  const { isServerError } = useConnectDisconnect();
+  const { isServerError } = useConnectDisconnect({ messageApi });
   const { onReenterRoom, onCreateRoom, startVoting } = useActions({
     messageApi,
   });

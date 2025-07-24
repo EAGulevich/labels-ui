@@ -6,7 +6,10 @@ import { message } from "antd";
 
 import { PlayerClient, RoomClient } from "@shared/types";
 
-import { QUERY_PARAM_ROOM_CODE } from "@constants";
+import {
+  MESSAGE_SHOW_RECONNECTING_DURATION_S,
+  QUERY_PARAM_ROOM_CODE,
+} from "@constants";
 import { useAppStorage } from "@providers/AppStorageProvider.tsx";
 import { useGameState } from "@providers/GameStateProvider.tsx";
 import { socket } from "@socket";
@@ -14,6 +17,8 @@ import { socket } from "@socket";
 type UseActionsProps = {
   messageApi: ReturnType<typeof message.useMessage>[0];
 };
+
+const MESSAGE_ENTER_KEY = "MESSAGE_ENTER_KEY";
 
 export const useActions = ({ messageApi }: UseActionsProps) => {
   const { t } = useTranslation();
@@ -30,6 +35,12 @@ export const useActions = ({ messageApi }: UseActionsProps) => {
       roomCode: RoomClient["code"];
       player: Pick<PlayerClient, "name">;
     }) => {
+      messageApi.open({
+        key: MESSAGE_ENTER_KEY,
+        type: "loading",
+        content: t("messages.enteringRoom"),
+        duration: MESSAGE_SHOW_RECONNECTING_DURATION_S,
+      });
       socket.emit(
         "joinRoom",
         {
@@ -47,6 +58,7 @@ export const useActions = ({ messageApi }: UseActionsProps) => {
             });
 
             messageApi.open({
+              key: MESSAGE_ENTER_KEY,
               type: "success",
               content: t("messages.youEnteredInRoom"),
             });

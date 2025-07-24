@@ -151,8 +151,12 @@
     "youVoted_interval": "(1)[You are {{count}}-st person to vote correctly];(2)[You are {{count}}-nd person to vote correctly];(3)[You are {{count}}-rd person to vote correctly];(4-inf)[You are {{count}}-th person to vote correctly]"
   },
   "messages": {
+    "enteringRoom": "Entering the room",
     "youEnteredInRoom": "You entered the room",
     "youHaveBecomeVIP": "You have become VIP",
+    "connectingLost": "Lost connection...",
+    "connecting": "Connecting...",
+    "connectionIsActive": "Connection is active",
     "playerHasBecomeVIP": "Player {{playerName}} has become VIP",
     "hostLeftRoom": "Lost connection to host",
     "hostReturnedToRoom": "Connection to host restored",

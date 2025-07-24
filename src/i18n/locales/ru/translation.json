@@ -151,8 +151,12 @@
     "youVoted_interval": "(1)[Вы {{count}}-ый, кто верно проголосовал];(2)[Вы {{count}}-ой, кто верно проголосовал];(3)[Вы {{count}}-ий, кто верно проголосовал];(4-5)[Вы {{count}}-ый, кто верно проголосовал];(6-8)[Вы {{count}}-ой, кто верно проголосовал];(9-inf)[Вы {{count}}-ый, кто верно проголосовал]"
   },
   "messages": {
+    "enteringRoom": "Входим в комнату",
     "youEnteredInRoom": "Вы вошли в комнату",
     "youHaveBecomeVIP": "Вы стали VIP",
+    "connectingLost": "Соединение потеряно...",
+    "connecting": "Соединяем...",
+    "connectionIsActive": "Соединение активно",
     "playerHasBecomeVIP": "Игрок {{playerName}} стал VIP",
     "hostLeftRoom": "Потеряно соединение с хостом",
     "hostReturnedToRoom": "Соединение с хостом восстановлено",
