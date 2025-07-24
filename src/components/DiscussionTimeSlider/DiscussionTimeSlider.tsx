@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import { Flex, Slider, Tooltip, Typography } from "antd";
 
 import { InfoIcon } from "@components/DiscussionTimeSlider/styles.ts";
+import { LAYOUT_ID } from "@constants";
 import { useAppSettings } from "@providers/AppSettingsProvider/AppSettingsProvider.tsx";
 
 export const DiscussionTimeSlider = () => {
@@ -14,7 +15,13 @@ export const DiscussionTimeSlider = () => {
     <Flex align={"top"} justify={"space-between"} vertical>
       <Flex justify={"space-between"}>
         <Typography.Text>{t("menu.timer")}</Typography.Text>
-        <Tooltip title={t("menu.timerHint")} placement="left">
+        <Tooltip
+          getPopupContainer={() =>
+            document.getElementById(LAYOUT_ID) || document.body
+          }
+          title={t("menu.timerHint")}
+          placement="leftTop"
+        >
           <InfoIcon />
         </Tooltip>
       </Flex>

@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FullscreenExitOutlined, FullscreenOutlined } from "@ant-design/icons";
-import { FloatButton } from "antd";
+import { Button, Tooltip } from "antd";
 import styled from "styled-components";
 
-const SFloatButton = styled(FloatButton)`
+import { LAYOUT_ID } from "@constants";
+
+const SFloatButton = styled(Button)`
+  position: absolute;
   opacity: 0.5;
   bottom: 12px;
   right: 12px;
@@ -56,17 +59,24 @@ export const FullScreenButton = () => {
   }
 
   return (
-    <SFloatButton
-      type="default"
-      tooltip={{
-        placement: "left",
-        title: isFullscreen
+    <Tooltip
+      placement="leftBottom"
+      getPopupContainer={() =>
+        document.getElementById(LAYOUT_ID) || document.body
+      }
+      title={
+        isFullscreen
           ? t("fullScreenButton.tooltipFullExit")
-          : t("fullScreenButton.tooltipFull"),
-      }}
-      shape={"square"}
-      icon={isFullscreen ? <FullscreenExitOutlined /> : <FullscreenOutlined />}
-      onClick={toggleFullscreen}
-    />
+          : t("fullScreenButton.tooltipFull")
+      }
+    >
+      <SFloatButton
+        type={"text"}
+        icon={
+          isFullscreen ? <FullscreenExitOutlined /> : <FullscreenOutlined />
+        }
+        onClick={toggleFullscreen}
+      />
+    </Tooltip>
   );
 };
