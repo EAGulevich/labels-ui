@@ -21,12 +21,7 @@ export const useNewVip = ({ messageApi }: UseNewVipProps) => {
     const updateVipPlayer: ServerToClientEvents["updateVipPlayer"] = (data) => {
       setRoom(data.room);
 
-      if (data.extra.newVipPlayer.id === userId) {
-        messageApi.open({
-          type: "info",
-          content: t("messages.youHaveBecomeVIP"),
-        });
-      } else {
+      if (data.extra.newVipPlayer.id !== userId) {
         messageApi.open({
           type: "info",
           content: t("messages.playerHasBecomeVIP", {
