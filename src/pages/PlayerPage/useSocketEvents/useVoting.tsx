@@ -21,8 +21,8 @@ export const useVoting = ({ messageApi }: UseReceiveFact) => {
     const voting: ServerToClientEvents["voting"] = ({ room: newRoom }) => {
       setRoom(newRoom);
       if (
-        room?.votingData?.currentVotingFact !==
-        newRoom.votingData?.currentVotingFact
+        room?.votingData?.currentVotingFact.id !==
+        newRoom.votingData?.currentVotingFact.id
       ) {
         vibrate("voteRequest");
       }
