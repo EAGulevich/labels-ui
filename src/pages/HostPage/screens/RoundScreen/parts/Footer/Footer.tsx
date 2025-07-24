@@ -43,6 +43,8 @@ export const Footer = ({ startTimer, onTimerFinish }: FooterProps) => {
     }
   }, [DISCUSSION_TIME_MS, startTimer]);
 
+  console.log({ percentTimer: percent, timeLeft, deadline });
+
   return createPortal(
     <Wrapper>
       <Progress
