@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ReloadOutlined, UsergroupAddOutlined } from "@ant-design/icons";
 import { Button, Col, Flex, Result, Row } from "antd";
@@ -13,6 +13,8 @@ export const CreateOrReturnToRoom: FC<CreateOrReturnToRoomProps> = ({
   onReenterRoom,
 }) => {
   const { t } = useTranslation();
+  const [isEntering, setIsEntering] = useState(false);
+  const [isReentering, setIsReentering] = useState(false);
 
   if (typeof onReenterRoom === "function") {
     return (
@@ -24,10 +26,27 @@ export const CreateOrReturnToRoom: FC<CreateOrReturnToRoomProps> = ({
             subTitle={t("createOrReturnToRoom.returnResult.subTitle")}
             extra={[
               <Flex key={"actions"} gap={"large"} justify={"center"}>
-                <Button key={"create"} onClick={onReenterRoom} type={"primary"}>
+                <Button
+                  key={"create"}
+                  disabled={isEntering || isReentering}
+                  onClick={() => {
+                    setIsReentering(true);
+                    onReenterRoom();
+                  }}
+                  loading={isReentering}
+                  type={"primary"}
+                >
                   {t("createOrReturnToRoom.returnResult.buttons.return")}
                 </Button>
-                <Button key={"return"} onClick={onCreateRoom}>
+                <Button
+                  key={"return"}
+                  loading={isEntering}
+                  disabled={isEntering || isReentering}
+                  onClick={() => {
+                    setIsEntering(true);
+                    onCreateRoom();
+                  }}
+                >
                   {t("createOrReturnToRoom.returnResult.buttons.createNew")}
                 </Button>
               </Flex>,
@@ -46,7 +65,14 @@ export const CreateOrReturnToRoom: FC<CreateOrReturnToRoomProps> = ({
           title={t("createOrReturnToRoom.createResult.title")}
           subTitle={t("createOrReturnToRoom.createResult.subTitle")}
           extra={
-            <Button onClick={onCreateRoom}>
+            <Button
+              disabled={isEntering}
+              onClick={() => {
+                setIsEntering(true);
+                onCreateRoom();
+              }}
+              loading={isEntering}
+            >
               {t("createOrReturnToRoom.createResult.buttons.create")}
             </Button>
           }

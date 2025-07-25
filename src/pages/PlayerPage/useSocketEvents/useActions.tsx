@@ -64,6 +64,7 @@ export const useActions = ({ messageApi }: UseActionsProps) => {
             });
           } else if (!res.success) {
             messageApi.open({
+              key: MESSAGE_ENTER_KEY,
               type: "error",
               content: <TranslatedError errorCode={res.error.enumCode} />,
             });
