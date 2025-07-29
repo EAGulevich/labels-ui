@@ -8,6 +8,7 @@ export const GridFacts = styled.div`
   margin: 0 -20px;
   padding: 0 20px;
   overflow: hidden;
+  width: 100%;
 `;
 
 export const FactBlock = styled.div`
