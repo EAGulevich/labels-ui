@@ -39,7 +39,7 @@ export const useAppStorage = () => useContext(AppStorageContext);
 
 export const AppStorageProvider: FC<PropsWithChildren> = ({ children }) => {
   const [volume, setVolume] = useState(
-    +(localStorage.getItem(LOCAL_KEY_VOLUME) || 1),
+    +(localStorage.getItem(LOCAL_KEY_VOLUME) || 3),
   );
 
   const changeVolume = (newVolume: number) => {
