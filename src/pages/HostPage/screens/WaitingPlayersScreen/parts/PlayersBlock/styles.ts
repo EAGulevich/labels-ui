@@ -108,6 +108,7 @@ export const CountDownItem = styled.div<{ $visible?: boolean }>`
   font-size: 110px;
   opacity: ${({ $visible }) => ($visible ? 1 : 0)};
   text-shadow: 4px 2px 4px ${({ theme }) => theme.token.colorBgBase};
+  color: ${({ theme }) => theme.token.colorHighlight};
   transition: opacity
     ${({ $visible }) =>
       $visible ? `${ANIMATION_DURATION_COUNT_DOWN_BEFORE_START_S}s` : "0s"};
