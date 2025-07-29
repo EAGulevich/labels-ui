@@ -20,7 +20,8 @@
   "home": {
     "menu": {
       "newGame": "Новая игра",
-      "join": "Присоединиться"
+      "join": "Присоединиться",
+      "about": "О проекте"
     }
   },
   "createOrReturnToRoom": {

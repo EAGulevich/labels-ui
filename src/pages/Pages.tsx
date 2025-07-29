@@ -11,6 +11,7 @@ const HostPageRouteComponent = lazy(() => import("./HostPage/HostPage.tsx"));
 const PlayerPageRouteComponent = lazy(
   () => import("./PlayerPage/PlayerPage.tsx"),
 );
+const AboutPageRouteComponent = lazy(() => import("./AboutPage/AboutPage.tsx"));
 
 const NotFoundPageRouteComponent = lazy(
   () => import("./NotFoundPage/NotFoundPage.tsx"),
@@ -125,6 +126,14 @@ export const Pages = () => {
         element={
           <Suspense fallback={fallback}>
             <PlayerPageRouteComponent />
+          </Suspense>
+        }
+      />
+      <Route
+        path={ROUTE_PATHS.about}
+        element={
+          <Suspense fallback={fallback}>
+            <AboutPageRouteComponent />
           </Suspense>
         }
       />

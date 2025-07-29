@@ -54,6 +54,16 @@ export const AnimatedMenuList = () => {
       >
         {t("home.menu.join")}
       </Button>,
+
+      <Button
+        size={"large"}
+        key={"joinButton"}
+        onMouseEnter={playAudio}
+        type={"link"}
+        onClick={() => navigate(ROUTE_PATHS.about)}
+      >
+        {t("home.menu.about")}
+      </Button>,
     ],
     [navigate, playAudio, t],
   );

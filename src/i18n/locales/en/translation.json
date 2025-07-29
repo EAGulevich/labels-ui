@@ -20,7 +20,8 @@
   "home": {
     "menu": {
       "newGame": "New game",
-      "join": "Join"
+      "join": "Join",
+      "about": "About"
     }
   },
   "createOrReturnToRoom": {
