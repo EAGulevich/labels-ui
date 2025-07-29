@@ -62,7 +62,9 @@ export const LogoWrapper = styled.div`
           backlightAnimation(
             DROP_SHADOW_LENGTH,
             DROP_SHADOW_BLUR,
-            theme.token.colorWhite,
+            theme.themeName === "dark"
+              ? theme.token.colorWhite
+              : theme.token.colorPrimary,
           )}
         normal;
     }
@@ -83,7 +85,9 @@ export const LogoWrapper = styled.div`
           backlightAnimation(
             DROP_SHADOW_LENGTH_FOR_E,
             DROP_SHADOW_BLUR_FOR_E,
-            theme.token.colorWhite,
+            theme.themeName === "dark"
+              ? theme.token.colorWhite
+              : theme.token.colorPrimary,
           )}
         normal;
       // fix for E -->
