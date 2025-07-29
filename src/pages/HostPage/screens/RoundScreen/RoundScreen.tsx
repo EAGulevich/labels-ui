@@ -25,7 +25,7 @@ export const RoundScreen = ({ onTimerFinish }: RoundScreenProps) => {
   return (
     <>
       <Footer
-        startTimer={!room.votingData && !isAllGuessed}
+        showTimer={!room.votingData && !isAllGuessed}
         onTimerFinish={onTimerFinish}
       />
       <FactsGrid />

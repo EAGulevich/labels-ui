@@ -14,11 +14,11 @@ import { useGameState } from "@providers/GameStateProvider.tsx";
 import { PlayerItem, PlayersList, Slashed, Wrapper } from "./styles.ts";
 
 type FooterProps = {
-  startTimer: boolean;
+  showTimer: boolean;
   onTimerFinish: () => void;
 };
 
-export const Footer = ({ startTimer, onTimerFinish }: FooterProps) => {
+export const Footer = ({ showTimer, onTimerFinish }: FooterProps) => {
   const { room } = useGameState();
 
   const { token } = useTheme();
@@ -36,14 +36,11 @@ export const Footer = ({ startTimer, onTimerFinish }: FooterProps) => {
     : 0;
 
   useEffect(() => {
-    // TODO: должно быть не через useEffect
-    if (startTimer) {
+    if (showTimer) {
       setDeadline(Date.now() + DISCUSSION_TIME_MS);
       setTimeLeft(DISCUSSION_TIME_MS);
     }
-  }, [DISCUSSION_TIME_MS, startTimer]);
-
-  console.log({ percentTimer: percent, timeLeft, deadline });
+  }, [DISCUSSION_TIME_MS, showTimer]);
 
   return createPortal(
     <Wrapper>
@@ -55,7 +52,7 @@ export const Footer = ({ startTimer, onTimerFinish }: FooterProps) => {
         type="circle"
         percent={percent}
         format={() =>
-          timeLeft > 0 ? (
+          showTimer ? (
             <Statistic.Timer
               type={"countdown"}
               title={t("roundScreen.time")}
@@ -105,6 +102,7 @@ export const Footer = ({ startTimer, onTimerFinish }: FooterProps) => {
         })}
       </PlayersList>
     </Wrapper>,
+    // TODO: воскл.знак
     document.getElementById(FOOTER_CONTENT)!,
   );
 };
