@@ -7,13 +7,13 @@ import translationRu from "./locales/ru/translation.json";
 
 type Language = "ru" | "en";
 
-const localStorageLng = localStorage.getItem("lng");
+const localStorageLng = (localStorage.getItem("lng") as Language) || "ru";
 const i18n = i18next.use(initReactI18next).use(intervalPlural);
 
 i18n.init({
   debug: true,
   defaultNS: "translation",
-  lng: localStorageLng as Language,
+  lng: localStorageLng,
   fallbackLng: "ru",
   resources: {
     en: { translation: translationEn },

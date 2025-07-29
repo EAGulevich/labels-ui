@@ -2,6 +2,7 @@ import { useCallback } from "react";
 import { TranslatedError } from "@utils/TranslatedError.tsx";
 import { message } from "antd";
 
+import { useAppSettings } from "@providers/AppSettingsProvider/AppSettingsProvider.tsx";
 import { useAppStorage } from "@providers/AppStorageProvider.tsx";
 import { useGameState } from "@providers/GameStateProvider.tsx";
 import { socket } from "@socket";
@@ -13,9 +14,10 @@ type UseActionsProps = {
 export const useActions = ({ messageApi }: UseActionsProps) => {
   const { setRoom } = useGameState();
   const { userId, setUserId } = useAppStorage();
+  const { language } = useAppSettings();
 
   const onCreateRoom = useCallback(() => {
-    socket.emit("createRoom", null, (res) => {
+    socket.emit("createRoom", { lang: language.lng }, (res) => {
       if (res.success) {
         setUserId(res.extra.userId);
         setRoom(res.room);
@@ -26,7 +28,7 @@ export const useActions = ({ messageApi }: UseActionsProps) => {
         });
       }
     });
-  }, [messageApi, setRoom, setUserId]);
+  }, [language.lng, messageApi, setRoom, setUserId]);
 
   const startVoting = useCallback(() => {
     socket.emit("startVoting", null, (res) => {

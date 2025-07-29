@@ -30,7 +30,7 @@ type AppSettingsContextType = {
     changeTheme: (themeName: ThemeName) => void;
   };
   language: {
-    lng: string;
+    lng: "ru" | "en";
     changeLng: (lng: "ru" | "en") => void;
   };
   audio: {
@@ -53,7 +53,7 @@ const defaultValue: AppSettingsContextType = {
     changeTheme: () => null,
   },
   language: {
-    lng: i18n.language,
+    lng: i18n.language as "ru" | "en",
     changeLng: () => null,
   },
   audio: {
@@ -138,7 +138,7 @@ export const AppSettingsProvider: FC<PropsWithChildren> = ({ children }) => {
           changeTheme,
         },
         language: {
-          lng: i18n.language,
+          lng: i18n.language as "ru" | "en",
           changeLng: i18n.changeLanguage,
         },
         audio: {
