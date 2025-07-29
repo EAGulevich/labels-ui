@@ -22,7 +22,7 @@ type AppStorageContextType = {
 };
 
 const defaultValue: AppStorageContextType = {
-  volume: +(localStorage.getItem(LOCAL_KEY_VOLUME) || 1),
+  volume: +(localStorage.getItem(LOCAL_KEY_VOLUME) || 3),
   changeVolume: () => undefined,
 
   userId: sessionStorage.getItem(SESSION_KEY_USER_ID) || "",
