@@ -1,13 +1,10 @@
-![Vercel Deploy](https://deploy-badge.vercel.app/vercel/game-labels) 
+![Vercel Deploy](https://deploy-badge.vercel.app/vercel/game-labels)
 Production https://game-labels.vercel.app/
 
-
-![Vercel Deploy](https://deploy-badge.vercel.app/vercel/game-labels-preview) 
+![Vercel Deploy](https://deploy-badge.vercel.app/vercel/game-labels-preview)
 Development https://game-labels-preview.vercel.app/
 
-# ![Labels Game Logo](public/icon.svg) Labels Game 
-
-
+# ![Labels Game Logo](public/icon.svg) Labels Game
 
 ## Overview
 
@@ -31,24 +28,23 @@ Labels Game is a web-based multiplayer game. Players connect and interact in rea
 ## Screens
 
 ### Input facts
-![Discussion](public/screens/phone_input_fact.png)
-![Discussion](public/screens/host_input_facts.png)
 
+<img src="public/screens/host_discussion.png" alt="host_discussion" height="400">
+<img src="public/screens/phone_input_fact.png" alt="phone_input_fact" height="400">
 
 ### Discussion and voting
-![Discussion](public/screens/host_discussion.png)
-![Discussion](public/screens/phone_vote.png)
-![Discussion](public/screens/host_votes.png)
 
-
+<img src="public/screens/host_discussion.png" alt="host_discussion" height="400">
+<img src="public/screens/host_votes.png" alt="host_votes" height="400">
+<img src="public/screens/phone_vote.png" alt="phone_vote" height="400">
+<img src="public/screens/host_discussion_results.png" alt="host_discussion_results" height="400">
 
 ### Player results
-![Discussion](public/screens/phone_result.png)
-![Discussion](public/screens/phone_result_full.png)
+
+<img src="public/screens/phone_result.png" alt="phone_result" height="400">
+<img src="public/screens/phone_result_full.png" alt="phone_result_full" height="400">
 
 ### All players results
-![Discussion](public/screens/host_discussion_results.png)
-![Discussion](public/screens/host_result.png)
-![Discussion](public/screens/host_result_full.png)
 
-
+<img src="public/screens/host_result.png" alt="host_result" height="400">
+<img src="public/screens/host_result_full.png" alt="host_result_full" height="400">
