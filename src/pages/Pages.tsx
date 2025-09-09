@@ -48,29 +48,6 @@ export const Pages = () => {
     }
   }, [allowAudio]);
 
-  if (isAudioModalOpen) {
-    return (
-      <Modal
-        getContainer={() => document.getElementById(LAYOUT_ID) || document.body}
-        open={isAudioModalOpen}
-        title={t("audioModal.title")}
-        onCancel={onRefuse}
-        footer={
-          <Flex justify={"end"} gap={"large"}>
-            <Button danger type={"dashed"} onClick={onRefuse}>
-              {t("audioModal.buttons.refuse")}
-            </Button>
-            <Button type="primary" onClick={onAllowAudio}>
-              {t("audioModal.buttons.allow")}
-            </Button>
-          </Flex>
-        }
-      >
-        {t("audioModal.description")}
-      </Modal>
-    );
-  }
-
   if (allowAudio && !isAllAudioLoaded) {
     return (
       <Spin tip={t("audioModal.loadingSounds")} size={"large"}>
@@ -104,47 +81,71 @@ export const Pages = () => {
   );
 
   return (
-    <Routes>
-      <Route
-        path={ROUTE_PATHS.home}
-        element={
-          <Suspense fallback={fallback}>
-            <HomePageRouteComponent />
-          </Suspense>
-        }
-      />
-      <Route
-        path={ROUTE_PATHS.host}
-        element={
-          <Suspense fallback={fallback}>
-            <HostPageRouteComponent />
-          </Suspense>
-        }
-      />
-      <Route
-        path={ROUTE_PATHS.player}
-        element={
-          <Suspense fallback={fallback}>
-            <PlayerPageRouteComponent />
-          </Suspense>
-        }
-      />
-      <Route
-        path={ROUTE_PATHS.about}
-        element={
-          <Suspense fallback={fallback}>
-            <AboutPageRouteComponent />
-          </Suspense>
-        }
-      />
-      <Route
-        path="*"
-        element={
-          <Suspense fallback={fallback}>
-            <NotFoundPageRouteComponent />
-          </Suspense>
-        }
-      />
-    </Routes>
+    <>
+      {isAudioModalOpen && (
+        <Modal
+          getContainer={() =>
+            document.getElementById(LAYOUT_ID) || document.body
+          }
+          open={isAudioModalOpen}
+          title={t("audioModal.title")}
+          onCancel={onRefuse}
+          footer={
+            <Flex justify={"end"} gap={"large"}>
+              <Button danger type={"dashed"} onClick={onRefuse}>
+                {t("audioModal.buttons.refuse")}
+              </Button>
+              <Button type="primary" onClick={onAllowAudio}>
+                {t("audioModal.buttons.allow")}
+              </Button>
+            </Flex>
+          }
+        >
+          {t("audioModal.description")}
+        </Modal>
+      )}
+      <Routes>
+        <Route
+          path={ROUTE_PATHS.home}
+          element={
+            <Suspense fallback={fallback}>
+              <HomePageRouteComponent />
+            </Suspense>
+          }
+        />
+        <Route
+          path={ROUTE_PATHS.host}
+          element={
+            <Suspense fallback={fallback}>
+              <HostPageRouteComponent />
+            </Suspense>
+          }
+        />
+        <Route
+          path={ROUTE_PATHS.player}
+          element={
+            <Suspense fallback={fallback}>
+              <PlayerPageRouteComponent />
+            </Suspense>
+          }
+        />
+        <Route
+          path={ROUTE_PATHS.about}
+          element={
+            <Suspense fallback={fallback}>
+              <AboutPageRouteComponent />
+            </Suspense>
+          }
+        />
+        <Route
+          path="*"
+          element={
+            <Suspense fallback={fallback}>
+              <NotFoundPageRouteComponent />
+            </Suspense>
+          }
+        />
+      </Routes>
+    </>
   );
 };
