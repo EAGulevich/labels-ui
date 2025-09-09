@@ -138,6 +138,14 @@ export const Pages = () => {
           }
         />
         <Route
+          path={ROUTE_PATHS.howToPlay}
+          element={
+            <Suspense fallback={fallback}>
+              <AboutPageRouteComponent />
+            </Suspense>
+          }
+        />
+        <Route
           path="*"
           element={
             <Suspense fallback={fallback}>

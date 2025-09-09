@@ -21,6 +21,7 @@ export const ROUTE_PATHS = {
   host: "/room",
   player: "/game",
   about: "/about",
+  howToPlay: "/how-to-play",
 } as const;
 
 // elems

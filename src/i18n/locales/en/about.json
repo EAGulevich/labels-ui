@@ -1,0 +1,9 @@
+{
+  "name": "About the Project",
+  "paragraphs": {
+    "hello": "Hello! My name is Katya, and I'm excited to welcome you to my project's page. I want to share the story of its creation and the inspiration that led to its development.",
+    "idea": "The idea for this project came to me after watching a YouTube show called 'Cube.Labels' (<Link>watch Cube.Labels</Link>). In this show, participants who don't know each other meet and try to guess facts about one another. Each player provides the organizers with an interesting fact about themselves in advance. During the game, participants discuss and vote, attempting to match the facts to the players. The winner is the one whose fact is guessed last.",
+    "webVersion": "I was inspired by this idea and wanted to create a web version of this game. That's how this project was born. I slightly modified the rules, adding a points system (more details in the rules).",
+    "end": "I hope you enjoy playing this game as much as I enjoyed creating it. Wishing you a great time and fun moments with friends!"
+  }
+}

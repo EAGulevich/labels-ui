@@ -1,0 +1,41 @@
+{
+  "name": "Rules",
+  "paragraphs": {
+    "goal": {
+      "title": "Game Objective:",
+      "text": "Guess the facts about other players and score the highest number of points."
+    },
+    "preparation": {
+      "title": "Preparation:",
+      "textList": {
+        "device": "Open the app on a device with a large screen. Press the 'New Game' button. Ensure this screen is visible to all players.",
+        "qrCode": "Each player joins the game by scanning the QR code on their mobile device. The minimum number of players is 4."
+      }
+    },
+    "stepsOfGame": {
+      "title": "Gameplay:",
+      "pointsSystem": {
+        "label": "Points System",
+        "paragraphs": {
+          "morePoints": "The longer your fact remains unguessed, the more points you earn.",
+          "everyRound": "Each round earns you <Tag>3 points</Tag>.",
+          "example": "For example, if your fact is guessed in the 2nd round, you earn <Tag>6 points</Tag>, and if in the 5th round, you earn <Tag>15 points</Tag>.",
+          "voteFast": "The faster you vote correctly, the more points you earn for a correct answer.",
+          "voteFastExample": "The first player to vote correctly earns points equal to <Tag>number of players * 2</Tag>. If there are 4 players, the first correct voter gets <Tag>8 points</Tag>, the second gets <Tag>6 points</Tag>, the third gets <Tag>4 points</Tag>, and the fourth gets <Tag>2 points</Tag>. You earn points for a correct vote even if the player wasn’t chosen by the majority, as long as your vote was for the correct player."
+        },
+        "voteYourself": "You can vote for yourself (if you want to deflect suspicion), but be cautious: if the majority votes for you, you’ll earn fewer points than you could have."
+      },
+      "textList": {
+        "addFact": "Each player submits an interesting fact about themselves through the app. Players must not reveal their facts until the game ends.",
+        "voting": "Once all facts are submitted, players begin discussing and then voting, trying to match facts to players.",
+        "points": "Players earn points for each correctly guessed fact.",
+        "resume": "After voting concludes, you’ll see the results: player avatars will be matched with facts on the screen. If the fact’s color is green, you guessed correctly; if red, the fact belongs to another player. Yellow indicates a tie—multiple players received the same number of votes."
+      }
+    },
+    "gameOver": {
+      "title": "Game End:",
+      "text": "The game ends when all facts are guessed. The player with the highest points wins. At this point, you can share the full story behind your fact."
+    }
+  },
+  "feedback": "I’d love to hear any feedback! Write to me on Telegram."
+}

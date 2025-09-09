@@ -1,5 +1,7 @@
-import { Link } from "react-router";
+import { Trans, useTranslation } from "react-i18next";
+import { Link, useLocation } from "react-router";
 import {
+  Badge,
   Card,
   Col,
   Collapse,
@@ -11,59 +13,81 @@ import {
   Typography,
 } from "antd";
 
+import { ROUTE_PATHS } from "@constants";
+
 const { Title, Paragraph, Text } = Typography;
 const { TabPane } = Tabs;
 
 const AboutPage = () => {
+  const { pathname } = useLocation();
+  const { t: aboutT } = useTranslation("about");
+  const { t: howToPlayT } = useTranslation("howToPlay");
+
   return (
     <Row justify="center" style={{ paddingBottom: "40px" }}>
       <Col xs={24} sm={24} md={18} lg={14}>
         <Card style={{ padding: "12px" }}>
-          <Tabs defaultActiveKey="1">
-            <TabPane tab="Правила" key="1">
-              <Title level={5}>Цель игры:</Title>
+          <Tabs defaultActiveKey={pathname}>
+            <TabPane tab={aboutT("name")} key={ROUTE_PATHS.about}>
+              <Paragraph>{aboutT("paragraphs.hello")}</Paragraph>
               <Paragraph>
-                Угадать факты о других игроках и набрать наибольшее количество
-                баллов.
+                <Trans
+                  ns={"about"}
+                  i18nKey="paragraphs.idea"
+                  components={{
+                    Link: (
+                      <Link
+                        target="_blank"
+                        to={
+                          "https://www.youtube.com/watch?v=wmqT93Mbkfo&list=PLDuygd2Lb1g8VCcPFr9Xmn4iJd70iwZtG"
+                        }
+                      />
+                    ),
+                    BadgeRound: <Badge color={"purple"} />,
+                  }}
+                />
               </Paragraph>
-              <Title level={5}>Подготовка:</Title>
+              <Paragraph>{aboutT("paragraphs.webVersion")}</Paragraph>
+              <Paragraph>{aboutT("paragraphs.end")}</Paragraph>
+            </TabPane>
+            <TabPane tab={howToPlayT("name")} key={ROUTE_PATHS.howToPlay}>
+              <Title level={5}>{howToPlayT("paragraphs.goal.title")}</Title>
+              <Paragraph>{howToPlayT("paragraphs.goal.text")}</Paragraph>
+              <Title level={5}>
+                {howToPlayT("paragraphs.preparation.title")}
+              </Title>
               <Paragraph>
                 <ol>
                   <li>
                     <Paragraph>
-                      Откройте приложение на устройстве с большим экраном.
-                      Нажмите кнопку "Новая игра". Убедитесь, что этот экран
-                      виден всем игрокам.
+                      {howToPlayT("paragraphs.preparation.textList.device")}
                     </Paragraph>
                   </li>
                   <li>
                     <Paragraph>
-                      Каждый игрок присоединяется к игре, сканируя QR-код на
-                      своем мобильном устройстве. Минимальное число игроков - 4.
+                      {howToPlayT("paragraphs.preparation.textList.qrCode")}
                     </Paragraph>
                   </li>
                 </ol>
               </Paragraph>
-              <Title level={5}>Ход игры:</Title>
+              <Title level={5}>
+                {howToPlayT("paragraphs.stepsOfGame.title")}
+              </Title>
               <Paragraph>
                 <ol>
                   <li>
                     <Paragraph>
-                      Каждый игрок отправляет в приложение интересный факт о
-                      себе. Игроки не должны раскрывать свои факты до окончания
-                      игры.
+                      {howToPlayT("paragraphs.stepsOfGame.textList.addFact")}
                     </Paragraph>
                   </li>
                   <li>
                     <Paragraph>
-                      Как только все факты будут получены, игроки начинают
-                      обсуждение, а затем голосование, пытаясь сопоставить факты
-                      с игроками.
+                      {howToPlayT("paragraphs.stepsOfGame.textList.voting")}
                     </Paragraph>
                   </li>
                   <li>
                     <Paragraph>
-                      За каждый правильно угаданный факт игрок получает баллы.
+                      {howToPlayT("paragraphs.stepsOfGame.textList.points")}
                     </Paragraph>
                     <Paragraph>
                       <Collapse
@@ -71,51 +95,59 @@ const AboutPage = () => {
                         items={[
                           {
                             key: "examples",
-                            label: "Система баллов",
+                            label: howToPlayT(
+                              "paragraphs.stepsOfGame.pointsSystem.label",
+                            ),
                             children: (
                               <Flex vertical>
                                 <ul>
                                   <li>
                                     <Paragraph>
-                                      Чем дольше ваш факт не отгадан, тем больше
-                                      баллов вы получите
+                                      {howToPlayT(
+                                        "paragraphs.stepsOfGame.pointsSystem.paragraphs.morePoints",
+                                      )}
                                     </Paragraph>
                                     <Paragraph>
-                                      Каждый раунд приносит вам{" "}
-                                      <Tag>3 балла</Tag>
+                                      <Trans
+                                        ns={"howToPlay"}
+                                        i18nKey="paragraphs.stepsOfGame.pointsSystem.paragraphs.everyRound"
+                                        components={{
+                                          Tag: <Tag />,
+                                        }}
+                                      />
                                     </Paragraph>
                                     <Paragraph>
-                                      Например, если ваш факт отгадан во 2-ом
-                                      раунде, то вы получите <Tag>6 баллов</Tag>
-                                      , а если в 5-ом, то <Tag>15 баллов</Tag>
+                                      <Trans
+                                        ns={"howToPlay"}
+                                        i18nKey="paragraphs.stepsOfGame.pointsSystem.paragraphs.example"
+                                        components={{
+                                          Tag: <Tag />,
+                                        }}
+                                      />
                                     </Paragraph>
                                   </li>
                                   <li>
                                     <Paragraph>
-                                      Чем быстрее вы проголосуете, тем больше
-                                      баллов вы получите за правильный ответ
+                                      {howToPlayT(
+                                        "paragraphs.stepsOfGame.pointsSystem.paragraphs.voteFast",
+                                      )}
                                     </Paragraph>
                                     <Paragraph>
-                                      Первый верно проголосовавший игрок
-                                      получает кол-во баллов равное{" "}
-                                      <Tag>кол-во игроков * 2</Tag>. Если всего
-                                      игроков 4, то первый верно проголосовавший
-                                      игрок получит <Tag>8 баллов</Tag>, второй
-                                      - <Tag>6 баллов</Tag>, третий -{" "}
-                                      <Tag>4 балла</Tag> и четвертый -
-                                      <Tag>2 балла</Tag>. Вы получите баллы за
-                                      верный ответ даже тогда, когда игрока не
-                                      выбрали путем общего голосования, главное
-                                      - чтобы ваш голос был за верного игрока
+                                      <Trans
+                                        ns={"howToPlay"}
+                                        i18nKey="paragraphs.stepsOfGame.pointsSystem.paragraphs.voteFastExample"
+                                        components={{
+                                          Tag: <Tag />,
+                                        }}
+                                      />
                                     </Paragraph>
                                   </li>
 
                                   <li>
                                     <Paragraph>
-                                      Голосовать за себя можно (если хотите
-                                      отвести от себя подозрения), но осторожно:
-                                      если большинство проголосует за вас, то вы
-                                      получите меньше баллов, чем могли бы
+                                      {howToPlayT(
+                                        "paragraphs.stepsOfGame.pointsSystem.voteYourself",
+                                      )}
                                     </Paragraph>
                                   </li>
                                 </ul>
@@ -128,56 +160,13 @@ const AboutPage = () => {
                   </li>
                   <li>
                     <Paragraph>
-                      После завершения голосования вы увидите итог: на экране
-                      будут сопоставлены аватары игроков с фактами. Если цвет
-                      этого факта зеленый - то вы угадали, если красный, то факт
-                      принадлежит другому игроку. Желтый цвет означает, что
-                      голосование завершилось спором - несколько игроков набрали
-                      одинаковое кол-во голосов.
+                      {howToPlayT("paragraphs.stepsOfGame.textList.resume")}
                     </Paragraph>
                   </li>
                 </ol>
               </Paragraph>
-              <Title level={5}>Завершение игры:</Title>
-              <Paragraph>
-                Игра заканчивается, когда все факты угаданы. Побеждает игрок,
-                набравший наибольшее количество баллов. На этом этапе можете
-                рассказать полную историю о своем факте.
-              </Paragraph>
-            </TabPane>
-            <TabPane tab="О проекте" key="2">
-              <Paragraph>
-                Привет! Меня зовут Катя, и я рада приветствовать вас на странице
-                моего проекта. Хочу поделиться историей его создания и
-                вдохновением, которое привело к его появлению.
-              </Paragraph>
-              <Paragraph>
-                Идея этого проекта пришла ко мне после просмотра шоу на YouTube
-                под названием "Куб.Ярлыки" (
-                <Link
-                  target="_blank"
-                  to={
-                    "https://www.youtube.com/watch?v=wmqT93Mbkfo&list=PLDuygd2Lb1g8VCcPFr9Xmn4iJd70iwZtG"
-                  }
-                >
-                  смотреть Куб.Ярлыки
-                </Link>
-                ). В этом шоу участники, незнакомые друг с другом, встречаются и
-                пытаются угадать факты друг о друге. Каждый игрок заранее
-                сообщает организаторам интересный факт о себе. В процессе игры
-                участники обсуждают и голосуют, пытаясь сопоставить факты с
-                игроками. Побеждает тот, чей факт будет угадан последним.
-              </Paragraph>
-              <Paragraph>
-                Я была вдохновлена этой идеей и захотела создать веб версию этой
-                игры. Так и появился этот проект. Я немного изменила правила,
-                добавив систему баллов (подробнее в правилах).
-              </Paragraph>
-              <Paragraph>
-                Надеюсь, вам понравится играть в эту игру так же, как мне
-                понравилось ее создавать. Желаю вам приятного
-                времяпрепровождения и веселых моментов в кругу друзей!
-              </Paragraph>
+              <Title level={5}>{howToPlayT("paragraphs.gameOver.title")}</Title>
+              <Paragraph>{howToPlayT("paragraphs.gameOver.text")}</Paragraph>
             </TabPane>
           </Tabs>
           <Divider />
@@ -188,7 +177,7 @@ const AboutPage = () => {
               fontStyle: "italic",
             }}
           >
-            Буду рада любой обратной связи! Пишите мне в Telegram{" "}
+            <div>{howToPlayT("feedback")}</div>
             <Text code copyable>
               @meteorgul
             </Text>

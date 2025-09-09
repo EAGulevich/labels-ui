@@ -2,7 +2,11 @@ import { initReactI18next } from "react-i18next";
 import i18next from "i18next";
 import intervalPlural from "i18next-intervalplural-postprocessor";
 
+import aboutEn from "./locales/en/about.json";
+import howToPlayEn from "./locales/en/howToPlay.json";
 import translationEn from "./locales/en/translation.json";
+import aboutRu from "./locales/ru/about.json";
+import howToPlayRu from "./locales/ru/howToPlay.json";
 import translationRu from "./locales/ru/translation.json";
 
 type Language = "ru" | "en";
@@ -15,9 +19,10 @@ i18n.init({
   defaultNS: "translation",
   lng: localStorageLng,
   fallbackLng: "ru",
+  ns: ["translation", "about", "howToPlay"],
   resources: {
-    en: { translation: translationEn },
-    ru: { translation: translationRu },
+    en: { translation: translationEn, about: aboutEn, howToPlay: howToPlayEn },
+    ru: { translation: translationRu, about: aboutRu, howToPlay: howToPlayRu },
   },
 });
 
