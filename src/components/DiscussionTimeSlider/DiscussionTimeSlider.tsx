@@ -1,8 +1,8 @@
 import { useTranslation } from "react-i18next";
+import { getLayoutContainer } from "@utils/getLayoutContainer.ts";
 import { Flex, Slider, Tooltip, Typography } from "antd";
 
 import { InfoIcon } from "@components/DiscussionTimeSlider/styles.ts";
-import { LAYOUT_ID } from "@constants";
 import { useAppSettings } from "@providers/AppSettingsProvider/AppSettingsProvider.tsx";
 
 export const DiscussionTimeSlider = () => {
@@ -16,9 +16,7 @@ export const DiscussionTimeSlider = () => {
       <Flex justify={"space-between"}>
         <Typography.Text>{t("menu.timer")}</Typography.Text>
         <Tooltip
-          getPopupContainer={() =>
-            document.getElementById(LAYOUT_ID) || document.body
-          }
+          getPopupContainer={getLayoutContainer}
           title={t("menu.timerHint")}
           placement="leftTop"
         >

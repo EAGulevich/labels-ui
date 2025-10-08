@@ -1,9 +1,10 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Route, Routes } from "react-router";
-import { Button, Col, Flex, Modal, Progress, Row, Spin } from "antd";
+import { getLayoutContainer } from "@utils/getLayoutContainer.ts";
+import { Button, Col, Flex, notification, Progress, Row, Spin } from "antd";
 
-import { LAYOUT_ID, ROUTE_PATHS } from "@constants";
+import { ROUTE_PATHS } from "@constants";
 import { useAppSettings } from "@providers/AppSettingsProvider/AppSettingsProvider.tsx";
 
 const HomePageRouteComponent = lazy(() => import("./HomePage/HomePage.tsx"));
@@ -19,6 +20,13 @@ const NotFoundPageRouteComponent = lazy(
 
 export const Pages = () => {
   const { t } = useTranslation();
+  const [api, contextHolder] = notification.useNotification({
+    placement: "bottomRight",
+    pauseOnHover: true,
+    duration: 10,
+    showProgress: true,
+    getContainer: getLayoutContainer,
+  });
 
   const {
     audio: {
@@ -32,21 +40,44 @@ export const Pages = () => {
     allowAudio === undefined,
   );
 
-  const onAllowAudio = () => {
-    setAllowAudio(true);
-    setIsAudioModalOpen(false);
-  };
-
-  const onRefuse = () => {
-    setAllowAudio(false);
-    setIsAudioModalOpen(false);
-  };
-
   useEffect(() => {
     if (allowAudio !== undefined) {
       setIsAudioModalOpen(false);
     }
   }, [allowAudio]);
+
+  useEffect(() => {
+    const key = "AUDIO_NOTIFICATION";
+    const onAllowAudio = () => {
+      setAllowAudio(true);
+      setIsAudioModalOpen(false);
+      api.destroy(key);
+    };
+
+    const onRefuse = () => {
+      setAllowAudio(false);
+      setIsAudioModalOpen(false);
+      api.destroy(key);
+    };
+    if (isAudioModalOpen) {
+      api.open({
+        key,
+        closable: false,
+        message: t("audioModal.title"),
+        description: t("audioModal.description"),
+        actions: (
+          <Flex justify={"end"} gap={"large"}>
+            <Button danger type={"dashed"} onClick={onRefuse}>
+              {t("audioModal.buttons.refuse")}
+            </Button>
+            <Button type="primary" onClick={onAllowAudio}>
+              {t("audioModal.buttons.allow")}
+            </Button>
+          </Flex>
+        ),
+      });
+    }
+  }, [api, isAudioModalOpen, setAllowAudio, t]);
 
   if (allowAudio && !isAllAudioLoaded) {
     return (
@@ -82,28 +113,8 @@ export const Pages = () => {
 
   return (
     <>
-      {isAudioModalOpen && (
-        <Modal
-          getContainer={() =>
-            document.getElementById(LAYOUT_ID) || document.body
-          }
-          open={isAudioModalOpen}
-          title={t("audioModal.title")}
-          onCancel={onRefuse}
-          footer={
-            <Flex justify={"end"} gap={"large"}>
-              <Button danger type={"dashed"} onClick={onRefuse}>
-                {t("audioModal.buttons.refuse")}
-              </Button>
-              <Button type="primary" onClick={onAllowAudio}>
-                {t("audioModal.buttons.allow")}
-              </Button>
-            </Flex>
-          }
-        >
-          {t("audioModal.description")}
-        </Modal>
-      )}
+      {contextHolder}
+
       <Routes>
         <Route
           path={ROUTE_PATHS.home}

@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FullscreenExitOutlined, FullscreenOutlined } from "@ant-design/icons";
+import { getLayoutContainer } from "@utils/getLayoutContainer.ts";
 import { Button, Tooltip } from "antd";
 import styled from "styled-components";
-
-import { LAYOUT_ID } from "@constants";
 
 const SFloatButton = styled(Button)`
   position: absolute;
@@ -61,9 +60,7 @@ export const FullScreenButton = () => {
   return (
     <Tooltip
       placement="leftBottom"
-      getPopupContainer={() =>
-        document.getElementById(LAYOUT_ID) || document.body
-      }
+      getPopupContainer={getLayoutContainer}
       title={
         isFullscreen
           ? t("fullScreenButton.tooltipFullExit")

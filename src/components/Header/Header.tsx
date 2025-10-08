@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { MenuOutlined } from "@ant-design/icons";
+import { getLayoutContainer } from "@utils/getLayoutContainer.ts";
 import { Button, Flex, Layout, List, Popover, Typography } from "antd";
 
 import HeaderLogo from "@assets/headerLogo.svg?react";
@@ -8,12 +9,7 @@ import { DiscussionTimeSlider } from "@components/DiscussionTimeSlider/Discussio
 import { LngSwitcher } from "@components/LngSwitcher/LngSwitcher.tsx";
 import { MuteSwitcher } from "@components/MuteSwitcher/MuteSwitcher.tsx";
 import { ThemeSwitcher } from "@components/ThemeSwither/ThemeSwitcher.tsx";
-import {
-  HEADER_INFO_CONTAINER,
-  LAYOUT_ID,
-  ROUTE_PATHS,
-  VERSION,
-} from "@constants";
+import { HEADER_INFO_CONTAINER, ROUTE_PATHS, VERSION } from "@constants";
 import { useAppStorage } from "@providers/AppStorageProvider.tsx";
 import { useGameState } from "@providers/GameStateProvider.tsx";
 
@@ -61,9 +57,7 @@ export const Header = ({ hasOnlyMenu }: HeaderProps) => {
         </SvgContainer>
         <StyledInfoHeader id={HEADER_INFO_CONTAINER} />
         <Popover
-          getPopupContainer={() =>
-            document.getElementById(LAYOUT_ID) || document.body
-          }
+          getPopupContainer={getLayoutContainer}
           placement="bottomRight"
           trigger={"click"}
           content={

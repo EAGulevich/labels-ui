@@ -30,6 +30,9 @@ const commonConfig: ThemeConfig = {
     Card: {
       bodyPadding: 0,
     },
+    Notification: {
+      boxShadow: "0 0 10px 0px #eddeff45",
+    },
   },
 };
 

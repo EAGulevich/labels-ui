@@ -1,6 +1,7 @@
+import { getLayoutContainer } from "@utils/getLayoutContainer.ts";
 import { message } from "antd";
 
-import { LAYOUT_ID, MESSAGE_TOP } from "@constants";
+import { MESSAGE_TOP } from "@constants";
 
 import { useActions } from "./useActions.tsx";
 import { useConnectDisconnect } from "./useConnectDisconnect.tsx";
@@ -16,7 +17,7 @@ import { useVoting } from "./useVoting.tsx";
 export const useSocketEvents = () => {
   const [messageApi, contextHolder] = message.useMessage({
     top: MESSAGE_TOP,
-    getContainer: () => document.getElementById(LAYOUT_ID) || document.body,
+    getContainer: getLayoutContainer,
   });
 
   const { isServerError } = useConnectDisconnect({ messageApi });

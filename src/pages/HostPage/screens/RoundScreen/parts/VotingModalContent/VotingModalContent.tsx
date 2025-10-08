@@ -1,11 +1,12 @@
 import { useTranslation } from "react-i18next";
+import { getLayoutContainer } from "@utils/getLayoutContainer.ts";
 import { Col, Drawer, Flex, Row, Typography } from "antd";
 import maxBy from "lodash.maxby";
 import styled, { useTheme } from "styled-components";
 
 import { ErrorFallback } from "@components/Error/ErrorFallback.tsx";
 import { AVATARS } from "@components/PlayerAvatar/constants.tsx";
-import { LAYOUT_ID, TV_WIDTH } from "@constants";
+import { TV_WIDTH } from "@constants";
 import { useGameState } from "@providers/GameStateProvider.tsx";
 
 import { getStepsOfVoting } from "./parts/getStepsOfVoting.tsx";
@@ -70,7 +71,7 @@ export const VotingModalContent = () => {
 
   return (
     <Drawer
-      getContainer={() => document.getElementById(LAYOUT_ID) || document.body}
+      getContainer={getLayoutContainer}
       height={"848px"}
       placement="bottom"
       closable={false}

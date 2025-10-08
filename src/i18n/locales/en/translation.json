@@ -4,8 +4,8 @@
     "title": "Enable sound effects?",
     "description": "You can change this in the settings at any time",
     "buttons": {
-      "allow": "Enable",
-      "refuse": "Disable"
+      "allow": "Yes",
+      "refuse": "No"
     },
     "loadingSounds": "Loading sounds..."
   },
