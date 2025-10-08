@@ -1,7 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Route, Routes } from "react-router";
-import { getLayoutContainer } from "@utils/getLayoutContainer.ts";
 import { Button, Col, Flex, notification, Progress, Row, Spin } from "antd";
 
 import { ROUTE_PATHS } from "@constants";
@@ -25,7 +24,6 @@ export const Pages = () => {
     pauseOnHover: true,
     duration: 10,
     showProgress: true,
-    getContainer: getLayoutContainer,
   });
 
   const {
