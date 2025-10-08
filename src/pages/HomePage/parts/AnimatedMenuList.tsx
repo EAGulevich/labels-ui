@@ -1,8 +1,9 @@
 import { JSX, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router";
-import { Button, Flex } from "antd";
+import { Link } from "react-router";
+import { Flex } from "antd";
 import { motion, MotionProps } from "motion/react";
+import styled from "styled-components";
 
 import { ROUTE_PATHS } from "@constants";
 import { useAppSettings } from "@providers/AppSettingsProvider/AppSettingsProvider.tsx";
@@ -15,18 +16,25 @@ const motionProps: MotionProps = {
   animate: { opacity: 1, y: 0 },
   exit: { opacity: 0, y: -50 },
   transition: { duration: ANIMATION_DURATION_S },
+  style: {
+    listStyle: "none",
+  },
 };
+
+const StyledLink = styled(Link)`
+  font-size: 24px;
+  line-height: 50px;
+`;
 
 export const AnimatedMenuList = () => {
   const {
     audio: { isAllAudioLoaded, allowAudio, getAudio },
   } = useAppSettings();
   const isReady = !allowAudio || isAllAudioLoaded;
-  const timerIdRef = useRef<NodeJS.Timeout | undefined>(undefined);
+  const timersRef = useRef<NodeJS.Timeout[]>([]);
   const { volume } = useAppStorage();
 
   const [items, setItems] = useState<JSX.Element[]>([]);
-  const navigate = useNavigate();
   const { t } = useTranslation();
 
   const playAudio = useCallback(() => {
@@ -35,89 +43,68 @@ export const AnimatedMenuList = () => {
 
   const allItems = useMemo(
     () => [
-      <Button
-        size={"large"}
-        key={"newGameButton"}
-        onMouseEnter={playAudio}
-        type={"link"}
-        onClick={() => navigate(ROUTE_PATHS.host)}
-      >
-        {t("home.menu.newGame")}
-      </Button>,
-
-      <Button
-        size={"large"}
-        key={"joinButton"}
-        onMouseEnter={playAudio}
-        type={"link"}
-        onClick={() => navigate(ROUTE_PATHS.player)}
-      >
-        {t("home.menu.join")}
-      </Button>,
-
-      <Button
-        size={"large"}
-        key={"joinButton"}
-        onMouseEnter={playAudio}
-        type={"link"}
-        onClick={() => navigate(ROUTE_PATHS.about)}
-      >
-        {t("home.menu.about")}
-      </Button>,
+      {
+        key: "newGameButton",
+        to: ROUTE_PATHS.host,
+        label: t("home.menu.newGame"),
+      },
+      {
+        key: "joinButton",
+        to: ROUTE_PATHS.player,
+        label: t("home.menu.join"),
+      },
+      {
+        key: "aboutButton",
+        to: ROUTE_PATHS.about,
+        label: t("home.menu.about"),
+      },
     ],
-    [navigate, playAudio, t],
+    [t],
   );
 
   useEffect(() => {
-    if (items.length === allItems.length) {
-      clearInterval(timerIdRef.current);
-      timerIdRef.current = undefined;
-      setItems(allItems);
+    if (!isReady) {
+      return;
     }
-  }, [allItems, items.length]);
 
-  useEffect(() => {
-    const addItems = () => {
-      setItems((prevItems) => {
-        if (prevItems.length >= allItems.length) {
-          clearInterval(timerIdRef.current);
-          return prevItems;
-        }
+    const items = allItems.map((item) => (
+      <StyledLink key={item.key} to={item.to} onMouseEnter={playAudio}>
+        {item.label}
+      </StyledLink>
+    ));
 
-        return [...prevItems, allItems[prevItems.length]];
-      });
-    };
-
-    if (isReady && !timerIdRef.current) {
-      timerIdRef.current = setInterval(addItems, ANIMATION_DURATION_S * 1000);
-    }
+    items.forEach((item, index) => {
+      const timer = setTimeout(
+        () => {
+          setItems((prev) => {
+            if (prev.length >= items.length) {
+              return items;
+            } else {
+              playAudio();
+              return [...prev, item];
+            }
+          });
+        },
+        (index + 1) * ANIMATION_DURATION_S * 1000,
+      );
+      timersRef.current.push(timer);
+    });
 
     return () => {
-      clearInterval(timerIdRef.current);
-      timerIdRef.current = undefined;
+      timersRef.current.forEach(clearTimeout);
+      timersRef.current = [];
     };
-  }, [
-    allItems,
-    allowAudio,
-    isAllAudioLoaded,
-    isReady,
-    items.length,
-    playAudio,
-  ]);
-
-  useEffect(() => {
-    if (items.length) {
-      playAudio();
-    }
-  }, [items.length, playAudio]);
+  }, [isReady, allItems, playAudio]);
 
   return (
-    <Flex vertical align={"center"}>
-      {items.map((item, index) => (
-        <motion.div key={index} {...motionProps}>
-          {item}
-        </motion.div>
-      ))}
-    </Flex>
+    <nav>
+      <Flex component="ul" vertical align="center">
+        {items.map((item, index) => (
+          <motion.li key={allItems[index].key} {...motionProps}>
+            {item}
+          </motion.li>
+        ))}
+      </Flex>
+    </nav>
   );
 };
