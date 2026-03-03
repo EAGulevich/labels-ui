@@ -27,9 +27,13 @@ Labels Game is a web-based multiplayer game. Players connect and interact in rea
 
 ## Screens
 
+### Lobby
+<img src="public/screens/host_waiting_players.png" alt="host_waiting_players" height="400">
+
+
 ### Input facts
 
-<img src="public/screens/host_discussion.png" alt="host_discussion" height="400">
+<img src="public/screens/host_input_facts.png" alt="host_input_facts" height="400">
 <img src="public/screens/phone_input_fact.png" alt="phone_input_fact" height="400">
 
 ### Discussion and voting
